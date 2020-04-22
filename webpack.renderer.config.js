@@ -5,6 +5,14 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const baseConfig = require('./webpack.base.config');
 
+const CSSModuleLoader = {
+    loader: 'css-loader',
+    options: {
+        modules: true,
+        sourceMap: true
+    }
+};
+
 module.exports = merge.smart(baseConfig, {
     target: 'electron-renderer',
     entry: {
@@ -34,7 +42,7 @@ module.exports = merge.smart(baseConfig, {
             },
             {
                 test: /\.scss$/,
-                loaders: ['style-loader', 'css-loader', 'sass-loader']
+                use: ['style-loader', CSSModuleLoader, 'sass-loader']
             },
             {
                 test: /\.css$/,
