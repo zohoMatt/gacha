@@ -98,7 +98,9 @@
     "@types/react": "^16.8.18",
     "@types/react-dom": "^16.8.4",
     "@types/react-redux": "^7.0.9",
+    "@types/react-router-dom": "^5.1.4",
     "@types/react-test-renderer": "^16.8.1",
+    "@types/uuid": "^7.0.2",
     "@types/webdriverio": "^4.8.7",
     "@types/webpack-env": "^1.13.3",
     "@typescript-eslint/eslint-plugin": "^2.4.0",
@@ -144,6 +146,8 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
-    "redux": "^4.0.1"
+    "react-router-dom": "^5.1.2",
+    "redux": "^4.0.1",
+    "uuid": "^7.0.3"
   }
 }
