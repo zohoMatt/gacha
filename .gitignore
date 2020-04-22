@@ -1,3 +1,10 @@
+# Dependencies
 node_modules/
+
+# IDE
+.idea
+.vscode
+
+# Project generated
 dist/
 release/
