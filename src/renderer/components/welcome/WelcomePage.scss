@@ -59,6 +59,7 @@
     color: $BASIC_COLOR_A3;
     font-size: 4vh;
     cursor: pointer;
+    user-select: none;
 
     &:hover {
         background: $BASIC_COLOR_A1;

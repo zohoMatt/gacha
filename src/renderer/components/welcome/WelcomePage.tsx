@@ -1,15 +1,23 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 
 const styles = require('./WelcomePage.scss');
 
-interface WelcomeProps {
+export interface WelcomeProps {
     title?: string;
     intro?: string;
     copyright?: string;
     src: string;
+    goto: string;
 }
 
-const WelcomePage: React.FunctionComponent<WelcomeProps> = ({ title, intro, copyright, src }) => (
+const WelcomePage: React.FunctionComponent<WelcomeProps> = ({
+    title,
+    intro,
+    copyright,
+    src,
+    goto
+}) => (
     <div className={styles.bg}>
         <div className={styles.title}>{title || 'MasterPFAS'}</div>
         <img className={styles.image} src={src} alt="Header" />
@@ -18,7 +26,9 @@ const WelcomePage: React.FunctionComponent<WelcomeProps> = ({ title, intro, copy
         </div>
         <div className={styles.copyright}>{copyright || 'Copyright: MIT License by PP & Zoho'}</div>
         <div className={styles.btnRow}>
-            <div className={styles.startBtn}>START</div>
+            <Link to={goto}>
+                <div className={styles.startBtn}>START</div>
+            </Link>
         </div>
     </div>
 );
