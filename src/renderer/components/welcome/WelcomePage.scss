@@ -1,0 +1,72 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+
+.bg {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    background: $BG;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.title {
+    margin: 8vh 0;
+
+    color: $BASIC_COLOR_A5;
+    font-family: $FONT_TAHOMA;
+    font-size: 8vh;
+}
+
+.intro {
+    margin: 4vh 0;
+
+    color: $BASIC_COLOR_A3;
+    font-family: $FONT_PALATINO;
+    font-size: 3vh;
+}
+
+.copyright {
+    color: $BASIC_COLOR_A2;
+    font-family: $FONT_TNR;
+    font-size: 2vh;
+}
+
+.image {
+    margin: 5vh 0;
+    width: 30vw;
+    height: auto;
+}
+
+.btnRow {
+    @include center-aligned-2d;
+    height: 20vh;
+}
+
+.startBtn {
+    @include center-aligned-2d;
+
+    width: 20vw;
+    height: 10vh;
+
+    background: $BASIC_COLOR_A2;
+    border-radius: 2vh;
+
+    color: $BASIC_COLOR_A3;
+    font-size: 4vh;
+    cursor: pointer;
+
+    &:hover {
+        background: $BASIC_COLOR_A1;
+    }
+
+    &:active {
+        width: 18vw;
+        height: 9vh;
+        font-size: 3vh;
+    }
+}
