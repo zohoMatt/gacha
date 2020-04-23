@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const styles = require('./Counter.scss');
+const styles = require('./Counter.less');
 const redCubeImg = require('./RedCube.jpg');
 
 export interface Props {

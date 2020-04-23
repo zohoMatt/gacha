@@ -5,13 +5,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const baseConfig = require('./webpack.base.config');
 
-const CSSModuleLoader = {
-    loader: 'css-loader',
-    options: {
-        modules: true,
-        sourceMap: true
-    }
-};
+const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = merge.smart(baseConfig, {
     target: 'electron-renderer',
@@ -41,8 +35,33 @@ module.exports = merge.smart(baseConfig, {
                 }
             },
             {
-                test: /\.scss$/,
-                use: ['style-loader', CSSModuleLoader, 'sass-loader']
+                test: /\.less$/,
+                use: [
+                    {
+                        loader: 'style-loader',
+                        options: {
+                            sourceMap: !isProduction,
+                        },
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1,
+                            // If you want to use CSS Modules, please name your file as 'xxx.module.less'.
+                            // Refer: https://github.com/webpack-contrib/css-loader#auto
+                            modules: {
+                                auto: true
+                            },
+                            sourceMap: true
+                        }
+                    },
+                    {
+                        loader: "less-loader",
+                        options: {
+                            javascriptEnabled: true
+                        }
+                    }
+                ]
             },
             {
                 test: /\.css$/,

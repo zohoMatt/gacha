@@ -1,12 +1,12 @@
-@import '../../assets/styles/variables';
-@import '../../assets/styles/mixins';
+@import '../../assets/styles/variables.less';
+@import '../../assets/styles/mixins.less';
 
 .bg {
     position: relative;
     box-sizing: border-box;
     width: 100%;
     height: 100%;
-    background: $BG;
+    background: @BG;
 
     display: flex;
     flex-direction: column;
@@ -17,22 +17,22 @@
 .title {
     margin: 5vh 0;
 
-    color: $BASIC_COLOR_A5;
-    font-family: $FONT_TAHOMA;
+    color: @BASIC_COLOR_A5;
+    font-family: @FONT_TAHOMA;
     font-size: 8vh;
 }
 
 .intro {
     margin: 4vh 0;
 
-    color: $BASIC_COLOR_A3;
-    font-family: $FONT_PALATINO;
+    color: @BASIC_COLOR_A3;
+    font-family: @FONT_PALATINO;
     font-size: 3vh;
 }
 
 .copyright {
-    color: $BASIC_COLOR_A2;
-    font-family: $FONT_TNR;
+    color: @BASIC_COLOR_A2;
+    font-family: @FONT_TNR;
     font-size: 2vh;
 }
 
@@ -43,26 +43,26 @@
 }
 
 .btnRow {
-    @include center-aligned-2d;
+    .center-aligned-2d();
     height: 20vh;
 }
 
 .startBtn {
-    @include center-aligned-2d;
+    .center-aligned-2d();
 
     width: 20vw;
     height: 10vh;
 
-    background: $BASIC_COLOR_A2;
+    background: @BASIC_COLOR_A2;
     border-radius: 2vh;
 
-    color: $BASIC_COLOR_A3;
+    color: @BASIC_COLOR_A3;
     font-size: 4vh;
     cursor: pointer;
     user-select: none;
 
     &:hover {
-        background: $BASIC_COLOR_A1;
+        background: @BASIC_COLOR_A1;
     }
 
     &:active {
