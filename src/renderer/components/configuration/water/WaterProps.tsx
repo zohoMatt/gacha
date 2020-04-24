@@ -1,5 +1,6 @@
 import * as React from 'react';
 import DataSetSelector from '../../common/DataSetSelector';
+import EditWaterProps from './EditWaterProps';
 import { DataSetEntry, WaterProps as IWaterProps } from '../../../store/initial';
 
 const styles = require('./WaterProps.module.less');
@@ -48,7 +49,10 @@ const mockdata: DataSetEntry<IWaterProps>[] = [
 
 const WaterProps: React.FunctionComponent = () => (
     <div className={styles.container}>
-        <div className={styles.edit} />
+        <div className={styles.title}>Water Properties</div>
+        <div className={styles.edit}>
+            <EditWaterProps />
+        </div>
         <div className={styles.transfer}>
             <DataSetSelector database={mockdata} />
         </div>
