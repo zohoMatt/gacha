@@ -2,6 +2,8 @@ import * as React from 'react';
 import DataSetSelector from '../../common/DataSetSelector';
 import { DataSetEntry, WaterProps as IWaterProps } from '../../../store/initial';
 
+const styles = require('./WaterProps.module.less');
+
 const mockdata: DataSetEntry<IWaterProps>[] = [
     {
         key: 'a1',
@@ -45,8 +47,11 @@ const mockdata: DataSetEntry<IWaterProps>[] = [
 ];
 
 const WaterProps: React.FunctionComponent = () => (
-    <div>
-        <DataSetSelector database={mockdata} />
+    <div className={styles.container}>
+        <div className={styles.edit} />
+        <div className={styles.transfer}>
+            <DataSetSelector database={mockdata} />
+        </div>
     </div>
 );
 
