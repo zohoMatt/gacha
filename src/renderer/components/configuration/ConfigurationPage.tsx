@@ -12,3 +12,5 @@ const ConfigurationPage: React.FunctionComponent = () => {
         </div>
     );
 };
+
+export default ConfigurationPage;

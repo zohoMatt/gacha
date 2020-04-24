@@ -52,7 +52,7 @@ module.exports = merge.smart(baseConfig, {
                             modules: {
                                 auto: true
                             },
-                            sourceMap: true
+                            sourceMap: !isProduction
                         }
                     },
                     {
