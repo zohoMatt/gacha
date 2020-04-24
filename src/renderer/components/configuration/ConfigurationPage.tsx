@@ -1,14 +1,31 @@
 import * as React from 'react';
-import { BrowserRouter, Switch, useRouteMatch } from 'react-router-dom';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
 
 import NavBar from '../nav/NavBar';
+import WaterProps from './water/WaterProps';
+import PollutantProps from './pollutant/PollutantProps';
+import AdsorptionModel from './pollutant/AdsorptionModel';
+
+const styles = require('./ConfigurationPage.module.less');
 
 const ConfigurationPage: React.FunctionComponent = () => {
     const match = useRouteMatch();
     return (
-        <div>
+        <div className={styles.container}>
             <NavBar />
-            <Switch />
+            <div className={styles.mainConfigArea}>
+                <Switch>
+                    <Route path={`${match.path}/settings/water/prop`}>
+                        <WaterProps />
+                    </Route>
+                    <Route path={`${match.path}/settings/components/prop`}>
+                        <PollutantProps />
+                    </Route>
+                    <Route path={`${match.path}/settings/components/model`}>
+                        <AdsorptionModel />
+                    </Route>
+                </Switch>
+            </div>
         </div>
     );
 };
