@@ -1,5 +1,6 @@
 import * as React from 'react';
-import DataSetSelector, { DataSetEntry } from '../../common/DataSetSelector';
+import DataSetSelector from '../../common/DataSetSelector';
+import { DataSetEntry } from '../../../store/initial';
 
 interface MockParams {
     cij: number;

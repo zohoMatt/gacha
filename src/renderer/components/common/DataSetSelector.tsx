@@ -1,15 +1,7 @@
 import * as React from 'react';
 import { Transfer, Table } from 'antd';
+import { DataSetEntry } from '../../store/initial';
 import { difference } from '../../../utils/array';
-
-export interface DataSetEntry<T> {
-    key: string;
-    name: string;
-    description: string;
-    params: T;
-    active: boolean;
-    disabled?: boolean;
-}
 
 export interface DataSetSelectorProps<T> {
     database: Array<DataSetEntry<T>>;
