@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { Button, Divider, Form, Input, Popover, Popconfirm, Select, Switch } from 'antd';
+import { Button, Divider, Form, Input, Popover, Popconfirm, Select, Switch, Row } from 'antd';
 
 const styles = require('./EditWaterProps.module.less');
 
 const EditWaterProps: React.FunctionComponent = () => (
     <div className={styles.container}>
-        <div className={styles.inputArea}>
-            <Form labelCol={{ span: 8 }} wrapperCol={{ span: 8 }}>
+        <div className={styles.formContainer}>
+            <Form labelCol={{ span: 6 }} wrapperCol={{ span: 8 }}>
                 <Form.Item name="name" label="Name">
                     <Input disabled />
                 </Form.Item>
-                <Form.Item name="description" label="Description" wrapperCol={{ span: 16 }}>
+                <Form.Item name="description" label="Description" wrapperCol={{ span: 12 }}>
                     <Input />
                 </Form.Item>
                 <Divider orientation="left">Basic</Divider>
@@ -20,8 +20,6 @@ const EditWaterProps: React.FunctionComponent = () => (
                 <Form.Item name="temperature" label="Temperature">
                     <Input addonAfter="℃" />
                 </Form.Item>
-            </Form>
-            <Form labelCol={{ span: 8 }} wrapperCol={{ span: 14 }}>
                 <Divider orientation="left">Correlations</Divider>
                 <Form.Item name="density" label="Density">
                     <div className={styles.combine}>
