@@ -33,7 +33,7 @@ const columns = (
         render: (text: string, record: DataSetEntry<any>) => {
             return (
                 <span>
-                    <a style={{ marginRight: '3vw' }} onClick={toEdit(record)}>
+                    <a style={{ marginRight: '1vw' }} onClick={toEdit(record)}>
                         Edit
                     </a>
                     <a onClick={toDelete(record)}>Delete</a>

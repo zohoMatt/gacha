@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 import { Menu } from 'antd';
-import { AreaChartOutlined, PaperClipOutlined, InsertRowBelowOutlined } from '@ant-design/icons';
+import { AreaChartOutlined, DatabaseOutlined, InsertRowBelowOutlined } from '@ant-design/icons';
 
 const styles = require('./NavBar.module.less');
 
@@ -19,8 +19,8 @@ const NavBar: React.FunctionComponent = () => {
                     key="sub1"
                     title={
                         <span>
-                            <PaperClipOutlined />
-                            <span>Settings</span>
+                            <DatabaseOutlined />
+                            <span>Database</span>
                         </span>
                     }>
                     <Group key="water" title="Water">
