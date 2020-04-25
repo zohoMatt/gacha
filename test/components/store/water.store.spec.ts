@@ -44,31 +44,59 @@ const MOCK_DATA = {
     ]
 };
 
-let wstore: WaterStore | null = null;
-
-beforeAll(() => {
-    wstore = new WaterStore(MOCK_DATA);
-});
-
 describe(`Testing 'class WaterStore' in water.store.ts`, () => {
-    test('@action save()', () => {
-        if (!wstore) {
-            expect(false);
-            return;
-        }
+    test('@action save(), editRecord()', () => {
+        const wstore = new WaterStore(MOCK_DATA);
         wstore.editRecord('a1');
-        wstore.save({
-            description: 'no des',
-            pressure: 12.001, // atm
-            temperature: 125, // ℃
+        if (wstore.activeRecord) wstore.activeRecord.temperature = 125;
+        wstore.save();
+
+        expect(wstore.database.props[0].params.temperature).toBe(125);
+    });
+
+    test('@action startNewRecord', () => {
+        const wstore = new WaterStore({ props: [] });
+        wstore.startNewRecord();
+        expect(wstore.activeRecord).toEqual({
+            name: '',
+            description: '',
+            pressure: 0,
+            temperature: 0,
+            density: null,
+            viscosity: null
+        });
+    });
+
+    test('@action deleteRecord', () => {
+        const wstore = new WaterStore(MOCK_DATA);
+        wstore.deleteRecord('a1');
+        expect(wstore.database.props.map(r => r.key)).toEqual(['a2', 'a3']);
+    });
+
+    test('@action editRecord() saveAs()', () => {
+        const wstore = new WaterStore(MOCK_DATA);
+        wstore.editRecord('a1');
+        expect(wstore.activeKey).toBe('a1');
+        expect(wstore.activeRecord).toEqual({
+            name: 'first experiment',
+            description: '2019-02-12 by pp',
+            pressure: 1.001, // atm
+            temperature: 25, // ℃
             density: 0.999, // g/cm^3
             viscosity: 0.0115
         });
-
-        expect(wstore.params.props[0].params.temperature).toBe(125);
+        wstore.saveAs('PFOAA');
+        expect(wstore.database.props.length).toBe(4);
     });
-});
 
-afterAll(() => {
-    wstore = null;
+    test('Error information', () => {
+        const wstore = new WaterStore(MOCK_DATA);
+        // saveAs
+        wstore.activeRecord = null;
+        expect(wstore.saveAs('random')).toBe(0);
+        // save
+        expect(wstore.save()).toBe(0);
+        // editRecord
+        expect(wstore.editRecord('not_exist')).toBe(0);
+    });
 });
