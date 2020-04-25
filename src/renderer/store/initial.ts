@@ -7,6 +7,10 @@ export interface DataSetEntry<T> {
     disabled?: boolean;
 }
 
+export interface RouterStore {
+    path: string;
+}
+
 export interface WaterProps {
     pressure: number; // atm
     temperature: number; // ℃
@@ -14,23 +18,21 @@ export interface WaterProps {
     viscosity: number | null; // todo unit of viscosity???
 }
 
-export interface RouterStore {
-    path: string;
+export interface WaterStore {
+    props: DataSetEntry<WaterProps>[];
 }
 
 export interface RootStore {
     router: RouterStore;
     params: {
-        water: DataSetEntry<WaterProps>[];
-        components: [];
-        simulation: [];
-        fixedBed: {
-            adsorber: [];
-            bed: [];
-        };
-        adsorbent: {
-            database: [];
-            solution: [];
+        water: WaterStore;
+    };
+    ui: {
+        water: {
+            props: {
+                state: 'idle' | 'edit';
+                activeKey: string;
+            };
         };
     };
 }

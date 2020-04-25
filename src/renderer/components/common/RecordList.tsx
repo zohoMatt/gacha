@@ -31,8 +31,7 @@ const RecordList: React.FunctionComponent<RecordListProps> = ({ database }) => {
             render: (text: string, record: DataSetEntry<any>) => {
                 return (
                     <span>
-                        <a onClick={toView(record)}>View</a>
-                        <a style={{ margin: '0 1vw' }} onClick={toEdit(record)}>
+                        <a style={{ marginRight: '1vw' }} onClick={toEdit(record)}>
                             Edit
                         </a>
                         <a onClick={toDelete(record)}>Delete</a>
@@ -42,12 +41,7 @@ const RecordList: React.FunctionComponent<RecordListProps> = ({ database }) => {
         }
     ];
     return (
-        <Table
-            style={{ height: '100%' }}
-            dataSource={database}
-            columns={COLUMNS}
-            size="small"
-            />
+        <Table style={{ height: '100%' }} dataSource={database} columns={COLUMNS} size="small" />
     );
 };
 
