@@ -13,7 +13,7 @@
     "prestart": "npm run build",
     "start": "electron .",
     "lint": "eslint --ext=jsx,js,tsx,ts src",
-    "test": "jest '(\\/test\\/(?!e2e/)).*'",
+    "test": "jest '(\\/test\\/(?!e2e/)).*' --config jest.config.json",
     "pretest:e2e": "npm run build",
     "test:e2e": "jest '(\\/test\\/e2e/).*'",
     "pack": "npm run build && electron-builder --dir",
@@ -33,23 +33,6 @@
       "prettier --config ./.prettierrc --write",
       "eslint --ext=jsx,js,ts,tsx --fix src"
     ]
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": "(/test/.+\\.spec)\\.tsx?$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "json",
-      "node"
-    ],
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/mocks/fileMock.js",
-      "\\.(s?css|sass)$": "<rootDir>/mocks/styleMock.js"
-    }
   },
   "build": {
     "productName": "ProductName",
@@ -88,6 +71,7 @@
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
@@ -146,6 +130,8 @@
   },
   "dependencies": {
     "antd": "^4.1.4",
+    "mobx": "^5.15.4",
+    "mobx-react": "^6.2.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
