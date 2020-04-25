@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Button, Divider, Form, Input, Popover, Popconfirm, Select, Switch, Row } from 'antd';
 
+import { InputSwitcher } from '../../common/InputSwitcher';
+
 const styles = require('./EditWaterProps.module.less');
 
 const EditWaterProps: React.FunctionComponent = () => (
@@ -22,16 +24,10 @@ const EditWaterProps: React.FunctionComponent = () => (
                 </Form.Item>
                 <Divider orientation="left">Correlations</Divider>
                 <Form.Item name="density" label="Density">
-                    <div className={styles.combine}>
-                        <Switch checkedChildren="on" unCheckedChildren="off" />
-                        <Input addonAfter="g/cm³" />
-                    </div>
+                    <InputSwitcher unit="g/cm³" />
                 </Form.Item>
                 <Form.Item name="viscosity" label="Viscosity">
-                    <div className={styles.combine}>
-                        <Switch checkedChildren="on" unCheckedChildren="off" />
-                        <Input addonAfter="g/cm·s" />
-                    </div>
+                    <InputSwitcher unit="g/cm·s" />
                 </Form.Item>
             </Form>
         </div>

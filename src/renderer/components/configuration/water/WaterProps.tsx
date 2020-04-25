@@ -1,5 +1,4 @@
 import * as React from 'react';
-import DataSetSelector from '../../common/DataSetSelector';
 import EditWaterProps from './EditWaterProps';
 import { RecordList } from '../../common/RecordList';
 import { DataSetEntry, WaterProps as IWaterProps } from '../../../store/initial';
