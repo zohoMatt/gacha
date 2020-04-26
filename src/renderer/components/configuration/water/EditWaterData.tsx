@@ -46,8 +46,14 @@ export class EditWaterData extends React.Component<EditWaterProps> {
                     <Input value={name} onChange={onInputChange('name')} disabled />
                     <Input value={description} onChange={onInputChange('description')} />
                     <Divider orientation="left">Basic</Divider>
-                    <Input value={pressure} onChange={onInputChange('pressure')} addonAfter="atm" />
                     <Input
+                        type="number"
+                        value={pressure}
+                        onChange={onInputChange('pressure')}
+                        addonAfter="atm"
+                        />
+                    <Input
+                        type="number"
                         value={temperature}
                         onChange={onInputChange('temperature')}
                         addonAfter="℃"
