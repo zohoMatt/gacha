@@ -1,7 +1,9 @@
 import * as React from 'react';
-import EditWaterProps from './EditWaterProps';
+import { observer, Provider } from 'mobx-react';
+import { EditWaterData } from './EditWaterData';
 import { RecordList } from '../../common/RecordList';
 import { DataSetEntry, WaterProps as IWaterProps } from '../../../store/initial';
+import { WaterStore } from '../../../store/water.store';
 
 const styles = require('./WaterProps.module.less');
 
@@ -47,16 +49,24 @@ const mockdata: DataSetEntry<IWaterProps>[] = [
     }
 ];
 
-const WaterProps: React.FunctionComponent = () => (
+const store = new WaterStore({ props: mockdata });
+
+const WaterProps: React.FunctionComponent = observer(() => (
     <div className={styles.container}>
         <div className={styles.title}>Water Properties</div>
-        <div className={styles.table}>
-            <RecordList database={mockdata} />
-        </div>
-        <div className={styles.edit}>
-            <EditWaterProps />
-        </div>
+        <Provider store={store}>
+            <div className={styles.table}>
+                <RecordList
+                    database={store.database.props}
+                    toEdit={store.editRecord.bind(store)}
+                    toDelete={store.deleteRecord.bind(store)}
+                    />
+            </div>
+            <div className={styles.edit}>
+                <EditWaterData {...store.activeRecord!} />
+            </div>
+        </Provider>
     </div>
-);
+));
 
 export default WaterProps;

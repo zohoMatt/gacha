@@ -93,10 +93,11 @@ describe(`Testing 'class WaterStore' in water.store.ts`, () => {
         const wstore = new WaterStore(MOCK_DATA);
         // saveAs
         wstore.activeRecord = null;
-        expect(wstore.saveAs('random')).toBe(0);
+        wstore.activeKey = null;
+        expect(() => wstore.saveAs('random')).toThrowError();
         // save
-        expect(wstore.save()).toBe(0);
+        expect(() => wstore.save()).toThrowError();
         // editRecord
-        expect(wstore.editRecord('not_exist')).toBe(0);
+        expect(() => wstore.editRecord('noexist')).toThrowError();
     });
 });

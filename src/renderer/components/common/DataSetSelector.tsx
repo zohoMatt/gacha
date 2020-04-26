@@ -76,9 +76,13 @@ export default class DataSetSelector extends React.Component<
         };
     }
 
-    protected handleTransfer(nextTargetKeys: string[], direction: string, moveKeys: string[]) {
+    protected handleTransfer = (
+        nextTargetKeys: string[],
+        direction: string,
+        moveKeys: string[]
+    ) => {
         this.setState({ targetKeys: nextTargetKeys });
-    }
+    };
 
     public render() {
         const { database } = this.props;
@@ -88,7 +92,7 @@ export default class DataSetSelector extends React.Component<
             <Transfer
                 dataSource={database}
                 targetKeys={targetKeys}
-                onChange={this.handleTransfer.bind(this)}
+                onChange={this.handleTransfer}
                 listStyle={{}}
                 showSearch={true}
                 filterOption={search}

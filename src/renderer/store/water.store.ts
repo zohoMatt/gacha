@@ -20,7 +20,7 @@ export class WaterStore {
 
     @observable activeKey: string | null = null;
 
-    @observable activeRecord: ActiveEditing = null;
+    @observable activeRecord: ActiveEditing | null = null;
 
     @computed get waterPropsList(): DataSetEntry<WaterProps>[] {
         return this.database.props;
@@ -44,30 +44,33 @@ export class WaterStore {
     }
 
     @action
-    public editRecord(key: string): 0 | 1 {
+    public editRecord(key: string) {
         this.activeKey = key;
         const entry = this.database.props.find(r => r.key === key);
         if (!entry) {
-            console.warn(`'editRecord()' No matching record.`);
-            return 0;
+            throw new Error(`'editRecord()' No matching record.`);
         }
         const { name, description } = entry;
         const { temperature, viscosity, pressure, density } = entry.params;
         this.activeRecord = { name, description, temperature, viscosity, pressure, density };
-        return 1;
+    }
+
+    @action
+    public changeParam(key: string, value: string | number) {
+        (this.activeRecord as any)[key] = value;
     }
 
     @action
     public deleteRecord(key: string) {
+        console.log(key);
         this.database.props = this.waterPropsList.filter(r => r.key !== key);
     }
 
     @action
-    public save(): 0 | 1 {
+    public save() {
         const origin = this.database.props.find(p => p.key === this.activeKey);
         if (!origin) {
-            console.warn(`'activeKey' has no valid corresponding record.`);
-            return 0;
+            throw new Error(`'activeKey' has no valid corresponding record.`);
         }
         const copy: any = { ...this.activeRecord };
         origin.description = copy.description;
@@ -75,15 +78,13 @@ export class WaterStore {
         origin.params = copy;
         // reset status
         this.activeKey = null;
-        return 1;
     }
 
     @action
-    public saveAs(name: string): 0 | 1 {
+    public saveAs(name: string) {
         const key = v4();
         if (!this.activeRecord) {
-            console.warn(`saveAs(): No valid active record editing.`);
-            return 0;
+            throw new Error(`saveAs(): No valid active record editing.`);
         }
         const { description, temperature, density, pressure, viscosity } = this.activeRecord;
         const toAdd = {
@@ -95,6 +96,5 @@ export class WaterStore {
             active: false
         };
         this.database.props.push(toAdd);
-        return 1;
     }
 }

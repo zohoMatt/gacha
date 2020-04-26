@@ -24,7 +24,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>65/65</span>
+                <span class='fraction'>62/62</span>
             </div>
         
             
@@ -45,7 +45,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>43/43</span>
+                <span class='fraction'>40/40</span>
             </div>
         
             
@@ -150,11 +150,8 @@
 <a name='L92'></a><a href='#L92'>92</a>
 <a name='L93'></a><a href='#L93'>93</a>
 <a name='L94'></a><a href='#L94'>94</a>
-<a name='L95'></a><a href='#L95'>95</a>
-<a name='L96'></a><a href='#L96'>96</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L95'></a><a href='#L95'>95</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -172,7 +169,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
@@ -201,7 +200,6 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
@@ -219,7 +217,6 @@
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -234,10 +231,11 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -247,8 +245,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { observable, action, computed } from 'mobx';
-import { DataSetEntry } from './initial';
 import { v4 } from 'uuid';
+import { DataSetEntry } from './initial';
 &nbsp;
 export interface WaterProps {
     pressure: number; // atm
@@ -261,13 +259,13 @@ export interface WaterDatabase {
     props: DataSetEntry&lt;WaterProps&gt;[];
 }
 &nbsp;
-type ActiveEditing = (
-    WaterProps &amp; { name?: string, description: string }
-    ) | null;
+type ActiveEditing = (WaterProps &amp; { name?: string; description: string }) | null;
 &nbsp;
 export class WaterStore {
     @observable database: WaterDatabase = { props: [] };
+&nbsp;
     @observable activeKey: string | null = null;
+&nbsp;
     @observable activeRecord: ActiveEditing = null;
 &nbsp;
     @computed get waterPropsList(): DataSetEntry&lt;WaterProps&gt;[] {
@@ -296,11 +294,10 @@ export class WaterStore {
         this.activeKey = key;
         const entry = this.database.props.find(r =&gt; r.key === key);
         if (!entry) {
-            console.warn(`'editRecord()' No matching record.`);
-            return 0;
+            throw new Error(`'editRecord()' No matching record.`);
         }
         const { name, description } = entry;
-        const { temperature, viscosity, pressure, density} = entry.params;
+        const { temperature, viscosity, pressure, density } = entry.params;
         this.activeRecord = { name, description, temperature, viscosity, pressure, density };
     }
 &nbsp;
@@ -313,8 +310,7 @@ export class WaterStore {
     public save() {
         const origin = this.database.props.find(p =&gt; p.key === this.activeKey);
         if (!origin) {
-            console.warn(`'activeKey' has no valid corresponding record.`);
-            return 0;
+            throw new Error(`'activeKey' has no valid corresponding record.`);
         }
         const copy: any = { ...this.activeRecord };
         origin.description = copy.description;
@@ -328,12 +324,13 @@ export class WaterStore {
     public saveAs(name: string) {
         const key = v4();
         if (!this.activeRecord) {
-            console.warn(`saveAs(): No valid active record editing.`);
-            return 0;
+            throw new Error(`saveAs(): No valid active record editing.`);
         }
-        const { description, temperature, density, pressure, viscosity} = this.activeRecord;
+        const { description, temperature, density, pressure, viscosity } = this.activeRecord;
         const toAdd = {
-            key, name, description,
+            key,
+            name,
+            description,
             params: { temperature, density, pressure, viscosity },
             disabled: false,
             active: false
@@ -348,7 +345,7 @@ export class WaterStore {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sat Apr 25 2020 17:49:03 GMT-0400 (Eastern Daylight Time)
+                at Sat Apr 25 2020 18:11:34 GMT-0400 (Eastern Daylight Time)
             </div>
         </div>
         <script src="prettify.js"></script>

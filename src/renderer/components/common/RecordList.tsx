@@ -1,21 +1,22 @@
 import * as React from 'react';
-import { Table } from 'antd';
+import { Popconfirm, Table } from 'antd';
 
 import { DataSetEntry } from '../../store/initial';
 
 export interface RecordListProps {
     database: Array<DataSetEntry<any>>;
+    toEdit: (key: string) => any;
+    toDelete: (key: string) => any;
 }
 
-const RecordList: React.FunctionComponent<RecordListProps> = ({ database }) => {
-    const toEdit = (record: DataSetEntry<any>) => (e: any) => {
-        console.log('to edit', record);
+const RecordList: React.FunctionComponent<RecordListProps> = ({ database, toEdit, toDelete }) => {
+    const TITLE = 'Are you sure to DELETE this entry?';
+
+    const editIt = (record: DataSetEntry<any>) => (e: any) => {
+        toEdit(record.key);
     };
-    const toDelete = (record: DataSetEntry<any>) => (e: any) => {
-        console.log('to delete', record);
-    };
-    const toView = (record: DataSetEntry<any>) => (e: any) => {
-        console.log('to view', record);
+    const deleteIt = (record: DataSetEntry<any>) => (e: any) => {
+        toDelete(record.key);
     };
 
     const COLUMNS = [
@@ -31,10 +32,17 @@ const RecordList: React.FunctionComponent<RecordListProps> = ({ database }) => {
             render: (text: string, record: DataSetEntry<any>) => {
                 return (
                     <span>
-                        <a style={{ marginRight: '1vw' }} onClick={toEdit(record)}>
+                        <a style={{ marginRight: '1vw' }} onClick={editIt(record)}>
                             Edit
                         </a>
-                        <a onClick={toDelete(record)}>Delete</a>
+                        <Popconfirm
+                            placement="right"
+                            title={TITLE}
+                            onConfirm={deleteIt(record)}
+                            okText="Yes"
+                            cancelText="No">
+                            <a>Delete</a>
+                        </Popconfirm>
                     </span>
                 );
             }
