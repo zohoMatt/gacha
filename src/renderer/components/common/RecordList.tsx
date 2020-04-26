@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Popconfirm, Table } from 'antd';
 
-import { DataSetEntry } from '../../store/initial';
+import { DataSetEntry } from '../../store/types';
 
 export interface RecordListProps {
     database: Array<DataSetEntry<any>>;

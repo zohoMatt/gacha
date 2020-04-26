@@ -1,12 +1,12 @@
 import { observable, action, computed } from 'mobx';
 import { v4 } from 'uuid';
-import { DataSetEntry } from './initial';
+import { InputSwitcherType, DataSetEntry } from './types';
 
 export interface WaterProps {
     pressure: number; // atm
     temperature: number; // ℃
-    density: number | null; // g/cm^3
-    viscosity: number | null; // todo unit of viscosity???
+    density: InputSwitcherType; // g/cm^3
+    viscosity: InputSwitcherType; // g/cm.s
 }
 
 export interface WaterDatabase {
@@ -38,8 +38,8 @@ export class WaterStore {
             description: '',
             pressure: 0,
             temperature: 0,
-            density: null,
-            viscosity: null
+            density: { use: false, value: 0 },
+            viscosity: { use: false, value: 0 }
         };
     }
 
@@ -56,7 +56,7 @@ export class WaterStore {
     }
 
     @action
-    public changeParam(key: string, value: string | number) {
+    public changeParam(key: string, value: string | number | null) {
         (this.activeRecord as any)[key] = value;
     }
 

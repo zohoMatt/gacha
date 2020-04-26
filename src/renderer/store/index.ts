@@ -1,5 +1,5 @@
-import { WaterStore } from './water.store';
-import { DataSetEntry, WaterProps as IWaterProps } from './initial';
+import { WaterStore, WaterProps as IWaterProps } from './water.store';
+import { DataSetEntry } from './types';
 
 const mockdata: DataSetEntry<IWaterProps>[] = [
     {
@@ -9,8 +9,8 @@ const mockdata: DataSetEntry<IWaterProps>[] = [
         params: {
             pressure: 1.001, // atm
             temperature: 25, // ℃
-            density: 0.999, // g/cm^3
-            viscosity: 0.0115
+            density: { use: true, value: 0.999 }, // g/cm^3
+            viscosity: { use: true, value: 0.115 }
         },
         active: false,
         disabled: false
@@ -22,8 +22,8 @@ const mockdata: DataSetEntry<IWaterProps>[] = [
         params: {
             pressure: 1.001, // atm
             temperature: 20, // ℃
-            density: 0.999, // g/cm^3
-            viscosity: 0.0115
+            density: { use: true, value: 0.949 }, // g/cm^3
+            viscosity: { use: true, value: 0.022 }
         },
         active: false,
         disabled: false
@@ -35,13 +35,13 @@ const mockdata: DataSetEntry<IWaterProps>[] = [
         params: {
             pressure: 1.001, // atm
             temperature: 30, // ℃
-            density: 0.999, // g/cm^3
-            viscosity: 0.0115
+            density: { use: false, value: 0.888 }, // g/cm^3
+            viscosity: { use: true, value: 0.022 }
         },
         active: true,
         disabled: false
     }
 ];
-const waterStore = new WaterStore({ props: mockdata });
+const waterRootStore = new WaterStore({ props: mockdata });
 
-export { waterStore };
+export { waterRootStore };

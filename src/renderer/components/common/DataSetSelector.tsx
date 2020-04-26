@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Transfer, Table } from 'antd';
-import { DataSetEntry } from '../../store/initial';
+import { DataSetEntry } from '../../store/types';
 import { difference } from '../../../utils/array';
 
 export interface DataSetSelectorProps<T> {

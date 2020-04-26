@@ -2,23 +2,25 @@ import * as React from 'react';
 import { observer, Provider } from 'mobx-react';
 import { EditWaterData } from './EditWaterData';
 import { RecordList } from '../../common/RecordList';
-import { waterStore } from '../../../store';
+import { waterRootStore } from '../../../store';
 
 const styles = require('./WaterProps.module.less');
 
 const WaterProps: React.FunctionComponent = observer(() => (
     <div className={styles.container}>
         <div className={styles.title}>Water Properties</div>
-        <Provider store={waterStore}>
+        <Provider store={waterRootStore}>
             <div className={styles.table}>
                 <RecordList
-                    database={waterStore.database.props}
-                    toEdit={waterStore.editRecord.bind(waterStore)}
-                    toDelete={waterStore.deleteRecord.bind(waterStore)}
+                    database={waterRootStore.database.props}
+                    toEdit={waterRootStore.editRecord.bind(waterRootStore)}
+                    toDelete={waterRootStore.deleteRecord.bind(waterRootStore)}
                     />
             </div>
             <div className={styles.edit}>
-                {waterStore.activeRecord ? <EditWaterData {...waterStore.activeRecord} /> : null}
+                {waterRootStore.activeRecord ? (
+                    <EditWaterData {...waterRootStore.activeRecord} />
+                ) : null}
             </div>
         </Provider>
     </div>

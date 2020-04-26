@@ -4,6 +4,7 @@ import { Button, Divider, Form, Input, Popover, Popconfirm } from 'antd';
 import { inject, observer } from 'mobx-react';
 import { InputSwitcher } from '../../common/InputSwitcher';
 import { WaterStore } from '../../../store/water.store';
+import { InputSwitcherType } from '../../../store/types';
 
 const styles = require('./EditWaterData.module.less');
 
@@ -12,8 +13,8 @@ export interface EditWaterProps {
     description: string;
     pressure: number;
     temperature: number;
-    density: number | null;
-    viscosity: number | null;
+    density: InputSwitcherType;
+    viscosity: InputSwitcherType;
     // injected
     store?: WaterStore;
 }
@@ -29,13 +30,25 @@ export class EditWaterData extends React.Component<EditWaterProps> {
         };
     };
 
-    public onSwitchChange = (key: string, status: boolean, input?: string | number) => {
-        return (s: boolean) => null;
+    public onInternalSwitchChange = (key: string, status: boolean) => {
+        const record: any = this.props.store!.activeRecord!;
+        record[key] = {
+            use: status,
+            value: record[key].value
+        };
+    };
+
+    public onInternalInputChange = (key: string, value: number) => {
+        const record: any = this.props.store!.activeRecord!;
+        record[key] = {
+            use: record.status,
+            value
+        };
     };
 
     public render() {
         const { name, description, pressure, temperature, density, viscosity } = this.props;
-        const { onInputChange, onSwitchChange } = this;
+        const { onInputChange } = this;
         return (
             <div className={styles.container}>
                 <div className={styles.formContainer}>
@@ -66,17 +79,27 @@ export class EditWaterData extends React.Component<EditWaterProps> {
                         <Divider orientation="left">Correlations</Divider>
                         <Form.Item label="Density">
                             <InputSwitcher
-                                status={density !== null}
-                                initValue={density || 0}
-                                onChange={(s, v) => onSwitchChange('density', s, v)}
+                                status={density.use}
+                                value={density.value}
+                                onSwitchChange={(s: any) =>
+                                    this.onInternalSwitchChange('density', s)
+                                }
+                                onInputChange={(e: any) =>
+                                    this.onInternalInputChange('density', e.target.value)
+                                }
                                 unit="g/cm³"
                                 />
                         </Form.Item>
                         <Form.Item label="Viscosity">
                             <InputSwitcher
-                                status={viscosity !== null}
-                                initValue={viscosity || 0}
-                                onChange={(s, v) => onSwitchChange('viscosity', s, v)}
+                                status={viscosity.use}
+                                value={viscosity.value}
+                                onSwitchChange={(s: any) =>
+                                    this.onInternalSwitchChange('viscosity', s)
+                                }
+                                onInputChange={(e: any) =>
+                                    this.onInternalInputChange('viscosity', e.target.value)
+                                }
                                 unit="g/cm·s"
                                 />
                         </Form.Item>
