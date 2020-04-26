@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Divider, Input, Popover, Popconfirm } from 'antd';
+import { Button, Divider, Form, Input, Popover, Popconfirm } from 'antd';
 
 import { inject, observer } from 'mobx-react';
 import { InputSwitcher } from '../../common/InputSwitcher';
@@ -29,11 +29,7 @@ export class EditWaterData extends React.Component<EditWaterProps> {
         };
     };
 
-    public onSwitchChange = (
-        key: keyof EditWaterProps,
-        status: boolean,
-        input?: string | number
-    ) => {
+    public onSwitchChange = (key: string, status: boolean, input?: string | number) => {
         return (s: boolean) => null;
     };
 
@@ -43,34 +39,48 @@ export class EditWaterData extends React.Component<EditWaterProps> {
         return (
             <div className={styles.container}>
                 <div className={styles.formContainer}>
-                    <Input value={name} onChange={onInputChange('name')} disabled />
-                    <Input value={description} onChange={onInputChange('description')} />
-                    <Divider orientation="left">Basic</Divider>
-                    <Input
-                        type="number"
-                        value={pressure}
-                        onChange={onInputChange('pressure')}
-                        addonAfter="atm"
-                        />
-                    <Input
-                        type="number"
-                        value={temperature}
-                        onChange={onInputChange('temperature')}
-                        addonAfter="℃"
-                        />
-                    <Divider orientation="left">Correlations</Divider>
-                    <InputSwitcher
-                        status={density !== null}
-                        initValue={density || 0}
-                        onChange={(s, v) => onSwitchChange('density', s, v)}
-                        unit="g/cm³"
-                        />
-                    <InputSwitcher
-                        status={viscosity !== null}
-                        initValue={viscosity || 0}
-                        onChange={(s, v) => onSwitchChange('viscosity', s, v)}
-                        unit="g/cm·s"
-                        />
+                    <Form labelCol={{ span: 6 }} wrapperCol={{ span: 8 }}>
+                        <Form.Item label="Name">
+                            <Input value={name} onChange={onInputChange('name')} disabled />
+                        </Form.Item>
+                        <Form.Item label="Description">
+                            <Input value={description} onChange={onInputChange('description')} />
+                        </Form.Item>
+                        <Divider orientation="left">Basic</Divider>
+                        <Form.Item label="Pressure">
+                            <Input
+                                type="number"
+                                value={pressure}
+                                onChange={onInputChange('pressure')}
+                                addonAfter="atm"
+                                />
+                        </Form.Item>
+                        <Form.Item label="Temperature">
+                            <Input
+                                type="number"
+                                value={temperature}
+                                onChange={onInputChange('temperature')}
+                                addonAfter="℃"
+                                />
+                        </Form.Item>
+                        <Divider orientation="left">Correlations</Divider>
+                        <Form.Item label="Density">
+                            <InputSwitcher
+                                status={density !== null}
+                                initValue={density || 0}
+                                onChange={(s, v) => onSwitchChange('density', s, v)}
+                                unit="g/cm³"
+                                />
+                        </Form.Item>
+                        <Form.Item label="Viscosity">
+                            <InputSwitcher
+                                status={viscosity !== null}
+                                initValue={viscosity || 0}
+                                onChange={(s, v) => onSwitchChange('viscosity', s, v)}
+                                unit="g/cm·s"
+                                />
+                        </Form.Item>
+                    </Form>
                 </div>
                 <div className={styles.btnPanel}>
                     <Button type="primary">Save</Button>

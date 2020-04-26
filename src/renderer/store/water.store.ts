@@ -13,7 +13,7 @@ export interface WaterDatabase {
     props: DataSetEntry<WaterProps>[];
 }
 
-type ActiveEditing = (WaterProps & { name?: string; description: string }) | null;
+type ActiveEditing = (WaterProps & { name: string; description: string }) | null;
 
 export class WaterStore {
     @observable database: WaterDatabase = { props: [] };

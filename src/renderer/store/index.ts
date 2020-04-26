@@ -1,20 +1,47 @@
-import { applyMiddleware, createStore, Store } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { WaterStore } from './water.store';
+import { DataSetEntry, WaterProps as IWaterProps } from './initial';
 
-import { rootReducer, RootState } from '../reducers';
+const mockdata: DataSetEntry<IWaterProps>[] = [
+    {
+        key: 'a1',
+        name: 'first experiment',
+        description: '2019-02-12 by pp',
+        params: {
+            pressure: 1.001, // atm
+            temperature: 25, // ℃
+            density: 0.999, // g/cm^3
+            viscosity: 0.0115
+        },
+        active: false,
+        disabled: false
+    },
+    {
+        key: 'a2',
+        name: '2nd experiment',
+        description: '2020-02-12 by pp',
+        params: {
+            pressure: 1.001, // atm
+            temperature: 20, // ℃
+            density: 0.999, // g/cm^3
+            viscosity: 0.0115
+        },
+        active: false,
+        disabled: false
+    },
+    {
+        key: 'a3',
+        name: '3rd experiment',
+        description: '2020-02-21 by pp',
+        params: {
+            pressure: 1.001, // atm
+            temperature: 30, // ℃
+            density: 0.999, // g/cm^3
+            viscosity: 0.0115
+        },
+        active: true,
+        disabled: false
+    }
+];
+const waterStore = new WaterStore({ props: mockdata });
 
-const configureStore = (initialState?: RootState): Store<RootState | undefined> => {
-    const middlewares: any[] = [];
-    const enhancer = composeWithDevTools(applyMiddleware(...middlewares));
-    return createStore(rootReducer, initialState, enhancer);
-};
-
-const store = configureStore();
-
-if (typeof module.hot !== 'undefined') {
-    module.hot.accept('../reducers', () =>
-        store.replaceReducer(require('../reducers').rootReducer)
-    );
-}
-
-export default store;
+export { waterStore };
