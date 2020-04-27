@@ -14,9 +14,15 @@ export interface EditWaterProps {
     store?: WaterStore;
 }
 
+export interface EditWaterState {
+    warning: boolean;
+}
+
 @inject('store')
 @observer
-export class EditWaterData extends React.Component<EditWaterProps> {
+export class EditWaterData extends React.Component<EditWaterProps, EditWaterState> {
+    public state: EditWaterState = { warning: false };
+
     public onInputChange = (key: keyof ActiveEditing) => {
         return (e: any) => {
             this.props.store!.changeParam(key, e.target.value);
@@ -31,10 +37,34 @@ export class EditWaterData extends React.Component<EditWaterProps> {
     ) => {
         const record: any = this.props.store!.activeRecord!;
         this.props.store!.changeParam(key, {
-            ...record,
+            ...record[key],
             [rkey]: value
         });
         this.props.store!.makeChanges();
+        console.log(record, rkey, value);
+    };
+
+    public save = (name?: string) => {
+        if (name === undefined) {
+            this.props.store!.save();
+        } else {
+            this.props.store!.saveAs(name);
+        }
+    };
+
+    public triggerQuit = () => {
+        if (this.props.store!.changesMade) {
+            this.setState({ warning: true });
+        } else {
+            this.props.store!.resetActiveRecords();
+        }
+    };
+
+    public quit = (confirm = true) => {
+        if (confirm) {
+            this.props.store!.cancel();
+        }
+        this.setState({ warning: false });
     };
 
     public render() {
@@ -47,6 +77,7 @@ export class EditWaterData extends React.Component<EditWaterProps> {
             viscosity
         } = this.props.store!.activeRecord!;
         const { changesMade } = this.props.store!;
+        const { warning } = this.state;
 
         return (
             <div className={styles.container}>
@@ -115,7 +146,15 @@ export class EditWaterData extends React.Component<EditWaterProps> {
                         </Form.Item>
                     </Form>
                 </div>
-                <OperationPanel saveDisabled={!changesMade} />
+                <OperationPanel
+                    saveDisabled={!changesMade}
+                    warning={warning}
+                    onSave={() => this.save()}
+                    onSavedAs={(newName: string) => this.save(newName)}
+                    onTriggerCancel={this.triggerQuit}
+                    onQuitCancel={() => this.quit(false)}
+                    onConfirmCancel={this.quit}
+                    />
             </div>
         );
     }

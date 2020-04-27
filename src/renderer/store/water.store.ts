@@ -33,7 +33,14 @@ export class WaterStore {
     }
 
     @action
-    makeChanges(hasChanges = true) {
+    public resetActiveRecords() {
+        this.activeRecord = null;
+        this.activeKey = null;
+        this.makeChanges(false);
+    }
+
+    @action
+    public makeChanges(hasChanges = true) {
         this.changesMade = hasChanges;
     }
 
@@ -88,8 +95,7 @@ export class WaterStore {
         origin.description = copy.description;
         delete copy.description;
         origin.params = copy;
-        // reset status
-        this.activeKey = null;
+        this.resetActiveRecords();
     }
 
     @action
@@ -108,5 +114,11 @@ export class WaterStore {
             active: false
         };
         this.database.props.push(toAdd);
+        this.resetActiveRecords();
+    }
+
+    @action
+    public cancel() {
+        this.resetActiveRecords();
     }
 }

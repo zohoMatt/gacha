@@ -10,6 +10,7 @@ export interface RecordListProps {
 }
 
 const RecordList: React.FunctionComponent<RecordListProps> = ({ database, toEdit, toDelete }) => {
+    console.log('record-list', database);
     const TITLE = 'Are you sure to DELETE this entry?';
 
     const editIt = (record: DataSetEntry<any>) => (e: any) => {
@@ -49,7 +50,12 @@ const RecordList: React.FunctionComponent<RecordListProps> = ({ database, toEdit
         }
     ];
     return (
-        <Table style={{ height: '100%' }} dataSource={database} columns={COLUMNS} size="small" />
+        <Table
+            style={{ height: '100%' }}
+            dataSource={database.slice()}
+            columns={COLUMNS}
+            size="small"
+            />
     );
 };
 
