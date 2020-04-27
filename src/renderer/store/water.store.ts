@@ -72,13 +72,9 @@ export class WaterStore {
     }
 
     @action
-    public changeParam(key: string, value: any) {
-        (this.activeRecord as any)[key] = value;
-    }
-
-    @action
     public changeAllParams(value: ActiveEditing) {
         this.activeRecord = value;
+        this.makeChanges();
     }
 
     @action
