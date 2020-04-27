@@ -77,6 +77,11 @@ export class WaterStore {
     }
 
     @action
+    public changeAllParams(value: ActiveEditing) {
+        this.activeRecord = value;
+    }
+
+    @action
     public deleteRecord(key: string) {
         if (key === this.activeKey) {
             this.activeKey = null;

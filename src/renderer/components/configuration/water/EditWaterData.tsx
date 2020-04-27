@@ -1,15 +1,14 @@
 import * as React from 'react';
-import { Divider, Form, Input } from 'antd';
+import { Divider, Form, Input, Switch } from 'antd';
 import { inject, observer } from 'mobx-react';
 
-import { InputSwitcher } from '../../common/InputSwitcher';
 import { OperationPanel } from '../../common/OperationPanel';
 import { ActiveEditing, WaterStore } from '../../../store/water.store';
-import { InputSwitcherType } from '../../../store/types';
 
 const styles = require('./EditWaterData.module.less');
 
 export interface EditWaterProps {
+    form: React.RefObject<any>;
     // injected
     store?: WaterStore;
 }
@@ -23,24 +22,8 @@ export interface EditWaterState {
 export class EditWaterData extends React.Component<EditWaterProps, EditWaterState> {
     public state: EditWaterState = { warning: false };
 
-    public onInputChange = (key: keyof ActiveEditing) => {
-        return (e: any) => {
-            this.props.store!.changeParam(key, e.target.value);
-            this.props.store!.makeChanges();
-        };
-    };
-
-    public onInternalSwitcherChange = (
-        key: string,
-        rkey: keyof InputSwitcherType,
-        value: boolean | number
-    ) => {
-        const record: any = this.props.store!.activeRecord!;
-        this.props.store!.changeParam(key, {
-            ...record[key],
-            [rkey]: value
-        });
-        this.props.store!.makeChanges();
+    public changeParams = (allParams: ActiveEditing) => {
+        this.props.store!.changeAllParams(allParams);
     };
 
     public save = (name?: string) => {
@@ -67,81 +50,56 @@ export class EditWaterData extends React.Component<EditWaterProps, EditWaterStat
     };
 
     public render() {
-        const {
-            name,
-            description,
-            pressure,
-            temperature,
-            density,
-            viscosity
-        } = this.props.store!.activeRecord!;
-        const { changesMade } = this.props.store!;
+        const { form, store } = this.props;
+        const { changesMade, activeRecord } = store!;
         const { warning } = this.state;
+        const NORMAL_RULES = [{ required: true, message: 'Value cannot be empty' }];
 
         return (
             <div className={styles.container}>
                 <div className={styles.formContainer}>
-                    <Form labelCol={{ span: 6 }} wrapperCol={{ span: 8 }}>
-                        <Form.Item label="Name">
-                            <Input value={name} onChange={this.onInputChange('name')} disabled />
+                    <Form
+                        size="small"
+                        layout="horizontal"
+                        ref={form}
+                        hideRequiredMark={true}
+                        labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 8 }}
+                        onValuesChange={(s, all: any) => this.changeParams(all)}
+                        initialValues={activeRecord!}>
+                        <Form.Item name="name" label="Name" rules={NORMAL_RULES}>
+                            <Input disabled />
                         </Form.Item>
-                        <Form.Item label="Description">
-                            <Input
-                                value={description}
-                                onChange={this.onInputChange('description')}
-                                />
+                        <Form.Item name="description" label="Description" rules={NORMAL_RULES}>
+                            <Input />
                         </Form.Item>
                         <Divider orientation="left">Basic</Divider>
-                        <Form.Item label="Pressure">
-                            <Input
-                                type="number"
-                                value={pressure}
-                                onChange={this.onInputChange('pressure')}
-                                addonAfter="atm"
-                                />
+                        <Form.Item name="pressure" label="Pressure" rules={NORMAL_RULES}>
+                            <Input type="number" addonAfter="atm" />
                         </Form.Item>
-                        <Form.Item label="Temperature">
-                            <Input
-                                type="number"
-                                value={temperature}
-                                onChange={this.onInputChange('temperature')}
-                                addonAfter="℃"
-                                />
+                        <Form.Item name="temperature" label="Temperature" rules={NORMAL_RULES}>
+                            <Input type="number" addonAfter="℃" />
                         </Form.Item>
                         <Divider orientation="left">Correlations</Divider>
-                        <Form.Item label="Density">
-                            <InputSwitcher
-                                status={density.use}
-                                value={density.value}
-                                onSwitchChange={(s: any) =>
-                                    this.onInternalSwitcherChange('density', 'use', s)
-                                }
-                                onInputChange={(e: any) =>
-                                    this.onInternalSwitcherChange(
-                                        'density',
-                                        'value',
-                                        e.target.value
-                                    )
-                                }
-                                unit="g/cm³"
-                                />
+                        <Form.Item
+                            name={['density', 'use']}
+                            label="Density"
+                            wrapperCol={{ span: 3 }}
+                            valuePropName="checked">
+                            <Switch />
                         </Form.Item>
-                        <Form.Item label="Viscosity">
-                            <InputSwitcher
-                                status={viscosity.use}
-                                value={viscosity.value}
-                                onSwitchChange={(s: any) =>
-                                    this.onInternalSwitcherChange('viscosity', 'use', s)
-                                }
-                                onInputChange={(e: any) =>
-                                    this.onInternalSwitcherChange(
-                                        'viscosity',
-                                        'value',
-                                        e.target.value
-                                    )
-                                }
-                                unit="g/cm·s"
-                                />
+                        <Form.Item name={['density', 'value']} label=" " colon={false}>
+                            <Input disabled={!activeRecord!.density.use} addonAfter="g/cm³" />
+                        </Form.Item>
+                        <Form.Item
+                            name={['viscosity', 'use']}
+                            label="Viscosity"
+                            wrapperCol={{ span: 3 }}
+                            valuePropName="checked">
+                            <Switch />
+                        </Form.Item>
+                        <Form.Item name={['viscosity', 'value']} label=" " colon={false}>
+                            <Input disabled={!activeRecord!.viscosity.use} addonAfter="g/cm·s" />
                         </Form.Item>
                     </Form>
                 </div>

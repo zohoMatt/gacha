@@ -1,3 +1,4 @@
+import { autorun, toJS } from 'mobx';
 import { WaterStore, WaterProps as IWaterProps } from './water.store';
 import { DataSetEntry } from './types';
 
@@ -43,5 +44,9 @@ const mockdata: DataSetEntry<IWaterProps>[] = [
     }
 ];
 const waterRootStore = new WaterStore({ props: mockdata });
+
+autorun(() => {
+    console.log(toJS(waterRootStore.activeRecord));
+});
 
 export { waterRootStore };
