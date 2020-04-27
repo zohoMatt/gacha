@@ -5,6 +5,7 @@ import { inject, observer } from 'mobx-react';
 import { TextSwitcher } from '../../common/TextSwticher';
 import { ActiveEditing, WaterStore } from '../../../store/water.store';
 import { Water } from '../../../../utils/calculation/waterProperties.maths';
+import { Calculation } from '../../../../utils/calculation/basic';
 
 const styles = require('./EditWaterData.module.less');
 
@@ -50,10 +51,36 @@ export class EditWaterData extends React.Component<EditWaterProps> {
                             <Input />
                         </Form.Item>
                         <Divider orientation="left">Basic</Divider>
-                        <Form.Item name="pressure" label="Pressure" rules={NORMAL_RULES}>
+                        <Form.Item
+                            name="pressure"
+                            label="Pressure"
+                            rules={[
+                                ...NORMAL_RULES,
+                                {
+                                    min: 0.9,
+                                    max: 1.1,
+                                    type: 'number',
+                                    message: 'Warning: Abnormal value.',
+                                    validateTrigger: 'onChange'
+                                }
+                            ]}
+                            normalize={v => (v ? +v : '')}>
                             <Input type="number" addonAfter="atm" />
                         </Form.Item>
-                        <Form.Item name="temperature" label="Temperature" rules={NORMAL_RULES}>
+                        <Form.Item
+                            name="temperature"
+                            label="Temperature"
+                            rules={[
+                                ...NORMAL_RULES,
+                                {
+                                    min: -1,
+                                    max: 101,
+                                    type: 'number',
+                                    message: 'Warning: Abnormal value.',
+                                    validateTrigger: 'onChange'
+                                }
+                            ]}
+                            normalize={v => (v ? +v : '')}>
                             <Input type="number" addonAfter="℃" />
                         </Form.Item>
                         <Divider orientation="left">Correlations</Divider>
@@ -61,12 +88,20 @@ export class EditWaterData extends React.Component<EditWaterProps> {
                             name={['density', 'use']}
                             label="Density"
                             valuePropName="checked">
-                            <TextSwitcher text={temperature ? Water.density(temperature) : '-'} />
+                            <TextSwitcher
+                                text={
+                                    temperature
+                                        ? Calculation.display(Water.density(temperature))
+                                        : '-'
+                                }
+                                />
                         </Form.Item>
                         <Form.Item name={['viscosity', 'use']} label="Viscosity">
                             <TextSwitcher
                                 text={
-                                    temperature ? Water.viscosity(activeRecord!.temperature) : '-'
+                                    temperature
+                                        ? Calculation.display(Water.viscosity(temperature))
+                                        : '-'
                                 }
                                 />
                         </Form.Item>

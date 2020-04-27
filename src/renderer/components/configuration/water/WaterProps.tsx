@@ -38,6 +38,13 @@ class WaterProps extends React.Component {
         }
     };
 
+    public toDelete = (key: string) => {
+        if (key === waterRootStore.activeKey) {
+            this.setState({ status: 'idle' });
+        }
+        waterRootStore.deleteRecord(key);
+    };
+
     public save = (name?: string) => {
         if (name === undefined) {
             waterRootStore.save();
@@ -66,7 +73,7 @@ class WaterProps extends React.Component {
 
     public render() {
         const { warning, status } = this.state;
-        const { database, deleteRecord, changesMade } = waterRootStore;
+        const { database, changesMade } = waterRootStore;
         return (
             <div className={styles.container}>
                 <div className={styles.title}>Water Properties</div>
@@ -75,7 +82,7 @@ class WaterProps extends React.Component {
                         <RecordList
                             database={database.props}
                             toEdit={this.toEdit}
-                            toDelete={deleteRecord.bind(waterRootStore)}
+                            toDelete={this.toDelete}
                             />
                     </div>
                     <div className={styles.edit}>
