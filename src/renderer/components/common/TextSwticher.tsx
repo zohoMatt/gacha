@@ -6,7 +6,7 @@ const styles = require('./TextSwitcher.module.less');
 export interface TextSwitcherProps {
     value?: boolean;
     onChange?: (checked: boolean) => void;
-    text?: string;
+    text?: string | number;
 }
 
 const TextSwitcher: React.FunctionComponent<TextSwitcherProps> = ({ value, onChange, text }) => {

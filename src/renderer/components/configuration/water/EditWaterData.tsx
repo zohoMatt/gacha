@@ -4,6 +4,7 @@ import { inject, observer } from 'mobx-react';
 
 import { TextSwitcher } from '../../common/TextSwticher';
 import { ActiveEditing, WaterStore } from '../../../store/water.store';
+import { Water } from '../../../../utils/calculation/waterProperties.maths';
 
 const styles = require('./EditWaterData.module.less');
 
@@ -27,6 +28,7 @@ export class EditWaterData extends React.Component<EditWaterProps> {
     public render() {
         const { form, store } = this.props;
         const { activeRecord } = store!;
+        const { temperature } = activeRecord!;
         const NORMAL_RULES = [{ required: true, message: 'Value cannot be empty' }];
 
         return (
@@ -59,11 +61,14 @@ export class EditWaterData extends React.Component<EditWaterProps> {
                             name={['density', 'use']}
                             label="Density"
                             valuePropName="checked">
-                            <Switch />
+                            <TextSwitcher text={temperature ? Water.density(temperature) : '-'} />
                         </Form.Item>
-                        <TextSwitcher text="1.999" />
                         <Form.Item name={['viscosity', 'use']} label="Viscosity">
-                            <TextSwitcher text="1.999" />
+                            <TextSwitcher
+                                text={
+                                    temperature ? Water.viscosity(activeRecord!.temperature) : '-'
+                                }
+                                />
                         </Form.Item>
                     </Form>
                 </div>
