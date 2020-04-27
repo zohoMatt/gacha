@@ -11,3 +11,7 @@ export interface InputSwitcherType {
     use: boolean;
     value: number;
 }
+
+export interface SwitcherType {
+    use: boolean;
+}

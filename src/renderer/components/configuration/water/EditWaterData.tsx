@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Divider, Form, Input, Switch } from 'antd';
 import { inject, observer } from 'mobx-react';
 
+import { TextSwitcher } from '../../common/TextSwticher';
 import { ActiveEditing, WaterStore } from '../../../store/water.store';
 
 const styles = require('./EditWaterData.module.less');
@@ -20,6 +21,7 @@ export interface EditWaterProps {
 export class EditWaterData extends React.Component<EditWaterProps> {
     public changeParams = (allParams: ActiveEditing) => {
         this.props.store!.changeAllParams(allParams);
+        console.log(allParams);
     };
 
     public render() {
@@ -58,14 +60,10 @@ export class EditWaterData extends React.Component<EditWaterProps> {
                             label="Density"
                             valuePropName="checked">
                             <Switch />
-                            {/* <span>{`${activeRecord!.density.value} g/cm³`}</span> */}
                         </Form.Item>
-                        <Form.Item
-                            name={['viscosity', 'use']}
-                            label="Viscosity"
-                            valuePropName="checked">
-                            <Switch />
-                            {/* <span>{`${activeRecord!.density.value} g/cm·s`}</span> */}
+                        <TextSwitcher text="1.999" />
+                        <Form.Item name={['viscosity', 'use']} label="Viscosity">
+                            <TextSwitcher text="1.999" />
                         </Form.Item>
                     </Form>
                 </div>

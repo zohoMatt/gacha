@@ -30,7 +30,8 @@ class WaterProps extends React.Component {
             waterRootStore.editRecord(key);
             this.pendingKey = '';
             this.setState({ status: 'edit' });
-            this.formRef.current.setFieldsValue(waterRootStore.activeRecord);
+            if (this.formRef.current)
+                this.formRef.current.setFieldsValue(waterRootStore.activeRecord);
         } else {
             this.setState({ warning: true });
             this.pendingKey = key;
@@ -40,8 +41,10 @@ class WaterProps extends React.Component {
     public save = (name?: string) => {
         if (name === undefined) {
             waterRootStore.save();
+            this.setState({ status: 'idle' });
         } else {
             waterRootStore.saveAs(name);
+            this.setState({ status: 'idle' });
         }
     };
 

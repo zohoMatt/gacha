@@ -10,8 +10,8 @@ const mockdata: DataSetEntry<IWaterProps>[] = [
         params: {
             pressure: 1.001, // atm
             temperature: 25, // ℃
-            density: { use: true, value: 0.999 }, // g/cm^3
-            viscosity: { use: true, value: 0.115 }
+            density: { use: true }, // g/cm^3
+            viscosity: { use: true }
         },
         active: false,
         disabled: false
@@ -23,8 +23,8 @@ const mockdata: DataSetEntry<IWaterProps>[] = [
         params: {
             pressure: 1.001, // atm
             temperature: 20, // ℃
-            density: { use: true, value: 0.949 }, // g/cm^3
-            viscosity: { use: true, value: 0.022 }
+            density: { use: true }, // g/cm^3
+            viscosity: { use: true }
         },
         active: false,
         disabled: false
@@ -36,8 +36,8 @@ const mockdata: DataSetEntry<IWaterProps>[] = [
         params: {
             pressure: 1.001, // atm
             temperature: 30, // ℃
-            density: { use: false, value: 0.888 }, // g/cm^3
-            viscosity: { use: true, value: 0.022 }
+            density: { use: false }, // g/cm^3
+            viscosity: { use: true }
         },
         active: true,
         disabled: false

@@ -1,12 +1,12 @@
 import { observable, action, computed } from 'mobx';
 import { v4 } from 'uuid';
-import { InputSwitcherType, DataSetEntry } from './types';
+import { SwitcherType, DataSetEntry } from './types';
 
 export interface WaterProps {
     pressure: number; // atm
     temperature: number; // ℃
-    density: InputSwitcherType; // g/cm^3
-    viscosity: InputSwitcherType; // g/cm.s
+    density: SwitcherType; // g/cm^3
+    viscosity: SwitcherType; // g/cm.s
 }
 
 export interface WaterDatabase {
@@ -53,8 +53,8 @@ export class WaterStore {
             description: '',
             pressure: 0,
             temperature: 0,
-            density: { use: false, value: 0 },
-            viscosity: { use: false, value: 0 }
+            density: { use: false },
+            viscosity: { use: false }
         };
     }
 
