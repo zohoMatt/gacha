@@ -41,7 +41,6 @@ export class EditWaterData extends React.Component<EditWaterProps, EditWaterStat
             [rkey]: value
         });
         this.props.store!.makeChanges();
-        console.log(record, rkey, value);
     };
 
     public save = (name?: string) => {

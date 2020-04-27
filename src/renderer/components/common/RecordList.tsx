@@ -10,7 +10,6 @@ export interface RecordListProps {
 }
 
 const RecordList: React.FunctionComponent<RecordListProps> = ({ database, toEdit, toDelete }) => {
-    console.log('record-list', database);
     const TITLE = 'Are you sure to DELETE this entry?';
 
     const editIt = (record: DataSetEntry<any>) => (e: any) => {
