@@ -71,7 +71,10 @@ export class WaterStore {
 
     @action
     public deleteRecord(key: string) {
-        console.log(key);
+        if (key === this.activeKey) {
+            this.activeKey = null;
+            this.activeRecord = null;
+        }
         this.database.props = this.waterPropsList.filter(r => r.key !== key);
     }
 

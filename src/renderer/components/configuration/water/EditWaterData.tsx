@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Button, Divider, Form, Input, Popover, Popconfirm } from 'antd';
-
+import { Divider, Form, Input } from 'antd';
 import { inject, observer } from 'mobx-react';
+
 import { InputSwitcher } from '../../common/InputSwitcher';
+import { OperationPanel } from '../../common/OperationPanel';
 import { ActiveEditing, WaterStore } from '../../../store/water.store';
 import { InputSwitcherType } from '../../../store/types';
 
@@ -114,28 +115,7 @@ export class EditWaterData extends React.Component<EditWaterProps> {
                         </Form.Item>
                     </Form>
                 </div>
-                <div className={styles.btnPanel}>
-                    <Button disabled={!changesMade} type="primary">
-                        Save
-                    </Button>
-                    <Popover
-                        content={
-                            <div>
-                                <Input />
-                                <a>Confirm</a>
-                                <a>Cancel</a>
-                            </div>
-                        }
-                        title="Name of new parameter group"
-                        trigger="click">
-                        <Button type="primary">Save as</Button>
-                    </Popover>
-                    <Popconfirm placement="top" title="Discard changes?" onConfirm={() => null}>
-                        <Button type="danger" ghost>
-                            Cancel
-                        </Button>
-                    </Popconfirm>
-                </div>
+                <OperationPanel saveDisabled={!changesMade} />
             </div>
         );
     }

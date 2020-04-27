@@ -18,9 +18,7 @@ const WaterProps: React.FunctionComponent = observer(() => (
                     />
             </div>
             <div className={styles.edit}>
-                {waterRootStore.activeRecord ? (
-                    <EditWaterData {...waterRootStore.activeRecord} />
-                ) : null}
+                {waterRootStore.activeRecord ? <EditWaterData /> : null}
             </div>
         </Provider>
     </div>
