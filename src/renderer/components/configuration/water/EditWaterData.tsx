@@ -3,18 +3,12 @@ import { Button, Divider, Form, Input, Popover, Popconfirm } from 'antd';
 
 import { inject, observer } from 'mobx-react';
 import { InputSwitcher } from '../../common/InputSwitcher';
-import { WaterStore } from '../../../store/water.store';
+import { ActiveEditing, WaterStore } from '../../../store/water.store';
 import { InputSwitcherType } from '../../../store/types';
 
 const styles = require('./EditWaterData.module.less');
 
 export interface EditWaterProps {
-    name: string;
-    description: string;
-    pressure: number;
-    temperature: number;
-    density: InputSwitcherType;
-    viscosity: InputSwitcherType;
     // injected
     store?: WaterStore;
 }
@@ -22,49 +16,56 @@ export interface EditWaterProps {
 @inject('store')
 @observer
 export class EditWaterData extends React.Component<EditWaterProps> {
-    public onInputChange = (key: keyof EditWaterProps) => {
+    public onInputChange = (key: keyof ActiveEditing) => {
         return (e: any) => {
-            if (this.props.store!.changeParam) {
-                this.props.store!.changeParam(key, e.target.value);
-            }
+            this.props.store!.changeParam(key, e.target.value);
+            this.props.store!.makeChanges();
         };
     };
 
-    public onInternalSwitchChange = (key: string, status: boolean) => {
+    public onInternalSwitcherChange = (
+        key: string,
+        rkey: keyof InputSwitcherType,
+        value: boolean | number
+    ) => {
         const record: any = this.props.store!.activeRecord!;
-        record[key] = {
-            use: status,
-            value: record[key].value
-        };
-    };
-
-    public onInternalInputChange = (key: string, value: number) => {
-        const record: any = this.props.store!.activeRecord!;
-        record[key] = {
-            use: record.status,
-            value
-        };
+        this.props.store!.changeParam(key, {
+            ...record,
+            [rkey]: value
+        });
+        this.props.store!.makeChanges();
     };
 
     public render() {
-        const { name, description, pressure, temperature, density, viscosity } = this.props;
-        const { onInputChange } = this;
+        const {
+            name,
+            description,
+            pressure,
+            temperature,
+            density,
+            viscosity
+        } = this.props.store!.activeRecord!;
+        const { changesMade } = this.props.store!;
+
         return (
             <div className={styles.container}>
                 <div className={styles.formContainer}>
                     <Form labelCol={{ span: 6 }} wrapperCol={{ span: 8 }}>
                         <Form.Item label="Name">
-                            <Input value={name} onChange={onInputChange('name')} disabled />
+                            <Input value={name} onChange={this.onInputChange('name')} disabled />
                         </Form.Item>
                         <Form.Item label="Description">
-                            <Input value={description} onChange={onInputChange('description')} />
+                            <Input
+                                value={description}
+                                onChange={this.onInputChange('description')}
+                                />
                         </Form.Item>
                         <Divider orientation="left">Basic</Divider>
                         <Form.Item label="Pressure">
                             <Input
                                 type="number"
                                 value={pressure}
-                                onChange={onInputChange('pressure')}
+                                onChange={this.onInputChange('pressure')}
                                 addonAfter="atm"
                                 />
                         </Form.Item>
@@ -72,7 +73,7 @@ export class EditWaterData extends React.Component<EditWaterProps> {
                             <Input
                                 type="number"
                                 value={temperature}
-                                onChange={onInputChange('temperature')}
+                                onChange={this.onInputChange('temperature')}
                                 addonAfter="℃"
                                 />
                         </Form.Item>
@@ -82,10 +83,14 @@ export class EditWaterData extends React.Component<EditWaterProps> {
                                 status={density.use}
                                 value={density.value}
                                 onSwitchChange={(s: any) =>
-                                    this.onInternalSwitchChange('density', s)
+                                    this.onInternalSwitcherChange('density', 'use', s)
                                 }
                                 onInputChange={(e: any) =>
-                                    this.onInternalInputChange('density', e.target.value)
+                                    this.onInternalSwitcherChange(
+                                        'density',
+                                        'value',
+                                        e.target.value
+                                    )
                                 }
                                 unit="g/cm³"
                                 />
@@ -95,10 +100,14 @@ export class EditWaterData extends React.Component<EditWaterProps> {
                                 status={viscosity.use}
                                 value={viscosity.value}
                                 onSwitchChange={(s: any) =>
-                                    this.onInternalSwitchChange('viscosity', s)
+                                    this.onInternalSwitcherChange('viscosity', 'use', s)
                                 }
                                 onInputChange={(e: any) =>
-                                    this.onInternalInputChange('viscosity', e.target.value)
+                                    this.onInternalSwitcherChange(
+                                        'viscosity',
+                                        'value',
+                                        e.target.value
+                                    )
                                 }
                                 unit="g/cm·s"
                                 />
@@ -106,7 +115,9 @@ export class EditWaterData extends React.Component<EditWaterProps> {
                     </Form>
                 </div>
                 <div className={styles.btnPanel}>
-                    <Button type="primary">Save</Button>
+                    <Button disabled={!changesMade} type="primary">
+                        Save
+                    </Button>
                     <Popover
                         content={
                             <div>

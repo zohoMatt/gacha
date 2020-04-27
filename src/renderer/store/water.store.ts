@@ -13,7 +13,7 @@ export interface WaterDatabase {
     props: DataSetEntry<WaterProps>[];
 }
 
-type ActiveEditing = (WaterProps & { name: string; description: string }) | null;
+export type ActiveEditing = WaterProps & { name: string; description: string };
 
 export class WaterStore {
     @observable database: WaterDatabase = { props: [] };
@@ -21,6 +21,8 @@ export class WaterStore {
     @observable activeKey: string | null = null;
 
     @observable activeRecord: ActiveEditing | null = null;
+
+    @observable changesMade = false;
 
     @computed get waterPropsList(): DataSetEntry<WaterProps>[] {
         return this.database.props;
@@ -31,7 +33,13 @@ export class WaterStore {
     }
 
     @action
+    makeChanges(hasChanges = true) {
+        this.changesMade = hasChanges;
+    }
+
+    @action
     public startNewRecord() {
+        this.makeChanges(false);
         this.activeKey = v4();
         this.activeRecord = {
             name: '',
@@ -45,6 +53,7 @@ export class WaterStore {
 
     @action
     public editRecord(key: string) {
+        this.makeChanges(false);
         this.activeKey = key;
         const entry = this.database.props.find(r => r.key === key);
         if (!entry) {
@@ -56,7 +65,7 @@ export class WaterStore {
     }
 
     @action
-    public changeParam(key: string, value: string | number | null) {
+    public changeParam(key: string, value: any) {
         (this.activeRecord as any)[key] = value;
     }
 

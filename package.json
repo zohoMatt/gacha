@@ -79,6 +79,7 @@
     "@hot-loader/react-dom": "^16.8.6",
     "@types/electron-devtools-installer": "^2.2.0",
     "@types/jest": "^24.0.13",
+    "@types/lodash": "^4.14.150",
     "@types/react": "^16.8.18",
     "@types/react-dom": "^16.8.4",
     "@types/react-redux": "^7.0.9",
@@ -130,6 +131,7 @@
   },
   "dependencies": {
     "antd": "^4.1.4",
+    "lodash": "^4.17.15",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
     "react": "^16.8.6",
