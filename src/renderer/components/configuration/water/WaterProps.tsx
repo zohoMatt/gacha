@@ -3,35 +3,91 @@ import { observer, Provider } from 'mobx-react';
 import { EditWaterData } from './EditWaterData';
 import { RecordList } from '../../common/RecordList';
 import { waterRootStore } from '../../../store';
+import { OperationPanel } from '../../common/OperationPanel';
 
 const styles = require('./WaterProps.module.less');
 
+export interface WaterComponentState {
+    warning: boolean;
+    status: 'idle' | 'edit';
+}
+
 @observer
 class WaterProps extends React.Component {
+    public state: WaterComponentState = {
+        status: 'idle',
+        warning: false
+    };
+
+    public pendingKey = '';
+
     public formRef: React.RefObject<any> = React.createRef();
 
-    public toEdit = (key: string) => {
-        waterRootStore.editRecord(key);
-        // fixme current is null?
-        if (waterRootStore.activeRecord && this.formRef.current) {
+    public toEdit = (key: string, force?: boolean) => {
+        if (key === '') return;
+
+        if (!waterRootStore.changesMade || force) {
+            waterRootStore.editRecord(key);
+            this.pendingKey = '';
+            this.setState({ status: 'edit' });
             this.formRef.current.setFieldsValue(waterRootStore.activeRecord);
+        } else {
+            this.setState({ warning: true });
+            this.pendingKey = key;
+        }
+    };
+
+    public save = (name?: string) => {
+        if (name === undefined) {
+            waterRootStore.save();
+        } else {
+            waterRootStore.saveAs(name);
+        }
+    };
+
+    public triggerStatusChange = (confirm = false) => {
+        if (confirm) {
+            console.log(this.pendingKey);
+            if (this.pendingKey) {
+                this.toEdit(this.pendingKey, true);
+                this.setState({ warning: false });
+            } else {
+                this.setState({ warning: false, status: 'idle' });
+            }
+        } else if (waterRootStore.changesMade) {
+            this.setState({ warning: true });
+        } else {
+            this.setState({ status: 'idle' });
         }
     };
 
     public render() {
+        const { warning, status } = this.state;
+        const { database, deleteRecord, changesMade } = waterRootStore;
         return (
             <div className={styles.container}>
                 <div className={styles.title}>Water Properties</div>
                 <Provider store={waterRootStore}>
                     <div className={styles.table}>
                         <RecordList
-                            database={waterRootStore.database.props}
+                            database={database.props}
                             toEdit={this.toEdit}
-                            toDelete={waterRootStore.deleteRecord.bind(waterRootStore)}
+                            toDelete={deleteRecord.bind(waterRootStore)}
                             />
                     </div>
                     <div className={styles.edit}>
-                        {waterRootStore.activeRecord ? <EditWaterData form={this.formRef} /> : null}
+                        {status === 'edit' ? <EditWaterData form={this.formRef} /> : null}
+                        {status === 'edit' ? (
+                            <OperationPanel
+                                saveDisabled={!changesMade}
+                                warning={warning}
+                                onSave={() => this.save()}
+                                onSavedAs={(newName: string) => this.save(newName)}
+                                onTriggerCancel={() => this.triggerStatusChange()}
+                                onQuitCancel={() => this.setState({ warning: false })}
+                                onConfirmCancel={() => this.triggerStatusChange(true)}
+                                />
+                        ) : null}
                     </div>
                 </Provider>
             </div>

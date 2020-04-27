@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Divider, Form, Input, Switch } from 'antd';
 import { inject, observer } from 'mobx-react';
 
-import { OperationPanel } from '../../common/OperationPanel';
 import { ActiveEditing, WaterStore } from '../../../store/water.store';
 
 const styles = require('./EditWaterData.module.less');
@@ -13,46 +12,19 @@ export interface EditWaterProps {
     store?: WaterStore;
 }
 
-export interface EditWaterState {
-    warning: boolean;
-}
+// export interface EditWaterState {
+// }
 
 @inject('store')
 @observer
-export class EditWaterData extends React.Component<EditWaterProps, EditWaterState> {
-    public state: EditWaterState = { warning: false };
-
+export class EditWaterData extends React.Component<EditWaterProps> {
     public changeParams = (allParams: ActiveEditing) => {
         this.props.store!.changeAllParams(allParams);
     };
 
-    public save = (name?: string) => {
-        if (name === undefined) {
-            this.props.store!.save();
-        } else {
-            this.props.store!.saveAs(name);
-        }
-    };
-
-    public triggerQuit = () => {
-        if (this.props.store!.changesMade) {
-            this.setState({ warning: true });
-        } else {
-            this.props.store!.resetActiveRecords();
-        }
-    };
-
-    public quit = (confirm = true) => {
-        if (confirm) {
-            this.props.store!.cancel();
-        }
-        this.setState({ warning: false });
-    };
-
     public render() {
         const { form, store } = this.props;
-        const { changesMade, activeRecord } = store!;
-        const { warning } = this.state;
+        const { activeRecord } = store!;
         const NORMAL_RULES = [{ required: true, message: 'Value cannot be empty' }];
 
         return (
@@ -84,34 +56,19 @@ export class EditWaterData extends React.Component<EditWaterProps, EditWaterStat
                         <Form.Item
                             name={['density', 'use']}
                             label="Density"
-                            wrapperCol={{ span: 3 }}
                             valuePropName="checked">
                             <Switch />
-                        </Form.Item>
-                        <Form.Item name={['density', 'value']} label=" " colon={false}>
-                            <Input disabled={!activeRecord!.density.use} addonAfter="g/cm³" />
+                            {/* <span>{`${activeRecord!.density.value} g/cm³`}</span> */}
                         </Form.Item>
                         <Form.Item
                             name={['viscosity', 'use']}
                             label="Viscosity"
-                            wrapperCol={{ span: 3 }}
                             valuePropName="checked">
                             <Switch />
-                        </Form.Item>
-                        <Form.Item name={['viscosity', 'value']} label=" " colon={false}>
-                            <Input disabled={!activeRecord!.viscosity.use} addonAfter="g/cm·s" />
+                            {/* <span>{`${activeRecord!.density.value} g/cm·s`}</span> */}
                         </Form.Item>
                     </Form>
                 </div>
-                <OperationPanel
-                    saveDisabled={!changesMade}
-                    warning={warning}
-                    onSave={() => this.save()}
-                    onSavedAs={(newName: string) => this.save(newName)}
-                    onTriggerCancel={this.triggerQuit}
-                    onQuitCancel={() => this.quit(false)}
-                    onConfirmCancel={this.quit}
-                    />
             </div>
         );
     }
