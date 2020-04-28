@@ -14,7 +14,7 @@ export interface WaterComponentState {
 }
 
 @observer
-class WaterProps extends React.Component<WaterComponentState> {
+class WaterProps extends React.Component<{}, WaterComponentState> {
     public state: WaterComponentState = {
         warning: false
     };
