@@ -11,3 +11,6 @@ release/
 
 # ENV
 .DS_Store
+
+# Test Coverage Report
+coverage/

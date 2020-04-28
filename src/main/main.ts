@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
+import { initIPCService } from './ipc';
 
 let win: BrowserWindow | null;
 
@@ -18,6 +19,7 @@ const createWindow = async () => {
     if (process.env.NODE_ENV !== 'production') {
         await installExtensions();
     }
+
 
     win = new BrowserWindow({
         width: 1280,
@@ -51,7 +53,10 @@ const createWindow = async () => {
     });
 };
 
-app.on('ready', createWindow);
+app.on('ready', () => {
+    createWindow();
+    initIPCService();
+});
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {

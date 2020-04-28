@@ -5,7 +5,6 @@ import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 
 import Application from './components/Application';
-import { Storage } from '../utils/localStore';
 
 // Create main element
 const mainElement = document.createElement('div');
