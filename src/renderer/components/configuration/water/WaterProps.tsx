@@ -33,7 +33,7 @@ class WaterProps extends React.Component {
     public toEdit = (key: string, force?: boolean) => {
         if (key === '') return;
         if (key === waterRootStore.activeKey) {
-            message.warning('Editing already in progress');
+            message.warning(`Already editing ${waterRootStore.activeRecord!.name}`);
             return;
         }
 

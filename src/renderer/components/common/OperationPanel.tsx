@@ -44,7 +44,7 @@ export class OperationPanel extends React.Component<OperationPanelProps> {
                 </Button>
                 <Popover
                     content={
-                        <div>
+                        <div className={styles.saveAsPopover}>
                             <Input defaultValue={inputNewName} onChange={this.onChange} />
                             <a onClick={() => onSavedAs(inputNewName)}>Confirm</a>
                         </div>

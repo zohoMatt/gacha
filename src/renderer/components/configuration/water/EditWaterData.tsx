@@ -43,11 +43,23 @@ export class EditWaterData extends React.Component<EditWaterProps> {
                         wrapperCol={{ span: 8 }}
                         onValuesChange={(s, all: any) => this.changeParams(all)}
                         initialValues={activeRecord!}>
-                        <Form.Item name="name" label="Name" rules={NORMAL_RULES}>
+                        <Form.Item
+                            name="name"
+                            label="Name"
+                            rules={[
+                                ...NORMAL_RULES,
+                                { max: 20, type: 'string', message: 'Name is too long.' }
+                            ]}>
                             <Input />
                         </Form.Item>
-                        <Form.Item name="description" label="Description" rules={NORMAL_RULES}>
-                            <Input />
+                        <Form.Item
+                            name="description"
+                            label="Description"
+                            rules={[
+                                ...NORMAL_RULES,
+                                { max: 80, type: 'string', message: 'Description is too long.' }
+                            ]}>
+                            <Input.TextArea rows={4} />
                         </Form.Item>
                         <Divider orientation="left">Basic</Divider>
                         <Form.Item
