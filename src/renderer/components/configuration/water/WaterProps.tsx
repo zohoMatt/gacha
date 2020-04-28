@@ -87,6 +87,7 @@ class WaterProps extends React.Component {
             this.setState({ warning: true });
         } else {
             this.setState({ status: 'idle' });
+            waterRootStore.resetActiveRecords();
         }
     };
 
