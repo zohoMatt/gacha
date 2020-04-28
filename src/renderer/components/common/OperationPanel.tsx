@@ -4,7 +4,8 @@ import { Button, Input, Popconfirm, Popover } from 'antd';
 const styles = require('./OperationPanel.module.less');
 
 export interface OperationPanelProps {
-    saveDisabled: boolean;
+    saveDisabled?: boolean;
+    saveAsDisabled?: boolean;
     warning?: boolean;
     onSavedAs: any;
     onSave: any;
@@ -27,6 +28,7 @@ export class OperationPanel extends React.Component<OperationPanelProps> {
     public render() {
         const {
             saveDisabled,
+            saveAsDisabled,
             warning,
             onSavedAs,
             onSave,
@@ -49,7 +51,7 @@ export class OperationPanel extends React.Component<OperationPanelProps> {
                     }
                     title="New name..."
                     trigger="click">
-                    <Button type="primary" disabled={saveDisabled}>
+                    <Button type="primary" disabled={saveAsDisabled}>
                         Save as
                     </Button>
                 </Popover>

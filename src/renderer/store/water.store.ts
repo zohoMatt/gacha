@@ -98,14 +98,7 @@ export class WaterStore {
 
         // New record
         if (!origin) {
-            this.database.props = [
-                {
-                    key: this.activeKey!,
-                    name,
-                    description,
-                    params: { pressure, temperature, density, viscosity }
-                }
-            ].concat(this.database.props);
+            this.saveAs(name);
         } else {
             origin.name = name;
             origin.description = description;
@@ -130,11 +123,9 @@ export class WaterStore {
             key,
             name,
             description,
-            params: { temperature, density, pressure, viscosity },
-            disabled: false,
-            active: false
+            params: { temperature, density, pressure, viscosity }
         };
-        this.database.props.push(toAdd);
+        this.database.props = [toAdd].concat(this.database.props);
         this.resetActiveRecords();
     }
 

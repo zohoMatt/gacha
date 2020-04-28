@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { observer, Provider } from 'mobx-react';
+import { message } from 'antd';
 import { EditWaterData } from './EditWaterData';
 import { RecordList } from '../../common/RecordList';
 import { waterRootStore } from '../../../store';
@@ -31,6 +32,10 @@ class WaterProps extends React.Component {
 
     public toEdit = (key: string, force?: boolean) => {
         if (key === '') return;
+        if (key === waterRootStore.activeKey) {
+            message.warning('Editing already in progress');
+            return;
+        }
 
         if (!waterRootStore.changesMade || force) {
             waterRootStore.editRecord(key);
@@ -49,6 +54,7 @@ class WaterProps extends React.Component {
             this.setState({ status: 'idle' });
         }
         waterRootStore.deleteRecord(key);
+        message.info('Successfully deleted');
     };
 
     public save = (name?: string) => {
@@ -59,16 +65,17 @@ class WaterProps extends React.Component {
             waterRootStore.saveAs(name);
             this.setState({ status: 'idle' });
         }
+        message.info('Successfully saved');
     };
 
     public triggerStatusChange = (confirm = false) => {
         if (confirm) {
-            console.log(this.pendingKey);
             if (this.pendingKey) {
                 this.toEdit(this.pendingKey, true);
                 this.setState({ warning: false });
             } else {
                 this.setState({ warning: false, status: 'idle' });
+                waterRootStore.resetActiveRecords();
             }
         } else if (waterRootStore.changesMade) {
             this.setState({ warning: true });
@@ -77,9 +84,15 @@ class WaterProps extends React.Component {
         }
     };
 
-    public isValid = () => {
+    public isValid = (checkName: boolean) => {
         const record = waterRootStore.activeRecord;
-        return record && record.name && record.description && record.temperature && record.pressure;
+        return (
+            record &&
+            (record.name || !checkName) &&
+            record.description &&
+            record.temperature &&
+            record.pressure
+        );
     };
 
     public render() {
@@ -100,7 +113,8 @@ class WaterProps extends React.Component {
                         {status === 'edit' ? <EditWaterData form={this.formRef} /> : null}
                         {status === 'edit' ? (
                             <OperationPanel
-                                saveDisabled={!changesMade || !this.isValid()}
+                                saveDisabled={!changesMade || !this.isValid(true)}
+                                saveAsDisabled={!this.isValid(false)}
                                 warning={warning}
                                 onSave={() => this.save()}
                                 onSavedAs={(newName: string) => this.save(newName)}

@@ -23,7 +23,6 @@ export interface EditWaterProps {
 export class EditWaterData extends React.Component<EditWaterProps> {
     public changeParams = (allParams: ActiveEditing) => {
         this.props.store!.changeAllParams(allParams);
-        console.log(allParams);
     };
 
     public render() {
@@ -84,10 +83,7 @@ export class EditWaterData extends React.Component<EditWaterProps> {
                             <Input type="number" addonAfter="℃" />
                         </Form.Item>
                         <Divider orientation="left">Correlations</Divider>
-                        <Form.Item
-                            name={['density', 'use']}
-                            label="Density"
-                            valuePropName="checked">
+                        <Form.Item name={['density', 'use']} label="Density">
                             <TextSwitcher
                                 text={
                                     temperature

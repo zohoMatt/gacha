@@ -10,16 +10,13 @@ export interface TextSwitcherProps {
 }
 
 const TextSwitcher: React.FunctionComponent<TextSwitcherProps> = ({ value, onChange, text }) => {
-    const [checked, setChecked] = React.useState(value || false);
-
     const triggerChange = (newVal: boolean) => {
-        setChecked(newVal);
         if (onChange) onChange(newVal);
     };
 
     return (
         <span>
-            <Switch checked={checked} onChange={triggerChange} />
+            <Switch checked={value} onChange={triggerChange} />
             <span className={styles.text}>{text || ''}</span>
         </span>
     );
