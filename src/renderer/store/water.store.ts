@@ -1,5 +1,6 @@
 import { observable, action, computed } from 'mobx';
 import { v4 } from 'uuid';
+
 import { SwitcherType, DataSetEntry } from './types';
 
 export interface WaterProps {
@@ -51,8 +52,8 @@ export class WaterStore {
         this.activeRecord = {
             name: '',
             description: '',
-            pressure: 0,
-            temperature: 0,
+            pressure: 1.0,
+            temperature: 25,
             density: { use: false },
             viscosity: { use: false }
         };
@@ -88,14 +89,33 @@ export class WaterStore {
 
     @action
     public save() {
-        const origin = this.database.props.find(p => p.key === this.activeKey);
-        if (!origin) {
-            throw new Error(`'activeKey' has no valid corresponding record.`);
+        if (!this.activeRecord || !this.activeRecord.name) {
+            const error = `'Name' cannot be left empty.`;
+            throw new Error(error);
         }
-        const copy: any = { ...this.activeRecord };
-        origin.description = copy.description;
-        delete copy.description;
-        origin.params = copy;
+        const { name, description, pressure, temperature, density, viscosity } = this.activeRecord;
+        const origin = this.database.props.find(p => p.key === this.activeKey);
+
+        // New record
+        if (!origin) {
+            this.database.props = [
+                {
+                    key: this.activeKey!,
+                    name,
+                    description,
+                    params: { pressure, temperature, density, viscosity }
+                }
+            ].concat(this.database.props);
+        } else {
+            origin.name = name;
+            origin.description = description;
+            origin.params = {
+                pressure,
+                temperature,
+                density,
+                viscosity
+            };
+        }
         this.resetActiveRecords();
     }
 

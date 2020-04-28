@@ -49,7 +49,9 @@ export class OperationPanel extends React.Component<OperationPanelProps> {
                     }
                     title="New name..."
                     trigger="click">
-                    <Button type="primary">Save as</Button>
+                    <Button type="primary" disabled={saveDisabled}>
+                        Save as
+                    </Button>
                 </Popover>
                 <Popconfirm
                     placement="top"

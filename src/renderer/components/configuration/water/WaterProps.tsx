@@ -4,6 +4,7 @@ import { EditWaterData } from './EditWaterData';
 import { RecordList } from '../../common/RecordList';
 import { waterRootStore } from '../../../store';
 import { OperationPanel } from '../../common/OperationPanel';
+import { IdleStatePrompt } from '../../common/IdleStatePrompt';
 
 const styles = require('./WaterProps.module.less');
 
@@ -22,6 +23,11 @@ class WaterProps extends React.Component {
     public pendingKey = '';
 
     public formRef: React.RefObject<any> = React.createRef();
+
+    public createNew = () => {
+        this.setState({ status: 'edit' });
+        waterRootStore.startNewRecord();
+    };
 
     public toEdit = (key: string, force?: boolean) => {
         if (key === '') return;
@@ -71,9 +77,14 @@ class WaterProps extends React.Component {
         }
     };
 
+    public isValid = () => {
+        const record = waterRootStore.activeRecord;
+        return record && record.name && record.description && record.temperature && record.pressure;
+    };
+
     public render() {
         const { warning, status } = this.state;
-        const { database, changesMade } = waterRootStore;
+        const { database, changesMade, activeRecord } = waterRootStore;
         return (
             <div className={styles.container}>
                 <div className={styles.title}>Water Properties</div>
@@ -89,7 +100,7 @@ class WaterProps extends React.Component {
                         {status === 'edit' ? <EditWaterData form={this.formRef} /> : null}
                         {status === 'edit' ? (
                             <OperationPanel
-                                saveDisabled={!changesMade}
+                                saveDisabled={!changesMade || !this.isValid()}
                                 warning={warning}
                                 onSave={() => this.save()}
                                 onSavedAs={(newName: string) => this.save(newName)}
@@ -97,7 +108,9 @@ class WaterProps extends React.Component {
                                 onQuitCancel={() => this.setState({ warning: false })}
                                 onConfirmCancel={() => this.triggerStatusChange(true)}
                                 />
-                        ) : null}
+                        ) : (
+                            <IdleStatePrompt onCreate={this.createNew} />
+                        )}
                     </div>
                 </Provider>
             </div>

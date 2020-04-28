@@ -3,8 +3,6 @@ export interface DataSetEntry<T> {
     name: string;
     description: string;
     params: T;
-    active: boolean;
-    disabled?: boolean;
 }
 
 export interface InputSwitcherType {

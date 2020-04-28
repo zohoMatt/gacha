@@ -45,7 +45,7 @@ export class EditWaterData extends React.Component<EditWaterProps> {
                         onValuesChange={(s, all: any) => this.changeParams(all)}
                         initialValues={activeRecord!}>
                         <Form.Item name="name" label="Name" rules={NORMAL_RULES}>
-                            <Input disabled />
+                            <Input />
                         </Form.Item>
                         <Form.Item name="description" label="Description" rules={NORMAL_RULES}>
                             <Input />

@@ -131,6 +131,7 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.1.0",
     "antd": "^4.1.4",
     "lodash": "^4.17.15",
     "mathjs": "^6.6.4",
