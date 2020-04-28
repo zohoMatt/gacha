@@ -63,7 +63,7 @@ export class WaterStore {
     public editRecord(key: string) {
         this.makeChanges(false);
         this.activeKey = key;
-        const entry = this.database.props.find(r => r.key === key);
+        const entry = this.waterPropsList.find(r => r.key === key);
         if (!entry) {
             throw new Error(`'editRecord()' No matching record.`);
         }
@@ -94,7 +94,7 @@ export class WaterStore {
             throw new Error(error);
         }
         const { name, description, pressure, temperature, density, viscosity } = this.activeRecord;
-        const origin = this.database.props.find(p => p.key === this.activeKey);
+        const origin = this.waterPropsList.find(p => p.key === this.activeKey);
 
         // New record
         if (!origin) {
@@ -125,7 +125,7 @@ export class WaterStore {
             description,
             params: { temperature, density, pressure, viscosity }
         };
-        this.database.props = [toAdd].concat(this.database.props);
+        this.database.props = [toAdd].concat(this.waterPropsList);
         this.resetActiveRecords();
     }
 

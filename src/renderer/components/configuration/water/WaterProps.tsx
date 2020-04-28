@@ -88,14 +88,14 @@ class WaterProps extends React.Component<WaterComponentState> {
 
     public render() {
         const { warning } = this.state;
-        const { database, changesMade, activeRecord } = waterRootStore;
+        const { changesMade, activeRecord, waterPropsList } = waterRootStore;
         return (
             <div className={styles.container}>
                 <div className={styles.title}>Water Properties</div>
                 <Provider store={waterRootStore}>
                     <div className={styles.table}>
                         <RecordList
-                            database={database.props}
+                            database={waterPropsList}
                             toEdit={this.toEdit}
                             toDelete={this.toDelete}
                             />
