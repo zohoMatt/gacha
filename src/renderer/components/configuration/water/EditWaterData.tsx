@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Divider, Form, Input, Switch } from 'antd';
+import { Divider, Form, Input } from 'antd';
 import { inject, observer } from 'mobx-react';
 
 import { TextSwitcher } from '../../common/TextSwticher';

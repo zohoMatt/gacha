@@ -12,9 +12,7 @@ const mockdata: DataSetEntry<IWaterProps>[] = [
             temperature: 25, // ℃
             density: { use: true }, // g/cm^3
             viscosity: { use: true }
-        },
-        active: false,
-        disabled: false
+        }
     },
     {
         key: 'a2',
@@ -25,9 +23,7 @@ const mockdata: DataSetEntry<IWaterProps>[] = [
             temperature: 20, // ℃
             density: { use: true }, // g/cm^3
             viscosity: { use: true }
-        },
-        active: false,
-        disabled: false
+        }
     },
     {
         key: 'a3',
@@ -38,9 +34,7 @@ const mockdata: DataSetEntry<IWaterProps>[] = [
             temperature: 30, // ℃
             density: { use: false }, // g/cm^3
             viscosity: { use: true }
-        },
-        active: true,
-        disabled: false
+        }
     }
 ];
 const waterRootStore = new WaterStore({ props: mockdata });

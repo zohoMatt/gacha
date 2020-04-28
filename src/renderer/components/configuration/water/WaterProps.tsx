@@ -25,6 +25,12 @@ class WaterProps extends React.Component {
 
     public formRef: React.RefObject<any> = React.createRef();
 
+    public componentDidMount() {
+        if (waterRootStore.activeRecord && this.state.status === 'idle') {
+            this.setState({ status: 'edit' });
+        }
+    }
+
     public createNew = () => {
         this.setState({ status: 'edit' });
         waterRootStore.startNewRecord();
@@ -33,7 +39,7 @@ class WaterProps extends React.Component {
     public toEdit = (key: string, force?: boolean) => {
         if (key === '') return;
         if (key === waterRootStore.activeKey) {
-            message.warning(`Already editing ${waterRootStore.activeRecord!.name}`);
+            message.warning(`Already editing '${waterRootStore.activeRecord!.name}'`);
             return;
         }
 
@@ -97,7 +103,7 @@ class WaterProps extends React.Component {
 
     public render() {
         const { warning, status } = this.state;
-        const { database, changesMade, activeRecord } = waterRootStore;
+        const { database, changesMade } = waterRootStore;
         return (
             <div className={styles.container}>
                 <div className={styles.title}>Water Properties</div>
