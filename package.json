@@ -78,6 +78,7 @@
     "@babel/preset-typescript": "^7.3.3",
     "@hot-loader/react-dom": "^16.8.6",
     "@types/electron-devtools-installer": "^2.2.0",
+    "@types/fs-extra": "^8.1.0",
     "@types/jest": "^24.0.13",
     "@types/lodash": "^4.14.150",
     "@types/mathjs": "^6.0.5",
@@ -133,6 +134,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.1.0",
     "antd": "^4.1.4",
+    "fs-extra": "^9.0.0",
     "lodash": "^4.17.15",
     "mathjs": "^6.6.4",
     "mobx": "^5.15.4",

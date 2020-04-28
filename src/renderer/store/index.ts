@@ -40,6 +40,9 @@ const mockdata: DataSetEntry<IWaterProps>[] = [
 const waterRootStore = new WaterStore({ props: mockdata });
 
 autorun(() => {
+    console.log(toJS(waterRootStore.database.props));
+});
+autorun(() => {
     console.log(toJS(waterRootStore.activeRecord));
 });
 
