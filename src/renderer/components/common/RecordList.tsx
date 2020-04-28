@@ -60,7 +60,8 @@ const RecordList: React.FunctionComponent<RecordListProps> = ({ database, toEdit
         <>
             <div className={styles.inputPanel}>
                 <Input.Search
-                    placeholder="Search for name or description"
+                    placeholder="Search here..."
+                    allowClear={true}
                     onSearch={setSearch}
                     onChange={e => setSearch(e.target.value)}
                     style={{ width: 200 }}

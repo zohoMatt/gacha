@@ -28,12 +28,16 @@ class WaterProps extends React.Component<{}, WaterComponentState> {
     };
 
     public toEdit = (key: string, force?: boolean) => {
-        if (key === '') return;
+        if (key === '') return; // Called after confirming quitting, but no pending key exists
+
+        // Repeatedly press 'edit' button
         if (key === waterRootStore.activeKey) {
             message.warning(`Already editing '${waterRootStore.activeRecord!.name}'`);
             return;
         }
 
+        // Called after confirming quitting, certain pending key exists
+        // OR: No changes has been made to this record.
         if (!waterRootStore.changesMade || force) {
             waterRootStore.editRecord(key);
             this.pendingKey = '';
@@ -61,13 +65,11 @@ class WaterProps extends React.Component<{}, WaterComponentState> {
 
     public triggerStatusChange = (confirm = false) => {
         if (confirm) {
-            if (this.pendingKey) {
-                this.toEdit(this.pendingKey, true);
-                this.setState({ warning: false });
-            } else {
-                this.setState({ warning: false });
-                waterRootStore.resetActiveRecords();
-            }
+            waterRootStore.resetActiveRecords();
+            // If the confirmation popover is triggered by 'edit' button
+            this.toEdit(this.pendingKey, true);
+
+            this.setState({ warning: false });
         } else if (waterRootStore.changesMade) {
             this.setState({ warning: true });
         } else {
