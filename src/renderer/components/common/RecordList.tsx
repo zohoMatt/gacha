@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { Popconfirm, Table } from 'antd';
+import { Input, Popconfirm, Table } from 'antd';
 
 import { DataSetEntry } from '../../store/types';
+
+const styles = require('./RecordList.module.less');
 
 export interface RecordListProps {
     database: Array<DataSetEntry<any>>;
@@ -10,6 +12,8 @@ export interface RecordListProps {
 }
 
 const RecordList: React.FunctionComponent<RecordListProps> = ({ database, toEdit, toDelete }) => {
+    const [search, setSearch] = React.useState('');
+
     const TITLE = 'Are you sure to DELETE this entry?';
 
     const editIt = (record: DataSetEntry<any>) => (e: any) => {
@@ -48,13 +52,27 @@ const RecordList: React.FunctionComponent<RecordListProps> = ({ database, toEdit
             }
         }
     ];
+
+    const filteredData = database.filter(
+        r => r.name.indexOf(search) !== -1 || r.description.indexOf(search) !== -1
+    );
     return (
-        <Table
-            style={{ height: '100%' }}
-            dataSource={database.slice()}
-            columns={COLUMNS}
-            size="small"
-            />
+        <>
+            <div className={styles.inputPanel}>
+                <Input.Search
+                    placeholder="Search for name or description"
+                    onSearch={setSearch}
+                    onChange={e => setSearch(e.target.value)}
+                    style={{ width: 200 }}
+                    />
+            </div>
+            <Table
+                style={{ height: '100%' }}
+                dataSource={filteredData}
+                columns={COLUMNS}
+                size="small"
+                />
+        </>
     );
 };
 
