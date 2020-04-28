@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer, Provider } from 'mobx-react';
-import { message, Input } from 'antd';
+import { message } from 'antd';
 import { EditWaterData } from './EditWaterData';
 import { RecordList } from '../../common/RecordList';
 import { waterRootStore } from '../../../store';
@@ -11,13 +11,11 @@ const styles = require('./WaterProps.module.less');
 
 export interface WaterComponentState {
     warning: boolean;
-    status: 'idle' | 'edit';
 }
 
 @observer
-class WaterProps extends React.Component {
+class WaterProps extends React.Component<WaterComponentState> {
     public state: WaterComponentState = {
-        status: 'idle',
         warning: false
     };
 
@@ -25,14 +23,7 @@ class WaterProps extends React.Component {
 
     public formRef: React.RefObject<any> = React.createRef();
 
-    public componentDidMount() {
-        if (waterRootStore.activeRecord && this.state.status === 'idle') {
-            this.setState({ status: 'edit' });
-        }
-    }
-
     public createNew = () => {
-        this.setState({ status: 'edit' });
         waterRootStore.startNewRecord();
     };
 
@@ -46,7 +37,6 @@ class WaterProps extends React.Component {
         if (!waterRootStore.changesMade || force) {
             waterRootStore.editRecord(key);
             this.pendingKey = '';
-            this.setState({ status: 'edit' });
             if (this.formRef.current)
                 this.formRef.current.setFieldsValue(waterRootStore.activeRecord);
         } else {
@@ -56,9 +46,6 @@ class WaterProps extends React.Component {
     };
 
     public toDelete = (key: string) => {
-        if (key === waterRootStore.activeKey) {
-            this.setState({ status: 'idle' });
-        }
         waterRootStore.deleteRecord(key);
         message.info('Successfully deleted');
     };
@@ -66,10 +53,8 @@ class WaterProps extends React.Component {
     public save = (name?: string) => {
         if (name === undefined) {
             waterRootStore.save();
-            this.setState({ status: 'idle' });
         } else {
             waterRootStore.saveAs(name);
-            this.setState({ status: 'idle' });
         }
         message.info('Successfully saved');
     };
@@ -80,13 +65,12 @@ class WaterProps extends React.Component {
                 this.toEdit(this.pendingKey, true);
                 this.setState({ warning: false });
             } else {
-                this.setState({ warning: false, status: 'idle' });
+                this.setState({ warning: false });
                 waterRootStore.resetActiveRecords();
             }
         } else if (waterRootStore.changesMade) {
             this.setState({ warning: true });
         } else {
-            this.setState({ status: 'idle' });
             waterRootStore.resetActiveRecords();
         }
     };
@@ -103,8 +87,8 @@ class WaterProps extends React.Component {
     };
 
     public render() {
-        const { warning, status } = this.state;
-        const { database, changesMade } = waterRootStore;
+        const { warning } = this.state;
+        const { database, changesMade, activeRecord } = waterRootStore;
         return (
             <div className={styles.container}>
                 <div className={styles.title}>Water Properties</div>
@@ -117,8 +101,8 @@ class WaterProps extends React.Component {
                             />
                     </div>
                     <div className={styles.edit}>
-                        {status === 'edit' ? <EditWaterData form={this.formRef} /> : null}
-                        {status === 'edit' ? (
+                        {activeRecord ? <EditWaterData form={this.formRef} /> : null}
+                        {activeRecord ? (
                             <OperationPanel
                                 saveDisabled={!changesMade || !this.isValid(true)}
                                 saveAsDisabled={!this.isValid(false)}
