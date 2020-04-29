@@ -1,25 +1,21 @@
 import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
+import installExt, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 import { initIPCService } from './ipc';
+import { Logger } from '../utils/logger';
 
 let win: BrowserWindow | null;
 
 const installExtensions = async () => {
-    const installer = require('electron-devtools-installer');
-    const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-    const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
-
-    return Promise.all(
-        extensions.map(name => installer.default(installer[name], forceDownload))
-    ).catch(console.log); // eslint-disable-line no-console
+    const extensions = [REACT_DEVELOPER_TOOLS, 'pfgnfdagidkfgccljigdamigbcnndkod'];
+    return Promise.all(extensions.map(ext => installExt(ext)));
 };
 
 const createWindow = async () => {
     if (process.env.NODE_ENV !== 'production') {
         await installExtensions();
     }
-
 
     win = new BrowserWindow({
         width: 1280,
@@ -54,8 +50,13 @@ const createWindow = async () => {
 };
 
 app.on('ready', () => {
-    createWindow();
+    // 1. Init logger
+    Logger.init();
+    // 2. init IPC listeners
     initIPCService();
+    // 3. others
+    createWindow();
+    require('devtron').install();
 });
 
 app.on('window-all-closed', () => {

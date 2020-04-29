@@ -14,3 +14,6 @@ release/
 
 # Test Coverage Report
 coverage/
+
+# Log
+*.log

@@ -6,7 +6,6 @@ const fileStorage: IpcSubModule = {
         {
             channel: 'save-water',
             listener: (event: any, arg: any) => {
-                console.log(`save-water received data ${JSON.stringify(arg)}`);
                 return {
                     key: 200,
                     data: { result: 'saved, relax' }

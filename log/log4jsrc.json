@@ -1,0 +1,27 @@
+{
+  "appenders": {
+    "console": { "type": "console" },
+    "file": {
+      "type": "file",
+      "filename": "log/app.log",
+      "maxLogSize": 1000000,
+      "numBackups": 2
+    },
+    "emergencies": {
+      "type": "file",
+      "filename": "log/error.log",
+      "maxLogSize": 1000000,
+      "numBackups": 2
+    },
+    "errors": {
+      "type": "logLevelFilter",
+      "appender": "emergencies",
+      "level": "error"
+    }
+  },
+  "categories": {
+    "default": { "appenders": ["console"], "level": "all" },
+    "dev": { "appenders": ["console"], "level": "all" },
+    "user": { "appenders": ["file", "errors"], "level": "all" }
+  }
+}
