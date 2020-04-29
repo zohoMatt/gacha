@@ -2,6 +2,7 @@ import { app, remote } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
 import { promisify } from 'util';
+import { set as setObj } from 'lodash';
 
 export class Storage {
     public userDataPath: string = (app || remote.app).getPath('appData');
@@ -14,16 +15,7 @@ export class Storage {
     }
 
     public async update(keyPath: string[] | string, value: string | number | void) {
-        if (typeof keyPath === 'string') {
-            this.data[keyPath] = value;
-        } else {
-            let origin = this.data;
-            for (const key of keyPath.slice(0, keyPath.length - 1)) {
-                origin = origin[key];
-            }
-            origin[keyPath.pop()!] = value;
-        }
-        console.log(this.data);
-        await promisify(fs.writeFile)(this.userDataPath, JSON.stringify(this.data));
+        const newData = setObj(this.data, keyPath, value);
+        await promisify(fs.writeFile)(this.userDataPath, JSON.stringify(newData));
     }
 }
