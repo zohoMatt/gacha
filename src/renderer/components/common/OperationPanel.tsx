@@ -44,6 +44,10 @@ export class OperationPanel extends React.Component<OperationPanelProps> {
         this.setState({ saveAsPopover: false });
     };
 
+    public handlePopover = (status: boolean) => {
+        this.setState({ saveAsPopover: status });
+    };
+
     public render() {
         const {
             buttons,
@@ -80,11 +84,12 @@ export class OperationPanel extends React.Component<OperationPanelProps> {
                         }
                         title="New name..."
                         trigger="click"
-                        visible={this.state.saveAsPopover}>
+                        visible={this.state.saveAsPopover}
+                        onVisibleChange={this.handlePopover}>
                         <Button
                             type="primary"
                             disabled={saveAsDisabled}
-                            onClick={() => this.setState({ saveAsPopover: true })}>
+                            onClick={() => this.handlePopover(true)}>
                             Save as
                         </Button>
                     </Popover>

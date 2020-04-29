@@ -116,7 +116,7 @@ class WaterProps extends React.Component<{}, WaterComponentState> {
 
     protected validate(record: any, newName?: string) {
         const allNames = this.store.database.props
-            .filter(r => r.key !== this.store.activeKey)
+            .filter(r => newName || r.key !== this.store.activeKey)
             .map(p => p.name);
         for (const key in WaterPopertiesValidators) {
             if (
