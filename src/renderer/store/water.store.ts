@@ -35,13 +35,17 @@ export class WaterStore {
     constructor() {
         this.database = Storage.read(WaterStore.STORED_PATH);
         autorun(async () => {
-            try {
-                await Storage.update(WaterStore.STORED_PATH, toJS(this.database));
-                console.log(`WaterStore::autorun Storage updated successfully.`);
-            } catch (e) {
-                console.error(`WaterStore::autorun Storage failed in updating.`);
-            }
+            return this.listeners();
         });
+    }
+
+    protected async listeners() {
+        try {
+            await Storage.update(WaterStore.STORED_PATH, toJS(this.database));
+            console.log(`WaterStore::autorun Storage updated successfully.`);
+        } catch (e) {
+            console.error(`WaterStore::autorun Storage failed in updating.`);
+        }
     }
 
     @action
