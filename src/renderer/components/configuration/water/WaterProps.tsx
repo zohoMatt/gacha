@@ -47,6 +47,7 @@ class WaterProps extends React.Component<{}, WaterComponentState> {
         } else {
             this.setState({ warning: true });
             this.pendingKey = key;
+            message.warning('Discard changes?');
         }
     };
 
