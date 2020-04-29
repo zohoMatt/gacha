@@ -1,21 +1,31 @@
 import { app, remote } from 'electron';
-import * as fs from 'fs';
+import * as fs from 'fs-extra';
 import * as path from 'path';
-import { promisify } from 'util';
-import { set as setObj } from 'lodash';
+import { set as setObj, get } from 'lodash';
 
 export class Storage {
-    public userDataPath: string = (app || remote.app).getPath('appData');
+    public static userDataPath = '';
 
-    public data: any = { first: { second: { third: 3 } } };
+    public static data: any = {};
 
-    constructor({ name }: any) {
-        this.userDataPath = path.join(this.userDataPath, `${name}.json`);
-        console.info(`Current user data path: ${this.userDataPath}`);
+    public static init({ filename }: any) {
+        Storage.userDataPath = path.join(
+            (app || remote.app).getPath('appData'),
+            `${filename}.json`
+        );
+        console.info(`Current user data path: ${Storage.userDataPath}`);
     }
 
-    public async update(keyPath: string[] | string, value: string | number | void) {
-        const newData = setObj(this.data, keyPath, value);
-        await promisify(fs.writeFile)(this.userDataPath, JSON.stringify(newData));
+    public static async update(keyPath: string[] | string, value: any) {
+        const newData = setObj(Storage.data, keyPath, value);
+        return fs.writeFile(Storage.userDataPath, JSON.stringify(newData));
+    }
+
+    public static async import() {
+        Storage.data = await fs.readJSON(Storage.userDataPath);
+    }
+
+    public static read(keyPath: string[] | string) {
+        return get(Storage.data, keyPath);
     }
 }

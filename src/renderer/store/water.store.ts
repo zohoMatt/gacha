@@ -1,7 +1,8 @@
-import { observable, action, computed } from 'mobx';
+import { observable, action, computed, autorun, toJS } from 'mobx';
 import { v4 } from 'uuid';
 
 import { SwitcherType, DataSetEntry } from './types';
+import { Storage } from '../../utils/localStore';
 
 export interface WaterProps {
     pressure: number; // atm
@@ -29,8 +30,18 @@ export class WaterStore {
         return this.database.props;
     }
 
-    constructor(params?: WaterDatabase) {
-        this.database = params || { props: [] };
+    public static STORED_PATH: string[] = ['database', 'water'];
+
+    constructor() {
+        this.database = Storage.read(WaterStore.STORED_PATH);
+        autorun(async () => {
+            try {
+                await Storage.update(WaterStore.STORED_PATH, toJS(this.database));
+                console.log(`WaterStore::autorun Storage updated successfully.`);
+            } catch (e) {
+                console.error(`WaterStore::autorun Storage failed in updating.`);
+            }
+        });
     }
 
     @action

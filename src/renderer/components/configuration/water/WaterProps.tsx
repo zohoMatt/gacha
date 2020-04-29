@@ -3,7 +3,7 @@ import { observer, Provider } from 'mobx-react';
 import { message } from 'antd';
 import { EditWaterData } from './EditWaterData';
 import { RecordList } from '../../common/RecordList';
-import { waterRootStore } from '../../../store';
+import { WaterStore } from '../../../store/water.store';
 import { OperationPanel } from '../../common/OperationPanel';
 import { IdleStatePrompt } from '../../common/IdleStatePrompt';
 
@@ -19,30 +19,31 @@ class WaterProps extends React.Component<{}, WaterComponentState> {
         warning: false
     };
 
+    public store = new WaterStore();
+
     public pendingKey = '';
 
     public formRef: React.RefObject<any> = React.createRef();
 
     public createNew = () => {
-        waterRootStore.startNewRecord();
+        this.store.startNewRecord();
     };
 
     public toEdit = (key: string, force?: boolean) => {
         if (key === '') return; // Called after confirming quitting, but no pending key exists
 
         // Repeatedly press 'edit' button
-        if (key === waterRootStore.activeKey) {
-            message.warning(`Already editing '${waterRootStore.activeRecord!.name}'`);
+        if (key === this.store.activeKey) {
+            message.warning(`Already editing '${this.store.activeRecord!.name}'`);
             return;
         }
 
         // Called after confirming quitting, certain pending key exists
         // OR: No changes has been made to this record.
-        if (!waterRootStore.changesMade || force) {
-            waterRootStore.editRecord(key);
+        if (!this.store.changesMade || force) {
+            this.store.editRecord(key);
             this.pendingKey = '';
-            if (this.formRef.current)
-                this.formRef.current.setFieldsValue(waterRootStore.activeRecord);
+            if (this.formRef.current) this.formRef.current.setFieldsValue(this.store.activeRecord);
         } else {
             this.setState({ warning: true });
             this.pendingKey = key;
@@ -50,35 +51,35 @@ class WaterProps extends React.Component<{}, WaterComponentState> {
     };
 
     public toDelete = (key: string) => {
-        waterRootStore.deleteRecord(key);
+        this.store.deleteRecord(key);
         message.info('Successfully deleted');
     };
 
     public save = (name?: string) => {
         if (name === undefined) {
-            waterRootStore.save();
+            this.store.save();
         } else {
-            waterRootStore.saveAs(name);
+            this.store.saveAs(name);
         }
         message.info('Successfully saved');
     };
 
     public triggerStatusChange = (confirm = false) => {
         if (confirm) {
-            waterRootStore.resetActiveRecords();
+            this.store.resetActiveRecords();
             // If the confirmation popover is triggered by 'edit' button
             this.toEdit(this.pendingKey, true);
 
             this.setState({ warning: false });
-        } else if (waterRootStore.changesMade) {
+        } else if (this.store.changesMade) {
             this.setState({ warning: true });
         } else {
-            waterRootStore.resetActiveRecords();
+            this.store.resetActiveRecords();
         }
     };
 
     public isValid = (checkName: boolean) => {
-        const record = waterRootStore.activeRecord;
+        const record = this.store.activeRecord;
         return (
             record &&
             (record.name || !checkName) &&
@@ -90,11 +91,11 @@ class WaterProps extends React.Component<{}, WaterComponentState> {
 
     public render() {
         const { warning } = this.state;
-        const { changesMade, activeRecord, waterPropsList } = waterRootStore;
+        const { changesMade, activeRecord, waterPropsList } = this.store;
         return (
             <div className={styles.container}>
                 <div className={styles.title}>Water Properties</div>
-                <Provider store={waterRootStore}>
+                <Provider store={this.store}>
                     <div className={styles.table}>
                         <RecordList
                             database={waterPropsList}
