@@ -30,7 +30,7 @@ export interface OperationPanelState {
 
 export class OperationPanel extends React.Component<OperationPanelProps> {
     public state: OperationPanelState = {
-        inputNewName: 'New Setting',
+        inputNewName: '',
         saveAsPopover: false
     };
 

@@ -24,18 +24,19 @@ const RecordList: React.FunctionComponent<RecordListProps> = ({
     const TITLE = 'Are you sure to DELETE this entry?';
 
     const viewIt = (record: DataSetEntry<any>) => (e: any) => {
-        if (disabled) {
-            message.warning('Please quit editing mode first');
-            return;
-        }
+        if (warning()) return;
         toView(record.key);
     };
     const deleteIt = (record: DataSetEntry<any>) => (e: any) => {
-        if (disabled) {
-            message.warning('Please quit editing mode first');
-            return;
-        }
         toDelete(record.key);
+    };
+
+    const warning = (): boolean => {
+        if (disabled) {
+            message.warning('Please saving or cancelling current edition first.');
+            return true;
+        }
+        return false;
     };
 
     const COLUMNS = [
@@ -69,7 +70,8 @@ const RecordList: React.FunctionComponent<RecordListProps> = ({
                             <a
                                 className={classnames({
                                     [styles.linkDisabled]: disabled
-                                })}>
+                                })}
+                                onClick={warning}>
                                 Delete
                             </a>
                         </Popconfirm>
@@ -80,7 +82,9 @@ const RecordList: React.FunctionComponent<RecordListProps> = ({
     ];
 
     const filteredData = database.filter(
-        r => r.name.indexOf(search) !== -1 || r.description.indexOf(search) !== -1
+        r =>
+            r.name.toLowerCase().indexOf(search.toLowerCase()) !== -1 ||
+            r.description.indexOf(search) !== -1
     );
     return (
         <>
