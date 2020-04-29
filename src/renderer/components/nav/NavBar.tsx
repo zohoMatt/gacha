@@ -32,11 +32,6 @@ const NavBar: React.FunctionComponent = () => {
                         <Item key="component.props">
                             <Link to={`${match.url}/settings/components/prop`}>Properties</Link>
                         </Item>
-                        <Item key="component.model">
-                            <Link to={`${match.url}/settings/components/model`}>
-                                Adsorption Model
-                            </Link>
-                        </Item>
                     </Group>
                     <Group key="sim" title="Simulation Parameters">
                         <Item key="sim.psdm">

@@ -96,8 +96,7 @@ export class WaterStore {
     @action
     public deleteRecord(key: string) {
         if (key === this.activeKey) {
-            this.activeKey = null;
-            this.activeRecord = null;
+            this.resetActiveRecords();
         }
         this.database.props = this.waterPropsList.filter(r => r.key !== key);
     }
@@ -124,7 +123,6 @@ export class WaterStore {
                 viscosity
             };
         }
-        this.resetActiveRecords();
     }
 
     @action
@@ -141,7 +139,8 @@ export class WaterStore {
             params: { temperature, density, pressure, viscosity }
         };
         this.database.props = [toAdd].concat(this.waterPropsList);
-        this.resetActiveRecords();
+        // Active new key
+        this.editRecord(key);
     }
 
     @action

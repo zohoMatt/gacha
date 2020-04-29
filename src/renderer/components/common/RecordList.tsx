@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Input, Popconfirm, Table } from 'antd';
+import classnames from 'classnames';
+import { Input, message, Popconfirm, Table } from 'antd';
 
 import { DataSetEntry } from '../../store/types';
 
@@ -7,19 +8,33 @@ const styles = require('./RecordList.module.less');
 
 export interface RecordListProps {
     database: Array<DataSetEntry<any>>;
-    toEdit: (key: string) => any;
+    disabled: boolean;
+    toView: (key: string) => any;
     toDelete: (key: string) => any;
 }
 
-const RecordList: React.FunctionComponent<RecordListProps> = ({ database, toEdit, toDelete }) => {
+const RecordList: React.FunctionComponent<RecordListProps> = ({
+    database,
+    disabled,
+    toView,
+    toDelete
+}) => {
     const [search, setSearch] = React.useState('');
 
     const TITLE = 'Are you sure to DELETE this entry?';
 
-    const editIt = (record: DataSetEntry<any>) => (e: any) => {
-        toEdit(record.key);
+    const viewIt = (record: DataSetEntry<any>) => (e: any) => {
+        if (disabled) {
+            message.warning('Please quit editing mode first');
+            return;
+        }
+        toView(record.key);
     };
     const deleteIt = (record: DataSetEntry<any>) => (e: any) => {
+        if (disabled) {
+            message.warning('Please quit editing mode first');
+            return;
+        }
         toDelete(record.key);
     };
 
@@ -36,16 +51,27 @@ const RecordList: React.FunctionComponent<RecordListProps> = ({ database, toEdit
             render: (text: string, record: DataSetEntry<any>) => {
                 return (
                     <span>
-                        <a style={{ marginRight: '1vw' }} onClick={editIt(record)}>
-                            Edit
+                        <a
+                            className={classnames({
+                                [styles.leftLink]: true,
+                                [styles.linkDisabled]: disabled
+                            })}
+                            onClick={viewIt(record)}>
+                            View
                         </a>
                         <Popconfirm
                             placement="right"
+                            disabled={disabled}
                             title={TITLE}
                             onConfirm={deleteIt(record)}
                             okText="Yes"
                             cancelText="No">
-                            <a>Delete</a>
+                            <a
+                                className={classnames({
+                                    [styles.linkDisabled]: disabled
+                                })}>
+                                Delete
+                            </a>
                         </Popconfirm>
                     </span>
                 );

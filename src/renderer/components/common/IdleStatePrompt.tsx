@@ -12,7 +12,7 @@ const IdleStatePrompt: React.FunctionComponent<IdleStatePromptProps> = ({ onCrea
     return (
         <div className={styles.container}>
             <div className={styles.instruction}>
-                Click <span className={styles.fakeLink}>Edit</span> button of any entry from the
+                Click <span className={styles.fakeLink}>View</span> button of any entry from the
                 list to start editing.
             </div>
             <div className={styles.instruction}>
