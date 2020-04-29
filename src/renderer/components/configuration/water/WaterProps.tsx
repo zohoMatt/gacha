@@ -33,6 +33,7 @@ class WaterProps extends React.Component<{}, WaterComponentState> {
 
     public createNew = () => {
         this.store.startNewRecord();
+        this.setState({ status: 'edit' });
     };
 
     public toView = (key: string) => {
@@ -114,7 +115,9 @@ class WaterProps extends React.Component<{}, WaterComponentState> {
     };
 
     protected validate(record: any, newName?: string) {
-        const allNames = this.store.database.props.map(p => (p.key === record.key ? '' : p.name));
+        const allNames = this.store.database.props
+            .filter(r => r.key !== this.store.activeKey)
+            .map(p => p.name);
         for (const key in WaterPopertiesValidators) {
             if (
                 !triggerValidator(

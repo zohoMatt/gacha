@@ -25,13 +25,23 @@ export interface OperationPanelProps {
 
 export interface OperationPanelState {
     inputNewName: string;
+    saveAsPopover: boolean;
 }
 
 export class OperationPanel extends React.Component<OperationPanelProps> {
-    public state: OperationPanelState = { inputNewName: 'New Setting' };
+    public state: OperationPanelState = {
+        inputNewName: 'New Setting',
+        saveAsPopover: false
+    };
 
     public onChange = (e: any) => {
         this.setState({ inputNewName: e.target.value });
+    };
+
+    public whenSavedAs = () => {
+        const { inputNewName } = this.state;
+        this.props.onSavedAs(inputNewName);
+        this.setState({ saveAsPopover: false });
     };
 
     public render() {
@@ -41,7 +51,6 @@ export class OperationPanel extends React.Component<OperationPanelProps> {
             saveAsDisabled,
             warning,
             onEdit,
-            onSavedAs,
             onSave,
             onTriggerCancel,
             onQuitCancel,
@@ -66,12 +75,16 @@ export class OperationPanel extends React.Component<OperationPanelProps> {
                         content={
                             <div className={styles.saveAsPopover}>
                                 <Input defaultValue={inputNewName} onChange={this.onChange} />
-                                <a onClick={() => onSavedAs(inputNewName)}>Confirm</a>
+                                <a onClick={this.whenSavedAs}>Confirm</a>
                             </div>
                         }
                         title="New name..."
-                        trigger="click">
-                        <Button type="primary" disabled={saveAsDisabled}>
+                        trigger="click"
+                        visible={this.state.saveAsPopover}>
+                        <Button
+                            type="primary"
+                            disabled={saveAsDisabled}
+                            onClick={() => this.setState({ saveAsPopover: true })}>
                             Save as
                         </Button>
                     </Popover>

@@ -46,19 +46,13 @@ export class EditWaterData extends React.Component<EditWaterProps> {
                         <Form.Item
                             name="name"
                             label="Name"
-                            rules={[
-                                ...NORMAL_RULES,
-                                { max: 20, type: 'string', message: 'Name is too long.' }
-                            ]}>
+                            rules={[...NORMAL_RULES, { max: 20, type: 'string' }]}>
                             <Input />
                         </Form.Item>
                         <Form.Item
                             name="description"
                             label="Description"
-                            rules={[
-                                ...NORMAL_RULES,
-                                { max: 80, type: 'string', message: 'Description is too long.' }
-                            ]}>
+                            rules={[...NORMAL_RULES, { max: 80, type: 'string' }]}>
                             <Input.TextArea rows={4} />
                         </Form.Item>
                         <Divider orientation="left">Basic</Divider>
@@ -84,10 +78,9 @@ export class EditWaterData extends React.Component<EditWaterProps> {
                             rules={[
                                 ...NORMAL_RULES,
                                 {
-                                    min: -1,
-                                    max: 101,
+                                    min: 0,
+                                    max: 100,
                                     type: 'number',
-                                    message: 'Warning: Abnormal value.',
                                     validateTrigger: 'onChange'
                                 }
                             ]}

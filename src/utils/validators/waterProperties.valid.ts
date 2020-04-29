@@ -7,20 +7,19 @@ const valid = {
 
 const WaterPopertiesValidators: Validator = {
     name: (name: string, allNames?: string[]) => {
-        console.log(name, allNames);
         if (name.length <= 0 || name.length > 20) {
             return {
                 valid: ValidLevels.Error,
                 message: 'Length of Name should be between 1 - 20'
             };
-        } if (allNames && allNames.includes(name)) {
+        }
+        if (allNames && allNames.includes(name)) {
             return {
                 valid: ValidLevels.Error,
                 message: 'Name already exits. Please change to a different value.'
             };
-        } 
-            return valid;
-        
+        }
+        return valid;
     },
     description: (descr: string) => {
         if (descr.length > 80) {
@@ -28,9 +27,8 @@ const WaterPopertiesValidators: Validator = {
                 valid: ValidLevels.Error,
                 message: 'Description is too long.'
             };
-        } 
-            return valid;
-        
+        }
+        return valid;
     },
     pressure: (pressure: number) => {
         if (pressure < 0.9 || pressure > 1.1) {
@@ -38,9 +36,8 @@ const WaterPopertiesValidators: Validator = {
                 valid: ValidLevels.Warn,
                 message: 'Abnormal pressure value.'
             };
-        } 
-            return valid;
-        
+        }
+        return valid;
     },
     temperature: (temperature: number) => {
         if (temperature <= 0 || temperature >= 100) {
@@ -48,9 +45,8 @@ const WaterPopertiesValidators: Validator = {
                 valid: ValidLevels.Error,
                 message: 'Abnormal temperature value.'
             };
-        } 
-            return valid;
-        
+        }
+        return valid;
     }
 };
 
