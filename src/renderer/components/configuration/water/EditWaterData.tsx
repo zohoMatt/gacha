@@ -6,6 +6,7 @@ import { TextSwitcher } from '../../common/TextSwticher';
 import { ActiveEditing, WaterStore } from '../../../store/water.store';
 import { Water } from '../../../../utils/calculation/waterProperties.maths';
 import { Calculation } from '../../../../utils/calculation/basic';
+import { MathsPrompt } from '../../common/MathsPrompt';
 
 const styles = require('./EditWaterData.module.less');
 
@@ -88,14 +89,16 @@ export class EditWaterData extends React.Component<EditWaterProps> {
                             <Input type="number" addonAfter="℃" />
                         </Form.Item>
                         <Divider orientation="left">Correlations</Divider>
-                        <Form.Item name={['density', 'use']} label="Density">
-                            <TextSwitcher
-                                text={
-                                    temperature
-                                        ? Calculation.display(Water.density(temperature))
-                                        : '-'
-                                }
-                                />
+                        <Form.Item label="Density">
+                            <Form.Item name={['density', 'use']}>
+                                <TextSwitcher
+                                    text={
+                                        temperature
+                                            ? Calculation.display(Water.density(temperature))
+                                            : '-'
+                                    }
+                                    />
+                            </Form.Item>
                         </Form.Item>
                         <Form.Item name={['viscosity', 'use']} label="Viscosity">
                             <TextSwitcher
