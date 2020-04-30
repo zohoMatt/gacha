@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 
 import NavBar from '../nav/NavBar';
-import WaterProps from './water/WaterProps';
+import { WaterProps } from './water/WaterProps';
 import PollutantProps from './pollutant/PollutantProps';
 import AdsorptionModel from './pollutant/AdsorptionModel';
 
