@@ -12,22 +12,10 @@ export interface WaterParams {
 }
 
 export class WaterStore extends BasicTableWithEditStore<WaterParams> {
-    @observable database: DataBaseType<WaterParams> = { props: [] };
-
-    @computed get tableList(): FullRecordType<WaterParams>[] {
-        return this.database.props;
-    }
-
     public STORE_NAME = 'WaterStore';
 
-    public STORED_PATH: string[] = ['database', 'water'];
-
     constructor() {
-        super();
-        this.database = Storage.read(this.STORED_PATH) || { props: [] };
-        autorun(async () => {
-            return this.listeners();
-        });
+        super(['database', 'water']);
     }
 
     @action
@@ -55,14 +43,6 @@ export class WaterStore extends BasicTableWithEditStore<WaterParams> {
         const { name, description } = entry;
         const { temperature, viscosity, pressure, density } = entry.params;
         this.activeRecord = { name, description, temperature, viscosity, pressure, density };
-    }
-
-    @action
-    public deleteRecord(key: string) {
-        if (key === this.activeKey) {
-            this.resetActive();
-        }
-        this.database.props = this.tableList.filter(r => r.key !== key);
     }
 
     @action

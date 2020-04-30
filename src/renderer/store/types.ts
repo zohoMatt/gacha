@@ -1,4 +1,4 @@
-import { action, observable, toJS } from 'mobx';
+import { action, autorun, computed, observable, toJS } from 'mobx';
 import { Storage } from '../../utils/localStore';
 
 export interface Params<T> {
@@ -35,7 +35,7 @@ export interface DataBaseType<T> {
 }
 
 export abstract class BasicTableWithEditStore<T> {
-    @observable abstract database: DataBaseType<T>;
+    @observable database: DataBaseType<T> = { props: [] };
 
     @observable activeKey: string | null = null;
 
@@ -43,11 +43,20 @@ export abstract class BasicTableWithEditStore<T> {
 
     @observable changesMade = false;
 
-    public abstract STORED_PATH: string[];
+    public STORED_PATH: string[] = [];
 
     public abstract STORE_NAME: string;
 
-    abstract get tableList(): FullRecordType<T>[];
+    @computed get tableList(): FullRecordType<T>[] {
+        return this.database.props;
+    }
+
+    protected constructor(storedPath: string[]) {
+        this.database = Storage.read(storedPath) || { props: [] };
+        autorun(async () => {
+            return this.listeners();
+        });
+    }
 
     public async listeners() {
         try {
@@ -77,6 +86,14 @@ export abstract class BasicTableWithEditStore<T> {
     }
 
     @action
+    public deleteRecord(key: string) {
+        if (key === this.activeKey) {
+            this.resetActive();
+        }
+        this.database.props = this.tableList.filter(r => r.key !== key);
+    }
+
+    @action
     public cancel() {
         this.resetActive();
     }
@@ -84,8 +101,6 @@ export abstract class BasicTableWithEditStore<T> {
     public abstract createNew(): void;
 
     public abstract edit(key: string): void;
-
-    public abstract deleteRecord(key: string): void;
 
     public abstract save(): void;
 
