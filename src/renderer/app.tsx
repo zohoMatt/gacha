@@ -4,6 +4,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 
+import { message } from 'antd';
 import Application from './components/Application';
 import { Storage } from '../utils/localStore';
 
@@ -24,3 +25,5 @@ const render = (Component: () => JSX.Element) => {
 // Init storage and import data
 Storage.init({ filename: 'master-pfas' });
 Storage.import().then(() => render(Application));
+// Config message
+message.config({ maxCount: 5 });
