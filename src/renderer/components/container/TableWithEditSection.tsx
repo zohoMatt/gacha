@@ -1,11 +1,13 @@
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { message } from 'antd';
-import { triggerValidator } from '../../../utils/validators/trigger';
-import { Validator, ValidLevels } from '../../../utils/validators/types';
+
 import { OperationPanel, OperationPanelButtons } from '../common/OperationPanel';
 import { RecordList } from '../common/RecordList';
 import { IdleStatePrompt } from '../common/IdleStatePrompt';
+import { triggerValidator } from '../../../utils/validators/trigger';
+
+import { Validator, ValidLevels } from '../../../utils/validators/types';
 import { ViewWaterProps } from '../configuration/water/ViewWaterProps';
 import { BriefRecordType, TableWithEditStore } from '../../store/types';
 
@@ -13,7 +15,7 @@ const styles = require('./TableWithEditSection.module.less');
 
 export interface RenderPropsParams {
     form: React.RefObject<any>;
-    initValues: any;
+    initValues: BriefRecordType<any>;
     onValuesChange: (...args: any[]) => any;
 }
 
@@ -21,7 +23,8 @@ export interface TableWithEditSectionProps {
     title: string;
     store: TableWithEditStore<any>;
     validator: Validator;
-    render: (params: RenderPropsParams) => void;
+    renderEdit: (params: RenderPropsParams) => void;
+    renderView: (database: BriefRecordType<any>) => void;
 }
 
 export interface TableWithEditSectionState {
@@ -97,7 +100,7 @@ export class TableWithEditSection extends React.Component<
 
     protected validate(record?: any, newName?: string) {
         const pending = record || this.store.activeRecord;
-        const {validator} = this.props;
+        const { validator } = this.props;
         const allNames = this.store.database.props
             .filter(r => newName || r.key !== this.store.activeKey)
             .map(p => p.name);
@@ -133,9 +136,9 @@ export class TableWithEditSection extends React.Component<
                 </div>
                 <div className={styles.edit}>
                     {status === 'idle' ? <IdleStatePrompt onCreate={this.createNew} /> : null}
-                    {status === 'view' ? <ViewWaterProps data={activeRecord!} /> : null}
+                    {status === 'view' ? this.props.renderView(activeRecord) : null}
                     {status === 'edit'
-                        ? this.props.render({
+                        ? this.props.renderEdit({
                               form: this.formRef,
                               initValues: activeRecord,
                               onValuesChange: this.changeParams.bind(this)
