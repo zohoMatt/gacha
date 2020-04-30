@@ -121,7 +121,6 @@ export class TableWithEditSection extends React.Component<
         const { warning, status } = this.state;
         const { title } = this.props;
         const { changesMade, activeRecord, tableList } = this.store;
-        console.log(tableList);
         const { Edit, Save, SaveAs, Cancel } = OperationPanelButtons;
         return (
             <div className={styles.container}>

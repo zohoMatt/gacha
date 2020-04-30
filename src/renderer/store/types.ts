@@ -1,4 +1,6 @@
 import { action, autorun, computed, observable, toJS } from 'mobx';
+import { omit } from 'lodash';
+import { v4 } from 'uuid';
 import { Storage } from '../../utils/localStore';
 
 export interface Params<T> {
@@ -86,6 +88,58 @@ export abstract class BasicTableWithEditStore<T> {
     }
 
     @action
+    public edit(key: string) {
+        this.changesHappen(false);
+        this.activeKey = key;
+        const entry = this.tableList.find(r => r.key === key);
+        if (!entry) {
+            throw new Error(`'edit()' No matching record.`);
+        }
+        const { name, description } = entry;
+        this.activeRecord = { name, description, ...entry.params };
+    }
+
+    @action
+    public save() {
+        if (!this.activeRecord || !this.activeRecord.name) {
+            const error = `'Name' cannot be left empty.`;
+            throw new Error(error);
+        }
+        const { name, description } = this.activeRecord;
+        const params: any = omit(this.activeRecord, ['name', 'description']);
+        const origin = this.tableList.find(p => p.key === this.activeKey);
+
+        // New record
+        if (!origin) {
+            this.saveAs(name);
+        } else {
+            origin.name = name;
+            origin.description = description;
+            origin.params = params;
+        }
+
+        this.changesHappen(false);
+    }
+
+    public saveAs(name: string) {
+        const key = v4();
+        if (!this.activeRecord) {
+            throw new Error(`saveAs(): No valid active record editing.`);
+        }
+        const { description } = this.activeRecord;
+        const params: any = omit(this.activeRecord, ['name', 'description']);
+        const toAdd = {
+            key,
+            name,
+            description,
+            params
+        };
+        this.database.props = [toAdd].concat(this.tableList);
+        // Active new key
+        this.edit(key);
+    }
+
+    @action
     public deleteRecord(key: string) {
         if (key === this.activeKey) {
             this.resetActive();
@@ -99,10 +153,4 @@ export abstract class BasicTableWithEditStore<T> {
     }
 
     public abstract createNew(): void;
-
-    public abstract edit(key: string): void;
-
-    public abstract save(): void;
-
-    public abstract saveAs(name: string): void;
 }

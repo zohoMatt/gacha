@@ -13,7 +13,6 @@ export class WaterProps extends React.Component {
     public store: WaterStore = new WaterStore();
 
     public render() {
-        console.log(this.store);
         return (
             <TableWithEditSection
                 title="Water Properties"
