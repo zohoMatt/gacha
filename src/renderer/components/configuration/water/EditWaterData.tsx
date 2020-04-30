@@ -1,35 +1,23 @@
 import * as React from 'react';
 import { Divider, Form, Input } from 'antd';
-import { inject, observer } from 'mobx-react';
 
 import { TextSwitcher } from '../../common/TextSwticher';
-import { ActiveEditing, WaterStore } from '../../../store/water.store';
+import { ActiveEditing } from '../../../store/water.store';
 import { Water } from '../../../../utils/calculation/waterProperties.maths';
 import { Calculation } from '../../../../utils/calculation/basic';
-import { MathsPrompt } from '../../common/MathsPrompt';
 
 const styles = require('./EditWaterData.module.less');
 
 export interface EditWaterProps {
     form: React.RefObject<any>;
-    // injected
-    store?: WaterStore;
+    initValues: ActiveEditing;
+    onValuesChange: (params: ActiveEditing) => any;
 }
 
-// export interface EditWaterState {
-// }
-
-@inject('store')
-@observer
 export class EditWaterData extends React.Component<EditWaterProps> {
-    public changeParams = (allParams: ActiveEditing) => {
-        this.props.store!.changeAllParams(allParams);
-    };
-
     public render() {
-        const { form, store } = this.props;
-        const { activeRecord } = store!;
-        const { temperature } = activeRecord!;
+        const { form, initValues, onValuesChange } = this.props;
+        const { temperature } = initValues;
         const NORMAL_RULES = [{ required: true, message: 'Value cannot be empty' }];
 
         return (
@@ -42,8 +30,8 @@ export class EditWaterData extends React.Component<EditWaterProps> {
                         hideRequiredMark={true}
                         labelCol={{ span: 6 }}
                         wrapperCol={{ span: 8 }}
-                        onValuesChange={(s, all: any) => this.changeParams(all)}
-                        initialValues={activeRecord!}>
+                        onValuesChange={(s, all: any) => onValuesChange(all)}
+                        initialValues={initValues}>
                         <Form.Item
                             name="name"
                             label="Name"

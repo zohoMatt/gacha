@@ -3,7 +3,7 @@ import { observer, Provider } from 'mobx-react';
 import { message } from 'antd';
 import { EditWaterData } from './EditWaterData';
 import { RecordList } from '../../common/RecordList';
-import { WaterStore } from '../../../store/water.store';
+import { ActiveEditing, WaterStore } from '../../../store/water.store';
 import { OperationPanel, OperationPanelButtons } from '../../common/OperationPanel';
 import { IdleStatePrompt } from '../../common/IdleStatePrompt';
 import { ViewWaterProps } from './ViewWaterProps';
@@ -27,8 +27,6 @@ class WaterProps extends React.Component<{}, WaterComponentState> {
 
     public store = new WaterStore();
 
-    public pendingKey = '';
-
     public formRef: React.RefObject<any> = React.createRef();
 
     public createNew = () => {
@@ -39,28 +37,6 @@ class WaterProps extends React.Component<{}, WaterComponentState> {
     public toView = (key: string) => {
         this.store.editRecord(key);
         this.setState({ status: 'view' });
-    };
-
-    public toEdit = (key: string, force?: boolean) => {
-        if (key === '') return; // Called after confirming quitting, but no pending key exists
-
-        // Repeatedly press 'edit' button
-        if (key === this.store.activeKey) {
-            message.warning(`Already editing '${this.store.activeRecord!.name}'`);
-            return;
-        }
-
-        // Called after confirming quitting, certain pending key exists
-        // OR: No changes has been made to this record.
-        if (!this.store.changesMade || force) {
-            this.store.editRecord(key);
-            this.pendingKey = '';
-            if (this.formRef.current) this.formRef.current.setFieldsValue(this.store.activeRecord);
-        } else {
-            this.setState({ warning: true });
-            this.pendingKey = key;
-            message.warning('Discard changes?');
-        }
     };
 
     public toDelete = (key: string) => {
@@ -91,8 +67,6 @@ class WaterProps extends React.Component<{}, WaterComponentState> {
         if (confirm) {
             this.setState({ status: 'idle' });
             this.store.resetActiveRecords();
-            // If the confirmation popover is triggered by 'edit' button
-            this.toEdit(this.pendingKey, true);
 
             this.setState({ warning: false });
         } else if (this.store.changesMade) {
@@ -112,6 +86,10 @@ class WaterProps extends React.Component<{}, WaterComponentState> {
             record.temperature &&
             record.pressure
         );
+    };
+
+    public changeParams = (allParams: ActiveEditing) => {
+        this.store.changeAllParams(allParams);
     };
 
     protected validate(record: any, newName?: string) {
@@ -154,7 +132,13 @@ class WaterProps extends React.Component<{}, WaterComponentState> {
                     <div className={styles.edit}>
                         {status === 'idle' ? <IdleStatePrompt onCreate={this.createNew} /> : null}
                         {status === 'view' ? <ViewWaterProps data={activeRecord!} /> : null}
-                        {status === 'edit' ? <EditWaterData form={this.formRef} /> : null}
+                        {status === 'edit' ? (
+                            <EditWaterData
+                                form={this.formRef}
+                                initValues={activeRecord!}
+                                onValuesChange={this.changeParams}
+                                />
+                        ) : null}
                         {status !== 'idle' ? (
                             <OperationPanel
                                 buttons={
