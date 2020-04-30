@@ -2,16 +2,17 @@ import * as React from 'react';
 import { Divider, Form, Input } from 'antd';
 
 import { TextSwitcher } from '../../common/TextSwticher';
-import { ActiveEditing } from '../../../store/water.store';
 import { Water } from '../../../../utils/calculation/waterProperties.maths';
 import { Calculation } from '../../../../utils/calculation/basic';
+import { BriefRecordType } from '../../../store/types';
+import { WaterParams } from '../../../store/water.store';
 
 const styles = require('./EditWaterData.module.less');
 
 export interface EditWaterProps {
     form: React.RefObject<any>;
-    initValues: ActiveEditing;
-    onValuesChange: (params: ActiveEditing) => any;
+    initValues: BriefRecordType<WaterParams>;
+    onValuesChange: (params: BriefRecordType<WaterParams>) => any;
 }
 
 export const EditWaterData: React.FunctionComponent<EditWaterProps> = ({

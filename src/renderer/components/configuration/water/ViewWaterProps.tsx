@@ -1,14 +1,15 @@
 import * as React from 'react';
 import { Divider, Form } from 'antd';
 
-import { ActiveEditing } from '../../../store/water.store';
 import { Calculation } from '../../../../utils/calculation/basic';
 import { Water } from '../../../../utils/calculation/waterProperties.maths';
+import { BriefRecordType } from '../../../store/types';
+import { WaterParams } from '../../../store/water.store';
 
 const styles = require('./ViewWaterProps.module.less');
 
 export interface ViewWaterPropsComponentProps {
-    data: ActiveEditing;
+    data: BriefRecordType<WaterParams>;
 }
 
 const ViewWaterProps: React.FunctionComponent<ViewWaterPropsComponentProps> = ({ data }) => {
@@ -23,10 +24,10 @@ const ViewWaterProps: React.FunctionComponent<ViewWaterPropsComponentProps> = ({
             </Form.Item>
             <Divider orientation="left">Basic</Divider>
             <Form.Item label="Pressure">
-                <span className={styles.text}>{`${pressure  } atm`}</span>
+                <span className={styles.text}>{`${pressure} atm`}</span>
             </Form.Item>
             <Form.Item label="Temperature">
-                <span className={styles.text}>{`${temperature  } ℃`}</span>
+                <span className={styles.text}>{`${temperature} ℃`}</span>
             </Form.Item>
             <Divider orientation="left">Correlations</Divider>
             <Form.Item label="Density">

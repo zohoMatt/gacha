@@ -45,18 +45,18 @@ const MOCK_DATA = {
 };
 
 describe(`Testing 'class WaterStore' in water.store.ts`, () => {
-    test('@action save(), editRecord()', () => {
+    test('@action save(), edit()', () => {
         const wstore = new WaterStore(MOCK_DATA);
-        wstore.editRecord('a1');
+        wstore.edit('a1');
         if (wstore.activeRecord) wstore.activeRecord.temperature = 125;
         wstore.save();
 
         expect(wstore.database.props[0].params.temperature).toBe(125);
     });
 
-    test('@action startNewRecord', () => {
+    test('@action createNew', () => {
         const wstore = new WaterStore({ props: [] });
-        wstore.startNewRecord();
+        wstore.createNew();
         expect(wstore.activeRecord).toEqual({
             name: '',
             description: '',
@@ -73,9 +73,9 @@ describe(`Testing 'class WaterStore' in water.store.ts`, () => {
         expect(wstore.database.props.map(r => r.key)).toEqual(['a2', 'a3']);
     });
 
-    test('@action editRecord() saveAs()', () => {
+    test('@action edit() saveAs()', () => {
         const wstore = new WaterStore(MOCK_DATA);
-        wstore.editRecord('a1');
+        wstore.edit('a1');
         expect(wstore.activeKey).toBe('a1');
         expect(wstore.activeRecord).toEqual({
             name: 'first experiment',
@@ -97,7 +97,7 @@ describe(`Testing 'class WaterStore' in water.store.ts`, () => {
         expect(() => wstore.saveAs('random')).toThrowError();
         // save
         expect(() => wstore.save()).toThrowError();
-        // editRecord
-        expect(() => wstore.editRecord('noexist')).toThrowError();
+        // edit
+        expect(() => wstore.edit('noexist')).toThrowError();
     });
 });

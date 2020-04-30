@@ -1,34 +1,36 @@
 import { observable, action, computed, autorun, toJS } from 'mobx';
 import { v4 } from 'uuid';
 
-import { SwitcherType, DataSetEntry } from './types';
+import {
+    SwitcherType,
+    TableWithEditStore,
+    DataBaseType,
+    FullRecordType,
+    BriefRecordType
+} from './types';
 import { Storage } from '../../utils/localStore';
 
-export interface WaterProps {
+export interface WaterParams {
     pressure: number; // atm
     temperature: number; // ℃
     density: SwitcherType; // g/cm^3
     viscosity: SwitcherType; // g/cm.s
 }
 
-export interface WaterDatabase {
-    props: DataSetEntry<WaterProps>[];
-}
-
-export type ActiveEditing = WaterProps & { name: string; description: string };
-
-export class WaterStore {
-    @observable database: WaterDatabase = { props: [] };
+export class WaterStore implements TableWithEditStore<WaterParams> {
+    @observable database: DataBaseType<WaterParams> = { props: [] };
 
     @observable activeKey: string | null = null;
 
-    @observable activeRecord: ActiveEditing | null = null;
+    @observable activeRecord: BriefRecordType<WaterParams> | null = null;
 
     @observable changesMade = false;
 
-    @computed get waterPropsList(): DataSetEntry<WaterProps>[] {
+    @computed get tableList(): FullRecordType<WaterParams>[] {
         return this.database.props;
     }
+
+    public localFilePath: string[] = ['database', 'water'];
 
     public static STORED_PATH: string[] = ['database', 'water'];
 
@@ -39,7 +41,7 @@ export class WaterStore {
         });
     }
 
-    protected async listeners() {
+    public async listeners() {
         try {
             await Storage.update(WaterStore.STORED_PATH, toJS(this.database));
             console.log(`WaterStore::autorun Storage updated successfully.`);
@@ -49,20 +51,20 @@ export class WaterStore {
     }
 
     @action
-    public resetActiveRecords() {
+    public resetActive() {
         this.activeRecord = null;
         this.activeKey = null;
-        this.makeChanges(false);
+        this.changesHappen(false);
     }
 
     @action
-    public makeChanges(hasChanges = true) {
+    public changesHappen(hasChanges = true) {
         this.changesMade = hasChanges;
     }
 
     @action
-    public startNewRecord() {
-        this.makeChanges(false);
+    public createNew() {
+        this.changesHappen(false);
         this.activeKey = v4();
         this.activeRecord = {
             name: '',
@@ -75,10 +77,10 @@ export class WaterStore {
     }
 
     @action
-    public editRecord(key: string) {
-        this.makeChanges(false);
+    public edit(key: string) {
+        this.changesHappen(false);
         this.activeKey = key;
-        const entry = this.waterPropsList.find(r => r.key === key);
+        const entry = this.tableList.find(r => r.key === key);
         if (!entry) {
             throw new Error(`'editRecord()' No matching record.`);
         }
@@ -88,17 +90,17 @@ export class WaterStore {
     }
 
     @action
-    public changeAllParams(value: ActiveEditing) {
+    public changeParams(value: BriefRecordType<WaterParams>) {
         this.activeRecord = value;
-        this.makeChanges();
+        this.changesHappen();
     }
 
     @action
     public deleteRecord(key: string) {
         if (key === this.activeKey) {
-            this.resetActiveRecords();
+            this.resetActive();
         }
-        this.database.props = this.waterPropsList.filter(r => r.key !== key);
+        this.database.props = this.tableList.filter(r => r.key !== key);
     }
 
     @action
@@ -108,7 +110,7 @@ export class WaterStore {
             throw new Error(error);
         }
         const { name, description, pressure, temperature, density, viscosity } = this.activeRecord;
-        const origin = this.waterPropsList.find(p => p.key === this.activeKey);
+        const origin = this.tableList.find(p => p.key === this.activeKey);
 
         // New record
         if (!origin) {
@@ -138,13 +140,13 @@ export class WaterStore {
             description,
             params: { temperature, density, pressure, viscosity }
         };
-        this.database.props = [toAdd].concat(this.waterPropsList);
+        this.database.props = [toAdd].concat(this.tableList);
         // Active new key
-        this.editRecord(key);
+        this.edit(key);
     }
 
     @action
     public cancel() {
-        this.resetActiveRecords();
+        this.resetActive();
     }
 }

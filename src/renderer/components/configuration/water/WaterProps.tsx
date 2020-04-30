@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 
-import { TableWithEditSection } from '../../common/pageScale/TableWithEditSection';
+import { TableWithEditSection } from '../../container/TableWithEditSection';
 
 @observer
 export class WaterProps extends React.Component {

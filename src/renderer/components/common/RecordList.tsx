@@ -2,12 +2,13 @@ import * as React from 'react';
 import classnames from 'classnames';
 import { Input, message, Popconfirm, Table } from 'antd';
 
-import { DataSetEntry } from '../../store/types';
+import { FullRecordType, Params } from '../../store/types';
+import { WaterParams } from '../../store/water.store';
 
 const styles = require('./RecordList.module.less');
 
 export interface RecordListProps {
-    database: Array<DataSetEntry<any>>;
+    database: FullRecordType<WaterParams>[];
     disabled: boolean;
     toView: (key: string) => any;
     toDelete: (key: string) => any;
@@ -23,11 +24,11 @@ const RecordList: React.FunctionComponent<RecordListProps> = ({
 
     const TITLE = 'Are you sure to DELETE this entry?';
 
-    const viewIt = (record: DataSetEntry<any>) => (e: any) => {
+    const viewIt = (record: FullRecordType<WaterParams>) => (e: any) => {
         if (warning()) return;
         toView(record.key);
     };
-    const deleteIt = (record: DataSetEntry<any>) => (e: any) => {
+    const deleteIt = (record: FullRecordType<WaterParams>) => (e: any) => {
         toDelete(record.key);
     };
 
@@ -49,7 +50,7 @@ const RecordList: React.FunctionComponent<RecordListProps> = ({
         {
             title: 'Action',
             key: 'action',
-            render: (text: string, record: DataSetEntry<any>) => {
+            render: (text: string, record: FullRecordType<WaterParams>) => {
                 return (
                     <span>
                         <a
