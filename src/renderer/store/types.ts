@@ -1,3 +1,6 @@
+import { action, observable, toJS } from 'mobx';
+import { Storage } from '../../utils/localStore';
+
 export interface Params<T> {
     params: T;
 }
@@ -28,24 +31,63 @@ export type FullRecordType<T> = KeyID & BasicInfo & Params<T>;
 export type BriefRecordType<T> = BasicInfo & T;
 
 export interface DataBaseType<T> {
-    props: FullRecordType<T>[];
+    [key: string]: FullRecordType<T>[];
 }
 
-export interface TableWithEditStore<T> {
-    database: DataBaseType<T>;
-    activeKey: string | null;
-    activeRecord: BriefRecordType<T> | null;
-    changesMade: boolean;
-    tableList: FullRecordType<T>[];
+export abstract class BasicTableWithEditStore<T> {
+    @observable abstract database: DataBaseType<T>;
 
-    resetActive: () => void;
-    changeParams: (value: BriefRecordType<T>) => void;
-    changesHappen: (happened: boolean) => void;
+    @observable activeKey: string | null = null;
 
-    createNew: () => void;
-    edit: (key: string) => void;
-    deleteRecord: (key: string) => void;
-    save: () => void;
-    saveAs: (name: string) => void;
-    cancel: () => void;
+    @observable activeRecord: BriefRecordType<T> | null = null;
+
+    @observable changesMade = false;
+
+    public abstract STORED_PATH: string[];
+
+    public abstract STORE_NAME: string;
+
+    abstract get tableList(): FullRecordType<T>[];
+
+    public async listeners() {
+        try {
+            await Storage.update(this.STORED_PATH, toJS(this.database));
+            console.log(`${this.STORE_NAME}::autorun Storage updated successfully.`);
+        } catch (e) {
+            console.error(`${this.STORE_NAME}::autorun Storage failed in updating.`);
+        }
+    }
+
+    @action
+    public resetActive() {
+        this.activeRecord = null;
+        this.activeKey = null;
+        this.changesHappen(false);
+    }
+
+    @action
+    public changesHappen(hasChanges = true) {
+        this.changesMade = hasChanges;
+    }
+
+    @action
+    public changeParams(value: BriefRecordType<T>) {
+        this.activeRecord = value;
+        this.changesHappen();
+    }
+
+    @action
+    public cancel() {
+        this.resetActive();
+    }
+
+    public abstract createNew(): void;
+
+    public abstract edit(key: string): void;
+
+    public abstract deleteRecord(key: string): void;
+
+    public abstract save(): void;
+
+    public abstract saveAs(name: string): void;
 }

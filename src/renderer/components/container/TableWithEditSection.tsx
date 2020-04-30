@@ -8,8 +8,7 @@ import { IdleStatePrompt } from '../common/IdleStatePrompt';
 import { triggerValidator } from '../../../utils/validators/trigger';
 
 import { Validator, ValidLevels } from '../../../utils/validators/types';
-import { ViewWaterProps } from '../configuration/water/ViewWaterProps';
-import { BriefRecordType, TableWithEditStore } from '../../store/types';
+import { BriefRecordType, BasicTableWithEditStore } from '../../store/types';
 
 const styles = require('./TableWithEditSection.module.less');
 
@@ -21,7 +20,7 @@ export interface RenderPropsParams {
 
 export interface TableWithEditSectionProps {
     title: string;
-    store: TableWithEditStore<any>;
+    store: BasicTableWithEditStore<any>;
     validator: Validator;
     renderEdit: (params: RenderPropsParams) => void;
     renderView: (database: BriefRecordType<any>) => void;
@@ -122,6 +121,7 @@ export class TableWithEditSection extends React.Component<
         const { warning, status } = this.state;
         const { title } = this.props;
         const { changesMade, activeRecord, tableList } = this.store;
+        console.log(tableList);
         const { Edit, Save, SaveAs, Cancel } = OperationPanelButtons;
         return (
             <div className={styles.container}>

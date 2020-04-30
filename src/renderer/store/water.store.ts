@@ -1,13 +1,7 @@
 import { observable, action, computed, autorun, toJS } from 'mobx';
 import { v4 } from 'uuid';
 
-import {
-    SwitcherType,
-    TableWithEditStore,
-    DataBaseType,
-    FullRecordType,
-    BriefRecordType
-} from './types';
+import { SwitcherType, DataBaseType, FullRecordType, BasicTableWithEditStore } from './types';
 import { Storage } from '../../utils/localStore';
 
 export interface WaterParams {
@@ -17,47 +11,23 @@ export interface WaterParams {
     viscosity: SwitcherType; // g/cm.s
 }
 
-export class WaterStore implements TableWithEditStore<WaterParams> {
+export class WaterStore extends BasicTableWithEditStore<WaterParams> {
     @observable database: DataBaseType<WaterParams> = { props: [] };
-
-    @observable activeKey: string | null = null;
-
-    @observable activeRecord: BriefRecordType<WaterParams> | null = null;
-
-    @observable changesMade = false;
 
     @computed get tableList(): FullRecordType<WaterParams>[] {
         return this.database.props;
     }
 
-    public static STORED_PATH: string[] = ['database', 'water'];
+    public STORE_NAME = 'WaterStore';
+
+    public STORED_PATH: string[] = ['database', 'water'];
 
     constructor() {
-        this.database = Storage.read(WaterStore.STORED_PATH);
+        super();
+        this.database = Storage.read(this.STORED_PATH) || { props: [] };
         autorun(async () => {
             return this.listeners();
         });
-    }
-
-    public async listeners() {
-        try {
-            await Storage.update(WaterStore.STORED_PATH, toJS(this.database));
-            console.log(`WaterStore::autorun Storage updated successfully.`);
-        } catch (e) {
-            console.error(`WaterStore::autorun Storage failed in updating.`);
-        }
-    }
-
-    @action
-    public resetActive() {
-        this.activeRecord = null;
-        this.activeKey = null;
-        this.changesHappen(false);
-    }
-
-    @action
-    public changesHappen(hasChanges = true) {
-        this.changesMade = hasChanges;
     }
 
     @action
@@ -85,12 +55,6 @@ export class WaterStore implements TableWithEditStore<WaterParams> {
         const { name, description } = entry;
         const { temperature, viscosity, pressure, density } = entry.params;
         this.activeRecord = { name, description, temperature, viscosity, pressure, density };
-    }
-
-    @action
-    public changeParams(value: BriefRecordType<WaterParams>) {
-        this.activeRecord = value;
-        this.changesHappen();
     }
 
     @action
@@ -143,10 +107,5 @@ export class WaterStore implements TableWithEditStore<WaterParams> {
         this.database.props = [toAdd].concat(this.tableList);
         // Active new key
         this.edit(key);
-    }
-
-    @action
-    public cancel() {
-        this.resetActive();
     }
 }

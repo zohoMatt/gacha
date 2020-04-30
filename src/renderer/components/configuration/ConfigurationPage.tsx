@@ -3,6 +3,7 @@ import { Switch, Route, useRouteMatch } from 'react-router-dom';
 
 import NavBar from '../nav/NavBar';
 import { WaterProps } from './water/WaterProps';
+import { SimulationParameter } from './simParams/SimulationParameter';
 import PollutantProps from './pollutant/PollutantProps';
 import AdsorptionModel from './pollutant/AdsorptionModel';
 
@@ -21,8 +22,8 @@ const ConfigurationPage: React.FunctionComponent = () => {
                     <Route path={`${match.path}/settings/components/prop`}>
                         <PollutantProps />
                     </Route>
-                    <Route path={`${match.path}/settings/components/model`}>
-                        <AdsorptionModel />
+                    <Route path={`${match.path}/settings/sim/psdm`}>
+                        <SimulationParameter />
                     </Route>
                 </Switch>
             </div>

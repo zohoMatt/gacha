@@ -20,6 +20,7 @@ const RecordList: React.FunctionComponent<RecordListProps> = ({
     toView,
     toDelete
 }) => {
+    console.log('record-list', database);
     const [search, setSearch] = React.useState('');
 
     const TITLE = 'Are you sure to DELETE this entry?';

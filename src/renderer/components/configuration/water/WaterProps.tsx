@@ -4,15 +4,16 @@ import { observer } from 'mobx-react';
 import { TableWithEditSection } from '../../container/TableWithEditSection';
 import { WaterPropertiesValidators } from '../../../../utils/validators/waterProperties.valid';
 import { WaterParams, WaterStore } from '../../../store/water.store';
-import { BriefRecordType, TableWithEditStore } from '../../../store/types';
+import { BriefRecordType } from '../../../store/types';
 import { EditWaterData } from './EditWaterData';
 import { ViewWaterProps } from './ViewWaterProps';
 
 @observer
 export class WaterProps extends React.Component {
-    public store: TableWithEditStore<WaterParams> = new WaterStore();
+    public store: WaterStore = new WaterStore();
 
     public render() {
+        console.log(this.store);
         return (
             <TableWithEditSection
                 title="Water Properties"
