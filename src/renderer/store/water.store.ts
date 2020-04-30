@@ -123,6 +123,8 @@ export class WaterStore implements TableWithEditStore<WaterParams> {
                 viscosity
             };
         }
+
+        this.changesHappen(false);
     }
 
     @action
