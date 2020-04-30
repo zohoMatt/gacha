@@ -1,35 +1,45 @@
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { message } from 'antd';
-import { WaterParams, WaterStore } from '../../store/water.store';
-import { WaterPopertiesValidators } from '../../../utils/validators/waterProperties.valid';
 import { triggerValidator } from '../../../utils/validators/trigger';
-import { ValidLevels } from '../../../utils/validators/types';
+import { Validator, ValidLevels } from '../../../utils/validators/types';
 import { OperationPanel, OperationPanelButtons } from '../common/OperationPanel';
 import { RecordList } from '../common/RecordList';
 import { IdleStatePrompt } from '../common/IdleStatePrompt';
 import { ViewWaterProps } from '../configuration/water/ViewWaterProps';
-import { EditWaterData } from '../configuration/water/EditWaterData';
-import { BriefRecordType } from '../../store/types';
+import { BriefRecordType, TableWithEditStore } from '../../store/types';
 
 const styles = require('./TableWithEditSection.module.less');
 
-// export interface TableWithEditSectionProps {
-// }
+export interface RenderPropsParams {
+    form: React.RefObject<any>;
+    initValues: any;
+    onValuesChange: (...args: any[]) => any;
+}
 
-export interface WaterComponentState {
+export interface TableWithEditSectionProps {
+    title: string;
+    store: TableWithEditStore<any>;
+    validator: Validator;
+    render: (params: RenderPropsParams) => void;
+}
+
+export interface TableWithEditSectionState {
     warning: boolean;
     status: 'idle' | 'edit' | 'view';
 }
 
 @observer
-export class TableWithEditSection extends React.Component<{}, WaterComponentState> {
-    public state: WaterComponentState = {
+export class TableWithEditSection extends React.Component<
+    TableWithEditSectionProps,
+    TableWithEditSectionState
+> {
+    public state: TableWithEditSectionState = {
         warning: false,
         status: 'idle'
     };
 
-    public store = new WaterStore();
+    public store = this.props.store;
 
     public formRef: React.RefObject<any> = React.createRef();
 
@@ -81,34 +91,22 @@ export class TableWithEditSection extends React.Component<{}, WaterComponentStat
         }
     };
 
-    public isValid = (checkName: boolean) => {
-        const record = this.store.activeRecord;
-        return (
-            record &&
-            (record.name || !checkName) &&
-            record.description &&
-            record.temperature &&
-            record.pressure
-        );
-    };
-
-    public changeParams = (allParams: BriefRecordType<WaterParams>) => {
+    public changeParams = (allParams: BriefRecordType<any>) => {
         this.store.changeParams(allParams);
     };
 
-    protected validate(record: any, newName?: string) {
+    protected validate(record?: any, newName?: string) {
+        const pending = record || this.store.activeRecord;
+        const {validator} = this.props;
         const allNames = this.store.database.props
             .filter(r => newName || r.key !== this.store.activeKey)
             .map(p => p.name);
-        for (const key in WaterPopertiesValidators) {
+        for (const key in validator) {
             if (
                 !triggerValidator(
                     key === 'name'
-                        ? WaterPopertiesValidators[key](
-                              newName === undefined ? record[key] : newName,
-                              allNames
-                          )
-                        : WaterPopertiesValidators[key](record[key]),
+                        ? validator[key](newName === undefined ? pending[key] : newName, allNames)
+                        : validator[key](pending[key]),
                     ValidLevels.Error
                 )
             )
@@ -119,11 +117,12 @@ export class TableWithEditSection extends React.Component<{}, WaterComponentStat
 
     public render() {
         const { warning, status } = this.state;
+        const { title } = this.props;
         const { changesMade, activeRecord, tableList } = this.store;
         const { Edit, Save, SaveAs, Cancel } = OperationPanelButtons;
         return (
             <div className={styles.container}>
-                <div className={styles.title}>Water Properties</div>
+                <div className={styles.title}>{title}</div>
                 <div className={styles.table}>
                     <RecordList
                         database={tableList}
@@ -135,20 +134,19 @@ export class TableWithEditSection extends React.Component<{}, WaterComponentStat
                 <div className={styles.edit}>
                     {status === 'idle' ? <IdleStatePrompt onCreate={this.createNew} /> : null}
                     {status === 'view' ? <ViewWaterProps data={activeRecord!} /> : null}
-                    {status === 'edit' ? (
-                        <EditWaterData
-                            form={this.formRef}
-                            initValues={activeRecord!}
-                            onValuesChange={this.changeParams}
-                            />
-                    ) : null}
+                    {status === 'edit'
+                        ? this.props.render({
+                              form: this.formRef,
+                              initValues: activeRecord,
+                              onValuesChange: this.changeParams.bind(this)
+                          })
+                        : null}
                     {status !== 'idle' ? (
                         <OperationPanel
                             buttons={
                                 status === 'view' ? [Edit, SaveAs, Cancel] : [Save, SaveAs, Cancel]
                             }
-                            saveDisabled={!changesMade || !this.isValid(true)}
-                            saveAsDisabled={!this.isValid(false)}
+                            saveDisabled={!changesMade}
                             warning={warning}
                             onEdit={() => this.setState({ status: 'edit' })}
                             onSave={() => this.save()}

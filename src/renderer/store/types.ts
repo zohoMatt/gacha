@@ -36,16 +36,12 @@ export interface TableWithEditStore<T> {
     activeKey: string | null;
     activeRecord: BriefRecordType<T> | null;
     changesMade: boolean;
+    tableList: FullRecordType<T>[];
 
-    localFilePath: string[];
-
-    tableList: Params<T>[];
-
-    listeners: (...args: any[]) => any;
     resetActive: () => void;
     changeParams: (value: BriefRecordType<T>) => void;
-
     changesHappen: (happened: boolean) => void;
+
     createNew: () => void;
     edit: (key: string) => void;
     deleteRecord: (key: string) => void;

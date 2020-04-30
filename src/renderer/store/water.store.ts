@@ -30,8 +30,6 @@ export class WaterStore implements TableWithEditStore<WaterParams> {
         return this.database.props;
     }
 
-    public localFilePath: string[] = ['database', 'water'];
-
     public static STORED_PATH: string[] = ['database', 'water'];
 
     constructor() {

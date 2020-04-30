@@ -70,7 +70,7 @@ export class OperationPanel extends React.Component<OperationPanelProps> {
                     </Button>
                 ) : null}
                 {buttons.includes(Save) ? (
-                    <Button disabled={saveDisabled} type="primary" onClick={onSave}>
+                    <Button disabled={saveDisabled || false} type="primary" onClick={onSave}>
                         Save
                     </Button>
                 ) : null}
@@ -88,7 +88,7 @@ export class OperationPanel extends React.Component<OperationPanelProps> {
                         onVisibleChange={this.handlePopover}>
                         <Button
                             type="primary"
-                            disabled={saveAsDisabled}
+                            disabled={saveAsDisabled || false}
                             onClick={() => this.handlePopover(true)}>
                             Save as
                         </Button>

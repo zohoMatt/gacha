@@ -5,7 +5,7 @@ const valid = {
     message: ''
 };
 
-const WaterPopertiesValidators: Validator = {
+const WaterPropertiesValidators: Validator = {
     name: (name: string, allNames?: string[]) => {
         if (name.length <= 0 || name.length > 20) {
             return {
@@ -50,4 +50,4 @@ const WaterPopertiesValidators: Validator = {
     }
 };
 
-export { WaterPopertiesValidators };
+export { WaterPropertiesValidators };
