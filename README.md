@@ -36,6 +36,3 @@ npm test
 ```
 
 ### Packaging
-
-### TODOS
-1. eslint -> tslint
