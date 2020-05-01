@@ -1,5 +1,5 @@
 import { Validator, ValidLevels } from './types';
-import { CommonValidator, Output } from './common';
+import { CommonValidator, Output, Rule } from './common';
 import { WaterParams } from '../../renderer/store/water.store';
 import { BriefRecordType } from '../../renderer/store/types';
 
@@ -7,7 +7,9 @@ const WaterPropertiesValidators: Validator<WaterParams> = {
     ...CommonValidator.nameDescrptValidator,
     pressure: (record: BriefRecordType<WaterParams>) => {
         const { pressure } = record;
-        if (pressure < 0.9 || pressure > 1.1) {
+        if (pressure <= 0) {
+            return Rule.numMinRule(pressure, 0, 'Pressure');
+        } if (pressure < 0.9 || pressure > 1.1) {
             return {
                 valid: ValidLevels.Warn,
                 message: 'Abnormal pressure value.'

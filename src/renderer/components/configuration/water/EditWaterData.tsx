@@ -52,8 +52,7 @@ export const EditWaterData: React.FunctionComponent<EditProps> = ({
                                 min: 0.9,
                                 max: 1.1,
                                 type: 'number',
-                                message: 'Warning: Abnormal value.',
-                                validateTrigger: 'onChange'
+                                message: 'Warning: Abnormal value.'
                             }
                         ]}
                         normalize={v => (v ? +v : '')}>
