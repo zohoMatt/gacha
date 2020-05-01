@@ -5,7 +5,7 @@ import NavBar from '../nav/NavBar';
 import { WaterProps } from './water/WaterProps';
 import { SimulationParameter } from './simParams/SimulationParameter';
 import PollutantProps from './pollutant/PollutantProps';
-import AdsorptionModel from './pollutant/AdsorptionModel';
+import { FixedBedProps } from './bed/FixedBedProps';
 
 const styles = require('./ConfigurationPage.module.less');
 
@@ -24,6 +24,9 @@ const ConfigurationPage: React.FunctionComponent = () => {
                     </Route>
                     <Route path={`${match.path}/settings/sim/psdm`}>
                         <SimulationParameter />
+                    </Route>
+                    <Route path={`${match.path}/settings/bed/prop`}>
+                        <FixedBedProps />
                     </Route>
                 </Switch>
             </div>
