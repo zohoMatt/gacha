@@ -102,8 +102,8 @@ export class OperationPanel extends React.Component<OperationPanelProps> {
                 ) : null}
                 {buttons.includes(Cancel) ? (
                     <Popconfirm
-                        placement="top"
-                        title="Discard changes?"
+                        placement="left"
+                        title="All unsaved changes will be lost. Sure to quit?"
                         visible={warning || false}
                         onConfirm={onConfirmCancel}
                         onCancel={onQuitCancel}

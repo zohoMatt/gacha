@@ -107,16 +107,12 @@ export class TableWithEditSection extends React.Component<
     };
 
     public triggerStatusChange = (confirm = false) => {
-        if (confirm) {
+        if (confirm || this.state.status === 'view') {
             this.setState({ status: 'idle' });
             this.store.resetActive();
-
             this.setState({ warning: false });
-        } else if (this.store.changesMade) {
-            this.setState({ warning: true });
         } else {
-            this.setState({ status: 'idle' });
-            this.store.resetActive();
+            this.setState({ warning: true });
         }
     };
 
