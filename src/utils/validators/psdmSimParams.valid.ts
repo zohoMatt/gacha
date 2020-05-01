@@ -26,15 +26,17 @@ const threeFactorValidator = (
             valid: ValidLevels.Error,
             message: '{Total Run Time} must be greater than {First Point Displayed}.'
         };
-    } if (totalRunTime / timeStep < pointsLimit) {
+    }
+    if (totalRunTime / timeStep > pointsLimit) {
         return {
             valid: ValidLevels.Error,
-            message: `{Total Run Time}/{Time Step} must be less than ${pointsLimit}.`
+            message: `{Total Run Time}/{Time Step} must be no more than ${pointsLimit}.`
         };
-    } return {
-            valid: ValidLevels.Valid,
-            message: ''
-        };
+    }
+    return {
+        valid: ValidLevels.Valid,
+        message: ''
+    };
 };
 
 export const PsdmSimParamsValidators: Validator<PsdmParams> = {

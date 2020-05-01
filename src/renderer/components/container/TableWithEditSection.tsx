@@ -83,7 +83,7 @@ export class TableWithEditSection extends React.Component<
         // Validate
         if (
             !Automation.formValidator(
-                WaterPropertiesValidators,
+                this.props.validator,
                 this.store.activeRecord,
                 this.store.activeKey || '',
                 this.store.tableList,
@@ -123,7 +123,7 @@ export class TableWithEditSection extends React.Component<
     public render() {
         const { warning, status } = this.state;
         const { title } = this.props;
-        const { changesMade, activeRecord, tableList } = this.store;
+        const { changesMade, activeKey, activeRecord, tableList } = this.store;
         const { Edit, Save, SaveAs, Cancel } = OperationPanelButtons;
         return (
             <div className={styles.container}>

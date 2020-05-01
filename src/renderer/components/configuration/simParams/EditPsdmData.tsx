@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Divider, Form, Input } from 'antd';
 import { EditProps } from '../../container/TableWithEditSection';
+import { PsdmSimParamsValidators } from '../../../../utils/validators/psdmSimParams.valid';
+import { ValidLevels } from '../../../../utils/validators/types';
 
 const styles = require('./EditPsdmData.module.less');
 
@@ -9,24 +11,27 @@ export const EditPsdmData: React.FunctionComponent<EditProps> = ({
     initValues,
     onValuesChange
 }) => {
-    const { temperature } = initValues;
     const NORMAL_RULES = [{ required: true, message: 'Value cannot be empty.' }];
 
-    const POINTS_LIMIT = 500;
-    const checkTotalPoints = (compareWith: string) => ({ getFieldValue }: any) => ({
-        validator: (_: any, value: number) => {
-            const message = `{Total Run Time}/{Time Step} should be less than ${POINTS_LIMIT}.`;
-            if (value === 0) {
-                return Promise.reject(message);
-            }
-            const result =
-                compareWith === 'totalRunTime'
-                    ? getFieldValue(compareWith) / value
-                    : value / getFieldValue(compareWith);
-            if (!Number.isNaN(result) && result <= POINTS_LIMIT) {
+    const checkTotalPoints = ({ getFieldValue }: any) => ({
+        validator: () => {
+            const totalRunTime = getFieldValue('totalRunTime');
+            const firstPointDisplayed = getFieldValue('firstPointDisplayed');
+            const timeStep = getFieldValue('timeStep');
+            const valid = PsdmSimParamsValidators.totalRunTime(
+                {
+                    totalRunTime,
+                    firstPointDisplayed,
+                    timeStep
+                } as any,
+                '',
+                []
+            );
+            if (valid.valid === ValidLevels.Valid) {
                 return Promise.resolve();
-            }
-            return Promise.reject(message);
+            } 
+                return Promise.reject(valid.message);
+            
         }
     });
 
@@ -58,21 +63,21 @@ export const EditPsdmData: React.FunctionComponent<EditProps> = ({
                     <Form.Item
                         name="totalRunTime"
                         label="Total Run Time"
-                        rules={[...NORMAL_RULES, checkTotalPoints('timeStep')]}
+                        rules={[...NORMAL_RULES, checkTotalPoints]}
                         normalize={v => (v ? +v : '')}>
                         <Input type="number" addonAfter="d" />
                     </Form.Item>
                     <Form.Item
                         name="firstPointDisplayed"
                         label="First Point Displayed"
-                        rules={NORMAL_RULES}
+                        rules={[...NORMAL_RULES, checkTotalPoints]}
                         normalize={v => (v ? +v : '')}>
                         <Input type="number" addonAfter="d" />
                     </Form.Item>
                     <Form.Item
                         name="timeStep"
                         label="Time Step"
-                        rules={[...NORMAL_RULES, checkTotalPoints('totalRunTime')]}
+                        rules={[...NORMAL_RULES, checkTotalPoints]}
                         normalize={v => (v ? +v : '')}>
                         <Input type="number" addonAfter="d" />
                     </Form.Item>
