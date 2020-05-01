@@ -158,6 +158,7 @@ export class TableWithEditSection extends React.Component<
                             onSavedAs={(newName: string) => this.save(newName)}
                             onTriggerCancel={() => this.triggerStatusChange()}
                             onQuitCancel={() => this.setState({ warning: false })}
+                            onCancelConfirmChange={(s: boolean) => this.setState({ warning: s })}
                             onConfirmCancel={() => this.triggerStatusChange(true)}
                             />
                     ) : null}

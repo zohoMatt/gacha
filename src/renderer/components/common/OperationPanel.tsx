@@ -21,6 +21,7 @@ export interface OperationPanelProps {
     onQuitCancel: any;
     onConfirmCancel: any;
     onTriggerCancel: any;
+    onCancelConfirmChange: any;
 }
 
 export interface OperationPanelState {
@@ -58,7 +59,8 @@ export class OperationPanel extends React.Component<OperationPanelProps> {
             onSave,
             onTriggerCancel,
             onQuitCancel,
-            onConfirmCancel
+            onConfirmCancel,
+            onCancelConfirmChange
         } = this.props;
         const { Edit, Save, SaveAs, Cancel } = OperationPanelButtons;
         const { inputNewName } = this.state;
@@ -100,7 +102,8 @@ export class OperationPanel extends React.Component<OperationPanelProps> {
                         title="Discard changes?"
                         visible={warning || false}
                         onConfirm={onConfirmCancel}
-                        onCancel={onQuitCancel}>
+                        onCancel={onQuitCancel}
+                        onVisibleChange={onCancelConfirmChange}>
                         <Button type="danger" ghost onClick={onTriggerCancel}>
                             Cancel
                         </Button>
