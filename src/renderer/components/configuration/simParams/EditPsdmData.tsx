@@ -3,6 +3,7 @@ import { Divider, Form, Input } from 'antd';
 import { EditProps } from '../../container/TableWithEditSection';
 import { PsdmSimParamsValidators } from '../../../../utils/validators/psdmSimParams.valid';
 import { ValidLevels } from '../../../../utils/validators/types';
+import { Rule } from '../../../../utils/validators/common';
 
 const styles = require('./EditPsdmData.module.less');
 
@@ -11,7 +12,7 @@ export const EditPsdmData: React.FunctionComponent<EditProps> = ({
     initValues,
     onValuesChange
 }) => {
-    const NORMAL_RULES = [{ required: true, message: 'Value cannot be empty.' }];
+    const NORMAL_RULES = [{ required: true }];
 
     const checkTotalPoints = ({ getFieldValue }: any) => ({
         validator: () => {
@@ -29,9 +30,8 @@ export const EditPsdmData: React.FunctionComponent<EditProps> = ({
             );
             if (valid.valid === ValidLevels.Valid) {
                 return Promise.resolve();
-            } 
-                return Promise.reject(valid.message);
-            
+            }
+            return Promise.reject(valid.message);
         }
     });
 
@@ -41,6 +41,7 @@ export const EditPsdmData: React.FunctionComponent<EditProps> = ({
                 <Form
                     size="small"
                     layout="horizontal"
+                    validateMessages={Rule.FORM_WARNING_PROMPT}
                     ref={form}
                     hideRequiredMark={true}
                     labelCol={{ span: 6 }}

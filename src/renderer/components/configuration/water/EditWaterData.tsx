@@ -5,6 +5,7 @@ import { TextSwitcher } from '../../common/TextSwticher';
 import { Water } from '../../../../utils/calculation/waterProperties.maths';
 import { Calculation } from '../../../../utils/calculation/basic';
 import { EditProps } from '../../container/TableWithEditSection';
+import { Rule } from '../../../../utils/validators/common';
 
 const styles = require('./EditWaterData.module.less');
 
@@ -23,6 +24,7 @@ export const EditWaterData: React.FunctionComponent<EditProps> = ({
                     size="small"
                     layout="horizontal"
                     ref={form}
+                    validateMessages={Rule.FORM_WARNING_PROMPT}
                     hideRequiredMark={true}
                     labelCol={{ span: 6 }}
                     wrapperCol={{ span: 8 }}

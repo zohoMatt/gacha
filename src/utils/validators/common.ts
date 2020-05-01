@@ -65,6 +65,62 @@ export namespace CommonValidator {
 }
 
 export namespace Rule {
+    /* eslint-disable no-template-curly-in-string */
+    const typeTemplate = "'${label}' is not a valid ${type}";
+    export const FORM_WARNING_PROMPT = {
+        default: "Validation error on field '${label}'",
+        required: "'${label}' is required",
+        enum: "'${label}' must be one of [${enum}]",
+        whitespace: "'${label}' cannot be empty",
+        date: {
+            format: "'${label}' is invalid for format date",
+            parse: "'${label}' could not be parsed as date",
+            invalid: "'${label}' is invalid date"
+        },
+        types: {
+            string: typeTemplate,
+            method: typeTemplate,
+            array: typeTemplate,
+            object: typeTemplate,
+            number: typeTemplate,
+            date: typeTemplate,
+            boolean: typeTemplate,
+            integer: typeTemplate,
+            float: typeTemplate,
+            regexp: typeTemplate,
+            email: typeTemplate,
+            url: typeTemplate,
+            hex: typeTemplate
+        },
+        string: {
+            len: "'${label}' must be exactly ${len} characters",
+            min: "'${label}' must be at least ${min} characters",
+            max: "'${label}' cannot be longer than ${max} characters",
+            range: "'${label}' must be between ${min} and ${max} characters"
+        },
+        number: {
+            len: "'${label}' must equal ${len}",
+            min: "'${label}' cannot be less than ${min}",
+            max: "'${label}' cannot be greater than ${max}",
+            range: "'${label}' must be between ${min} and ${max}"
+        },
+        array: {
+            len: "'${label}' must be exactly ${len} in length",
+            min: "'${label}' cannot be less than ${min} in length",
+            max: "'${label}' cannot be greater than ${max} in length",
+            range: "'${label}' must be between ${min} and ${max} in length"
+        },
+        pattern: {
+            mismatch: "'${label}' does not match pattern ${pattern}"
+        }
+    };
+    /* eslint-enable no-template-curly-in-string */
+
+    export const interploTag = (strings: string[], ...args: any[]) => {
+        return strings.reduce((res, c, i) => res + c + (i === args.length ? '' : args[i]), '');
+    };
+
+    // todo Refactor
     export const TEMPLATE = {
         number: {
             max: (label: string, num1: number) => `${label} must be below ${num1}.`,
@@ -84,36 +140,24 @@ export namespace Rule {
         }
     };
 
-    export function numMaxRule(
-        target: number,
-        max: number,
-        label: string,
-        includes = false
-    ) {
+    export function numMaxRule(target: number, max: number, label: string, includes = false) {
         if (target < max || (includes && target === max)) {
             return Output.VALID;
-        } 
-            return {
-                valid: ValidLevels.Error,
-                message: TEMPLATE.number.max(label, max)
-            };
-        
+        }
+        return {
+            valid: ValidLevels.Error,
+            message: TEMPLATE.number.max(label, max)
+        };
     }
 
-    export function numMinRule(
-        target: number,
-        min: number,
-        label: string,
-        includes = false
-    ) {
+    export function numMinRule(target: number, min: number, label: string, includes = false) {
         if (target > min || (includes && target === min)) {
             return Output.VALID;
-        } 
-            return {
-                valid: ValidLevels.Error,
-                message: TEMPLATE.number.max(label, min)
-            };
-        
+        }
+        return {
+            valid: ValidLevels.Error,
+            message: TEMPLATE.number.min(label, min)
+        };
     }
 
     export function numRangeRule(
@@ -131,9 +175,8 @@ export namespace Rule {
             ValidLevels.Valid;
         if (leftYes && rightYes) {
             return Output.VALID;
-        } 
-            return TEMPLATE.number.range(label, min, max);
-        
+        }
+        return TEMPLATE.number.range(label, min, max);
     }
 
     export function stringMaxRule(target: string, max: number, label: string, includes: boolean) {
