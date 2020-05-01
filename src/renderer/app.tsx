@@ -26,4 +26,7 @@ const render = (Component: () => JSX.Element) => {
 Storage.init({ filename: 'master-pfas' });
 Storage.import().then(() => render(Application));
 // Config message
-message.config({ maxCount: 5 });
+message.config({
+    maxCount: 5,
+    top: 240
+});
