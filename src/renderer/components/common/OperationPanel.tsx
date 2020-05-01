@@ -21,7 +21,7 @@ export interface OperationPanelProps {
     onQuitCancel: any;
     onConfirmCancel: any;
     onTriggerCancel: any;
-    onCancelConfirmChange: any;
+    onPopConfirmChange: any;
 }
 
 export interface OperationPanelState {
@@ -49,6 +49,11 @@ export class OperationPanel extends React.Component<OperationPanelProps> {
         this.setState({ saveAsPopover: status });
     };
 
+    // fixme:ugly Only help clear pop-confirm
+    public onPopConfirmChange = (status: boolean) => {
+        if (!status) this.props.onPopConfirmChange(status);
+    };
+
     public render() {
         const {
             buttons,
@@ -59,8 +64,7 @@ export class OperationPanel extends React.Component<OperationPanelProps> {
             onSave,
             onTriggerCancel,
             onQuitCancel,
-            onConfirmCancel,
-            onCancelConfirmChange
+            onConfirmCancel
         } = this.props;
         const { Edit, Save, SaveAs, Cancel } = OperationPanelButtons;
         const { inputNewName } = this.state;
@@ -103,7 +107,7 @@ export class OperationPanel extends React.Component<OperationPanelProps> {
                         visible={warning || false}
                         onConfirm={onConfirmCancel}
                         onCancel={onQuitCancel}
-                        onVisibleChange={onCancelConfirmChange}>
+                        onVisibleChange={this.onPopConfirmChange}>
                         <Button type="danger" ghost onClick={onTriggerCancel}>
                             Cancel
                         </Button>

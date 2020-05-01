@@ -36,6 +36,7 @@ export namespace CommonValidator {
     export const nameDescrptValidator = {
         name: (record: BriefRecordType<any>, key: string, list: FullRecordType<any>[]) => {
             const { name } = record;
+            console.log('validdate', name);
             if (name.length <= 0 || name.length > 20) {
                 return {
                     valid: ValidLevels.Error,

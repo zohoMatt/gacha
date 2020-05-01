@@ -80,12 +80,16 @@ export class TableWithEditSection extends React.Component<
     };
 
     public save = (name?: string) => {
+        // SaveAs vs. Save
+        const realRecord =
+            name === undefined ? this.store.activeRecord : { ...this.store.activeRecord, name };
+        const realKey = name === undefined ? this.store.activeKey! : '';
         // Validate
         if (
             !Automation.formValidator(
                 this.props.validator,
-                this.store.activeRecord,
-                name ? '' : this.store.activeKey!, // SaveAs vs. Save
+                realRecord,
+                realKey,
                 this.store.tableList,
                 ValidLevels.Error
             )
@@ -158,8 +162,8 @@ export class TableWithEditSection extends React.Component<
                             onSavedAs={(newName: string) => this.save(newName)}
                             onTriggerCancel={() => this.triggerStatusChange()}
                             onQuitCancel={() => this.setState({ warning: false })}
-                            onCancelConfirmChange={(s: boolean) => this.setState({ warning: s })}
                             onConfirmCancel={() => this.triggerStatusChange(true)}
+                            onPopConfirmChange={(s: boolean) => this.setState({ warning: s })}
                             />
                     ) : null}
                 </div>
