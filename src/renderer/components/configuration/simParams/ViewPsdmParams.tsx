@@ -27,7 +27,7 @@ const ViewPsdmParams: React.FunctionComponent<ViewWaterPropsComponentProps> = ({
             <Form.Item label="Description">
                 <span>{description}</span>
             </Form.Item>
-            <Divider orientation="left">Basic</Divider>
+            <Divider orientation="left" />
             <Form.Item label="Total Run Time">
                 <span>{`${totalRunTime} d`}</span>
             </Form.Item>

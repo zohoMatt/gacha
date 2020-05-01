@@ -18,7 +18,7 @@ const ViewWaterProps: React.FunctionComponent<ViewDataProps<WaterParams>> = ({ d
             <Form.Item label="Description">
                 <span className={styles.text}>{description}</span>
             </Form.Item>
-            <Divider orientation="left">Basic</Divider>
+            <Divider orientation="left" />
             <Form.Item label="Pressure">
                 <span className={styles.text}>{`${pressure} atm`}</span>
             </Form.Item>

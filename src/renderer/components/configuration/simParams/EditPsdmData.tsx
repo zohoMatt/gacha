@@ -54,7 +54,7 @@ export const EditPsdmData: React.FunctionComponent<EditProps> = ({
                         rules={[...NORMAL_RULES, { max: 80, type: 'string' }]}>
                         <Input.TextArea rows={4} />
                     </Form.Item>
-                    <Divider orientation="left">Basic</Divider>
+                    <Divider orientation="left" />
                     <Form.Item
                         name="totalRunTime"
                         label="Total Run Time"

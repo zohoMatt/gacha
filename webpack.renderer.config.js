@@ -30,6 +30,7 @@ module.exports = merge.smart(baseConfig, {
                         '@babel/preset-react'
                     ],
                     plugins: [
+                        ['@babel/plugin-transform-typescript', { isTSX: true, allExtensions: true, allowNamespaces: true }],
                         ['@babel/plugin-proposal-decorators', { legacy: true }],
                         ['@babel/plugin-proposal-class-properties', { loose: true }]
                     ]

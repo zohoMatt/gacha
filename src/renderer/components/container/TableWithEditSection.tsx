@@ -5,7 +5,8 @@ import { message } from 'antd';
 import { OperationPanel, OperationPanelButtons } from '../common/OperationPanel';
 import { RecordList } from '../common/RecordList';
 import { IdleStatePrompt } from '../common/IdleStatePrompt';
-import { triggerValidator } from '../../../utils/validators/trigger';
+import { Automation } from '../../../utils/validators/common';
+import { WaterPropertiesValidators } from '../../../utils/validators/waterProperties.valid';
 
 import { Validator, ValidLevels } from '../../../utils/validators/types';
 import { BriefRecordType, BasicTableWithEditStore } from '../../store/types';
@@ -34,7 +35,7 @@ export interface ViewDataProps<T> {
 export interface TableWithEditSectionProps {
     title: string;
     store: BasicTableWithEditStore<any>;
-    validator: Validator;
+    validator: Validator<any>;
     renderEdit: (params: RenderPropsParams) => void;
     renderView: (database: BriefRecordType<any>) => void;
 }
@@ -80,7 +81,16 @@ export class TableWithEditSection extends React.Component<
 
     public save = (name?: string) => {
         // Validate
-        if (!this.validate(this.store.activeRecord, name)) return;
+        if (
+            !Automation.formValidator(
+                WaterPropertiesValidators,
+                this.store.activeRecord,
+                this.store.activeKey || '',
+                this.store.tableList,
+                ValidLevels.Error
+            )
+        )
+            return;
 
         if (name === undefined) {
             this.store.save();
@@ -109,26 +119,6 @@ export class TableWithEditSection extends React.Component<
     public changeParams = (allParams: BriefRecordType<any>) => {
         this.store.changeParams(allParams);
     };
-
-    protected validate(record?: any, newName?: string) {
-        const pending = record || this.store.activeRecord;
-        const { validator } = this.props;
-        const allNames = this.store.database.props
-            .filter(r => newName || r.key !== this.store.activeKey)
-            .map(p => p.name);
-        for (const key in validator) {
-            if (
-                !triggerValidator(
-                    key === 'name'
-                        ? validator[key](newName === undefined ? pending[key] : newName, allNames)
-                        : validator[key](pending[key]),
-                    ValidLevels.Error
-                )
-            )
-                return false;
-        }
-        return true;
-    }
 
     public render() {
         const { warning, status } = this.state;
