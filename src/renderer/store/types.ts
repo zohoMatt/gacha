@@ -55,6 +55,7 @@ export abstract class BasicTableWithEditStore<T> {
 
     protected constructor(storedPath: string[]) {
         this.database = Storage.read(storedPath) || { props: [] };
+        this.STORED_PATH = storedPath;
         autorun(async () => {
             return this.listeners();
         });

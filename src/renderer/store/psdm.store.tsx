@@ -26,12 +26,12 @@ export class PsdmStore extends BasicTableWithEditStore<PsdmParams> {
         this.activeRecord = {
             name: '',
             description: '',
-            totalRunTime: 0,
-            firstPointDisplayed: 0,
-            timeStep: 0,
-            numOfAxialElms: 0,
-            axialCollocatPts: 0,
-            radialCollocatPts: 0
+            totalRunTime: 2.0,
+            firstPointDisplayed: 1e-8,
+            timeStep: 0.05,
+            numOfAxialElms: 1,
+            axialCollocatPts: 1,
+            radialCollocatPts: 1
         };
     }
 }

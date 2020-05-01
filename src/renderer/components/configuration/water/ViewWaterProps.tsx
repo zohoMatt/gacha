@@ -3,16 +3,12 @@ import { Divider, Form } from 'antd';
 
 import { Calculation } from '../../../../utils/calculation/basic';
 import { Water } from '../../../../utils/calculation/waterProperties.maths';
-import { BriefRecordType } from '../../../store/types';
 import { WaterParams } from '../../../store/water.store';
+import { ViewDataProps } from '../../container/TableWithEditSection';
 
 const styles = require('./ViewWaterProps.module.less');
 
-export interface ViewWaterPropsComponentProps {
-    data: BriefRecordType<WaterParams>;
-}
-
-const ViewWaterProps: React.FunctionComponent<ViewWaterPropsComponentProps> = ({ data }) => {
+const ViewWaterProps: React.FunctionComponent<ViewDataProps<WaterParams>> = ({ data }) => {
     const { name, description, pressure, temperature, density, viscosity } = data;
     return (
         <Form size="small" layout="horizontal" labelCol={{ span: 6 }} wrapperCol={{ span: 8 }}>

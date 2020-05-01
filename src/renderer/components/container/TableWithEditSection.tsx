@@ -9,6 +9,7 @@ import { triggerValidator } from '../../../utils/validators/trigger';
 
 import { Validator, ValidLevels } from '../../../utils/validators/types';
 import { BriefRecordType, BasicTableWithEditStore } from '../../store/types';
+import { WaterParams } from '../../store/water.store';
 
 const styles = require('./TableWithEditSection.module.less');
 
@@ -16,6 +17,18 @@ export interface RenderPropsParams {
     form: React.RefObject<any>;
     initValues: BriefRecordType<any>;
     onValuesChange: (...args: any[]) => any;
+}
+
+// Render props component
+export interface EditProps {
+    form: React.RefObject<any>;
+    initValues: BriefRecordType<WaterParams>;
+    onValuesChange: (params: BriefRecordType<WaterParams>) => any;
+}
+
+// Render props component
+export interface ViewDataProps<T> {
+    data: BriefRecordType<T>;
 }
 
 export interface TableWithEditSectionProps {
