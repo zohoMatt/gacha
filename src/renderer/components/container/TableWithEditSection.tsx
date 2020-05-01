@@ -85,7 +85,7 @@ export class TableWithEditSection extends React.Component<
             !Automation.formValidator(
                 this.props.validator,
                 this.store.activeRecord,
-                this.store.activeKey || '',
+                name ? '' : this.store.activeKey!, // SaveAs vs. Save
                 this.store.tableList,
                 ValidLevels.Error
             )
