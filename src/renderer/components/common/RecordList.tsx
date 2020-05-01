@@ -85,7 +85,7 @@ const RecordList: React.FunctionComponent<RecordListProps> = ({
     const filteredData = database.filter(
         r =>
             r.name.toLowerCase().indexOf(search.toLowerCase()) !== -1 ||
-            r.description.indexOf(search) !== -1
+            r.description.toLowerCase().indexOf(search) !== -1
     );
     return (
         <>
