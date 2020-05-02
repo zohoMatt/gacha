@@ -14,7 +14,7 @@ export class BedStore extends BasicTableWithEditStore<BedParams> {
     public STORE_NAME = 'BedStore';
 
     constructor() {
-        super(['databse', 'bed']);
+        super(['database', 'bed']);
     }
 
     @action

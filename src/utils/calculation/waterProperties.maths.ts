@@ -26,7 +26,6 @@ export class Water {
     /**
      * @param temperature   [℃]
      * @param fixed
-     * @return              [g/cm·s]
      */
     public static viscosity(temperature: number, fixed = 4): CalculationResult {
         const kv = evaluate(
