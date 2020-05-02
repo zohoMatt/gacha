@@ -136,32 +136,38 @@ export class TableWithEditSection extends React.Component<
                         toDelete={this.toDelete}
                         />
                 </div>
-                <div className={styles.edit}>
-                    {status === 'idle' ? <IdleStatePrompt onCreate={this.createNew} /> : null}
-                    {status === 'view' ? this.props.renderView(activeRecord) : null}
-                    {status === 'edit'
-                        ? this.props.renderEdit({
-                              form: this.formRef,
-                              initValues: activeRecord,
-                              onValuesChange: this.changeParams.bind(this)
-                          })
-                        : null}
-                    {status !== 'idle' ? (
-                        <OperationPanel
-                            buttons={
-                                status === 'view' ? [Edit, SaveAs, Cancel] : [Save, SaveAs, Cancel]
-                            }
-                            saveDisabled={!changesMade}
-                            warning={warning}
-                            onEdit={() => this.setState({ status: 'edit' })}
-                            onSave={() => this.save()}
-                            onSavedAs={(newName: string) => this.save(newName)}
-                            onTriggerCancel={() => this.triggerStatusChange()}
-                            onQuitCancel={() => this.setState({ warning: false })}
-                            onConfirmCancel={() => this.triggerStatusChange(true)}
-                            onPopConfirmChange={(s: boolean) => this.setState({ warning: s })}
-                            />
-                    ) : null}
+                <div className={styles.rightColumn}>
+                    <div className={styles.edit}>
+                        {status === 'idle' ? <IdleStatePrompt onCreate={this.createNew} /> : null}
+                        {status === 'view' ? this.props.renderView(activeRecord) : null}
+                        {status === 'edit'
+                            ? this.props.renderEdit({
+                                  form: this.formRef,
+                                  initValues: activeRecord,
+                                  onValuesChange: this.changeParams.bind(this)
+                              })
+                            : null}
+                    </div>
+                    <div className={styles.panel}>
+                        {status !== 'idle' ? (
+                            <OperationPanel
+                                buttons={
+                                    status === 'view'
+                                        ? [Edit, SaveAs, Cancel]
+                                        : [Save, SaveAs, Cancel]
+                                }
+                                saveDisabled={!changesMade}
+                                warning={warning}
+                                onEdit={() => this.setState({ status: 'edit' })}
+                                onSave={() => this.save()}
+                                onSavedAs={(newName: string) => this.save(newName)}
+                                onTriggerCancel={() => this.triggerStatusChange()}
+                                onQuitCancel={() => this.setState({ warning: false })}
+                                onConfirmCancel={() => this.triggerStatusChange(true)}
+                                onPopConfirmChange={(s: boolean) => this.setState({ warning: s })}
+                                />
+                        ) : null}
+                    </div>
                 </div>
             </div>
         );

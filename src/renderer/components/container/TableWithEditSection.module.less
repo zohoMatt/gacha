@@ -20,11 +20,24 @@
   margin: 1vh 0;
 }
 
-.edit {
+.rightColumn {
   width: 55vw;
-  height: 95%;
+  height: 85vh;
   margin: 10vh 0 0 1vw;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.edit {
+  max-height: 100%;
+  overflow: scroll;
+}
+
+.panel {
+  align-self: flex-end;
 }
 
 .table {
