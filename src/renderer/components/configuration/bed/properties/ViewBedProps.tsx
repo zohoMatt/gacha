@@ -11,7 +11,7 @@ export interface ViewBedPropsComponentProps {
 }
 
 export const ViewBedProps: React.FunctionComponent<ViewBedPropsComponentProps> = ({ data }) => {
-    const { name, description, length, diameter, mass, flowrate, ebct } = data;
+    const { name, description, manufacturer, length, diameter, mass, flowrate, ebct } = data;
     return (
         <Form size="small" layout="horizontal" labelCol={{ span: 12 }} wrapperCol={{ span: 12 }}>
             <Form.Item label="Name">
@@ -19,6 +19,9 @@ export const ViewBedProps: React.FunctionComponent<ViewBedPropsComponentProps> =
             </Form.Item>
             <Form.Item label="Description">
                 <span>{description}</span>
+            </Form.Item>
+            <Form.Item label="Manufacture">
+                <span>{manufacturer}</span>
             </Form.Item>
             <Divider orientation="left" />
             <Row>

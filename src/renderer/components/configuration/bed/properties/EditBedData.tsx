@@ -38,6 +38,12 @@ export const EditBedData: React.FunctionComponent<EditProps> = ({
                         rules={[{ max: 80, type: 'string' }]}>
                         <Input.TextArea rows={4} />
                     </Form.Item>
+                    <Form.Item
+                        name="manufacturer"
+                        label="Manufacturer"
+                        rules={[{ max: 20, type: 'string' }]}>
+                        <Input />
+                    </Form.Item>
                     <Divider orientation="left" />
                     <Form.Item
                         name="length"

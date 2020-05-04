@@ -14,7 +14,7 @@ export interface KeyID {
 export interface BasicInfo {
     name: string;
     description: string;
-    manufacture?: string;
+    manufacturer?: string;
 }
 
 export interface InputSwitcherType {

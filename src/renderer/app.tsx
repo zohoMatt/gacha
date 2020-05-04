@@ -22,11 +22,11 @@ const render = (Component: () => JSX.Element) => {
     );
 };
 
-// Init storage and import data
-Storage.init({ filename: 'master-pfas' });
-Storage.import().then(() => render(Application));
 // Config message
 message.config({
     maxCount: 5,
     top: 240
 });
+// Init storage and import data
+Storage.init({ filename: 'maspfas-user-data' });
+Storage.import().then(() => render(Application));
