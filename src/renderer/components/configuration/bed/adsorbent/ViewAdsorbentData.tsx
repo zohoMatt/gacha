@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Col, Divider, Form } from 'antd';
+import { Divider, Form } from 'antd';
 import { BriefRecordType } from '../../../../store/types';
 import { AdsorbentParams } from '../../../../store/adsorbent.store';
 
