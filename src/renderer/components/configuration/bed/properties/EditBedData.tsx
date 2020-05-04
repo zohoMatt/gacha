@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Divider, Form, Input } from 'antd';
 
-import { EditProps } from '../../container/TableWithEditSection';
-import { Rule } from '../../../../utils/validators/common';
+import { EditProps } from '../../../container/TableWithEditSection';
+import { Rule } from '../../../../../utils/validators/common';
 
 const styles = require('./EditBedData.module.less');
 

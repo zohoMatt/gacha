@@ -6,7 +6,6 @@ import { OperationPanel, OperationPanelButtons } from '../common/OperationPanel'
 import { RecordList } from '../common/RecordList';
 import { IdleStatePrompt } from '../common/IdleStatePrompt';
 import { Automation } from '../../../utils/validators/common';
-import { WaterPropertiesValidators } from '../../../utils/validators/waterProperties.valid';
 
 import { Validator, ValidLevels } from '../../../utils/validators/types';
 import { BriefRecordType, BasicTableWithEditStore } from '../../store/types';

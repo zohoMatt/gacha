@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Col, Divider, Form, Row } from 'antd';
 
-import { BriefRecordType } from '../../../store/types';
-import { BedParams } from '../../../store/bed.store';
-import { Calculation } from '../../../../utils/calculation/basic';
-import { FixedBed } from '../../../../utils/calculation/bedProps.maths';
+import { BriefRecordType } from '../../../../store/types';
+import { BedParams } from '../../../../store/bed.store';
+import { Calculation } from '../../../../../utils/calculation/basic';
+import { FixedBed } from '../../../../../utils/calculation/bedProps.maths';
 
 export interface ViewBedPropsComponentProps {
     data: BriefRecordType<BedParams>;
