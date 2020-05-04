@@ -39,7 +39,7 @@ export const EditWaterData: React.FunctionComponent<EditProps> = ({
                     <Form.Item
                         name="description"
                         label="Description"
-                        rules={[...NORMAL_RULES, { max: 80, type: 'string' }]}>
+                        rules={[{ max: 80, type: 'string' }]}>
                         <Input.TextArea rows={4} />
                     </Form.Item>
                     <Divider orientation="left" />
