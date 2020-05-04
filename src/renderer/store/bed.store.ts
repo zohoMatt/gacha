@@ -24,6 +24,7 @@ export class BedStore extends BasicTableWithEditStore<BedParams> {
         this.activeRecord = {
             name: '',
             description: '',
+            manufacturer: '',
             length: 0,
             diameter: 0,
             mass: 0,
