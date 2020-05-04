@@ -67,7 +67,6 @@ export const EditBedData: React.FunctionComponent<EditProps> = ({
                         normalize={v => (v ? +v : '')}>
                         <Input type="number" addonAfter="mL/min" />
                     </Form.Item>
-                    <Divider orientation="left">Number of Collocation Points</Divider>
                     <Form.Item
                         name="ebct"
                         label="EBCT"
@@ -75,6 +74,7 @@ export const EditBedData: React.FunctionComponent<EditProps> = ({
                         normalize={v => (v ? +v : '')}>
                         <Input type="number" addonAfter="min" />
                     </Form.Item>
+                    <Divider orientation="left">Calculation</Divider>
                 </Form>
             </div>
         </div>

@@ -39,16 +39,11 @@ const NavBar: React.FunctionComponent = () => {
                         </Item>
                     </Group>
                     <Group key="fixedBed" title="Fixed Bed">
+                        <Item key="adsorbent.database">
+                            <Link to={`${match.url}/settings/adsorbent/db`}>Adsorbent</Link>
+                        </Item>
                         <Item key="fixedBed.props">
                             <Link to={`${match.url}/settings/bed/prop`}>Bed Properties</Link>
-                        </Item>
-                    </Group>
-                    <Group key="adsorbent" title="Adsorbent">
-                        <Item key="adsorbent.database">
-                            <Link to={`${match.url}/settings/adsorbent/db`}>Database</Link>
-                        </Item>
-                        <Item key="adsorbent.props">
-                            <Link to={`${match.url}/settings/adsorbent/prop`}>Properties</Link>
                         </Item>
                     </Group>
                 </SubMenu>
