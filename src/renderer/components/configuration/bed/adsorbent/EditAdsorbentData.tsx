@@ -2,7 +2,7 @@ import * as React from 'react';
 import { AutoComplete, Col, Divider, Form, Input, Row } from 'antd';
 
 import { EditProps } from '../../../container/TableWithEditSection';
-import { Rule } from '../../../../../mods/validators/common';
+import { VALIDATE_MSG_TEMPLATE } from '../../../../../utils/validator';
 
 const styles = require('./EditAdsorbentData.module.less');
 
@@ -21,7 +21,7 @@ export const EditAdsorbentData: React.FunctionComponent<EditProps> = ({
                         <Form
                             size="small"
                             layout="horizontal"
-                            validateMessages={Rule.FORM_WARNING_PROMPT}
+                            validateMessages={VALIDATE_MSG_TEMPLATE}
                             ref={form}
                             hideRequiredMark={true}
                             labelCol={{ span: 8 }}

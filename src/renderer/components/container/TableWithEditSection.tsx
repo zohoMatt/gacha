@@ -5,9 +5,7 @@ import { message } from 'antd';
 import { OperationPanel, OperationPanelButtons } from '../common/OperationPanel';
 import { RecordList } from '../common/RecordList';
 import { IdleStatePrompt } from '../common/IdleStatePrompt';
-import { Automation } from '../../../mods/validators/common';
 
-import { Validator, ValidLevels } from '../../../mods/validators/types';
 import { BriefRecordType, BasicTableWithEditStore } from '../../store/types';
 import { WaterParams } from '../../store/water.store';
 
@@ -34,7 +32,6 @@ export interface ViewDataProps<T> {
 export interface TableWithEditSectionProps {
     title: string;
     store: BasicTableWithEditStore<any>;
-    validator: Validator<any>;
     renderEdit: (params: RenderPropsParams) => void;
     renderView: (database: BriefRecordType<any>) => void;
 }
@@ -79,21 +76,14 @@ export class TableWithEditSection extends React.Component<
     };
 
     public save = (name?: string) => {
-        // SaveAs vs. Save
-        const realRecord =
-            name === undefined ? this.store.activeRecord : { ...this.store.activeRecord, name };
-        const realKey = name === undefined ? this.store.activeKey! : '';
         // Validate
-        if (
-            !Automation.formValidator(
-                this.props.validator,
-                realRecord,
-                realKey,
-                this.store.tableList,
-                ValidLevels.Error
-            )
-        )
+        const errors = this.formRef.current
+            .getFieldsError()
+            .filter((f: any) => f.errors.length > 0);
+        if (errors.length > 0) {
+            message.error(errors[0].errors[0]);
             return;
+        }
 
         if (name === undefined) {
             this.store.save();

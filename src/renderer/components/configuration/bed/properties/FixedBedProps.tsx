@@ -14,7 +14,6 @@ export const FixedBedProps: React.FunctionComponent<any> = () => {
         <TableWithEditSection
             title="Fixed Bed Properties"
             store={store}
-            validator={{}}
             renderEdit={({ form, initValues, onValuesChange }) => (
                 <EditBedData form={form} initValues={initValues} onValuesChange={onValuesChange} />
             )}

@@ -37,6 +37,7 @@
     "@typescript-eslint"
   ],
   "rules": {
+    "class-methods-use-this": 1,
     "no-continue": 0,
     "no-prototype-builtins": 1,
     "no-inner-declarations": 0,

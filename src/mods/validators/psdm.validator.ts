@@ -41,7 +41,7 @@ export class PsdmValidator extends BaseValidator {
         'timeStep'
     ];
 
-    protected static checkDependentVars(
+    protected checkDependentVars(
         getFieldValue: (field: string) => any,
         name: string,
         value: any,

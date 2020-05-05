@@ -2,7 +2,6 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 
 import { TableWithEditSection } from '../../container/TableWithEditSection';
-import { WaterPropertiesValidators } from '../../../../mods/validators/waterProperties.valid';
 import { WaterParams, WaterStore } from '../../../store/water.store';
 import { BriefRecordType } from '../../../store/types';
 import { EditWaterData } from './EditWaterData';
@@ -17,7 +16,6 @@ export class WaterProps extends React.Component {
             <TableWithEditSection
                 title="Water Properties"
                 store={this.store}
-                validator={WaterPropertiesValidators}
                 renderEdit={({ form, initValues, onValuesChange }) => (
                     <EditWaterData
                         form={form}

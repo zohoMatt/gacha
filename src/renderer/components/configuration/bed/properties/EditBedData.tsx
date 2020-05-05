@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Divider, Form, Input } from 'antd';
 
 import { EditProps } from '../../../container/TableWithEditSection';
-import { Rule } from '../../../../../mods/validators/common';
+import { VALIDATE_MSG_TEMPLATE } from '../../../../../utils/validator';
 
 const styles = require('./EditBedData.module.less');
 
@@ -19,7 +19,7 @@ export const EditBedData: React.FunctionComponent<EditProps> = ({
                 <Form
                     size="small"
                     layout="horizontal"
-                    validateMessages={Rule.FORM_WARNING_PROMPT}
+                    validateMessages={VALIDATE_MSG_TEMPLATE}
                     ref={form}
                     hideRequiredMark={true}
                     labelCol={{ span: 6 }}

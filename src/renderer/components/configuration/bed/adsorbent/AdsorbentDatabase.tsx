@@ -13,7 +13,6 @@ export const AdsorbentDatabase: React.FunctionComponent<any> = () => {
         <TableWithEditSection
             title="Adsorbent Database"
             store={store}
-            validator={{}}
             renderEdit={({ form, initValues, onValuesChange }) => (
                 <EditAdsorbentData
                     form={form}
