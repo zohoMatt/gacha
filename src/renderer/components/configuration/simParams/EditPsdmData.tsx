@@ -2,9 +2,8 @@ import * as React from 'react';
 import { Divider, Form, Input } from 'antd';
 
 import { EditProps } from '../../container/TableWithEditSection';
-import { PsdmSimParamsValidators } from '../../../../mods/validators/psdmSimParams.valid';
-import { ValidLevels } from '../../../../mods/validators/types';
-import { Rule } from '../../../../mods/validators/common';
+import { PsdmValidator } from '../../../../mods/validators/psdm.validator';
+import { VALIDATE_MSG_TEMPLATE } from '../../../../utils/validator';
 
 const styles = require('./EditPsdmData.module.less');
 
@@ -13,28 +12,8 @@ export const EditPsdmData: React.FunctionComponent<EditProps> = ({
     initValues,
     onValuesChange
 }) => {
-    const NORMAL_RULES = [{ required: true }];
-
-    const checkTotalPoints = ({ getFieldValue }: any) => ({
-        validator: () => {
-            const totalRunTime = getFieldValue('totalRunTime');
-            const firstPointDisplayed = getFieldValue('firstPointDisplayed');
-            const timeStep = getFieldValue('timeStep');
-            const valid = PsdmSimParamsValidators.totalRunTime(
-                {
-                    totalRunTime,
-                    firstPointDisplayed,
-                    timeStep
-                } as any,
-                '',
-                []
-            );
-            if (valid.valid === ValidLevels.Valid) {
-                return Promise.resolve();
-            }
-            return Promise.reject(valid.message);
-        }
-    });
+    const vdator = new PsdmValidator();
+    const POINTS = 500;
 
     return (
         <div className={styles.container}>
@@ -42,17 +21,14 @@ export const EditPsdmData: React.FunctionComponent<EditProps> = ({
                 <Form
                     size="small"
                     layout="horizontal"
-                    validateMessages={Rule.FORM_WARNING_PROMPT}
+                    validateMessages={VALIDATE_MSG_TEMPLATE}
                     ref={form}
                     hideRequiredMark={true}
                     labelCol={{ span: 6 }}
                     wrapperCol={{ span: 8 }}
                     onValuesChange={(s, all: any) => onValuesChange(all)}
                     initialValues={initValues}>
-                    <Form.Item
-                        name="name"
-                        label="Name"
-                        rules={[...NORMAL_RULES, { max: 20, type: 'string' }]}>
+                    <Form.Item name="name" label="Name" rules={vdator.getFormValidators('name')}>
                         <Input />
                     </Form.Item>
                     <Form.Item
@@ -65,28 +41,28 @@ export const EditPsdmData: React.FunctionComponent<EditProps> = ({
                     <Form.Item
                         name="totalRunTime"
                         label="Total Run Time"
-                        rules={[...NORMAL_RULES, checkTotalPoints]}
+                        rules={vdator.getFormValidators('totalRunTime', POINTS)}
                         normalize={v => (v ? +v : '')}>
                         <Input type="number" addonAfter="d" />
                     </Form.Item>
                     <Form.Item
                         name="firstPointDisplayed"
                         label="First Point Displayed"
-                        rules={[...NORMAL_RULES, checkTotalPoints]}
+                        rules={vdator.getFormValidators('firstPointDisplayed', POINTS)}
                         normalize={v => (v ? +v : '')}>
                         <Input type="number" addonAfter="d" />
                     </Form.Item>
                     <Form.Item
                         name="timeStep"
                         label="Time Step"
-                        rules={[...NORMAL_RULES, checkTotalPoints]}
+                        rules={vdator.getFormValidators('timeStep', POINTS)}
                         normalize={v => (v ? +v : '')}>
                         <Input type="number" addonAfter="d" />
                     </Form.Item>
                     <Form.Item
                         name="numOfAxialElms"
                         label="Number of Axial Elements"
-                        rules={[...NORMAL_RULES, { min: 1, type: 'number' }]}
+                        rules={vdator.getFormValidators('numOfAxialElms')}
                         normalize={v => (v ? +v : '')}>
                         <Input type="number" />
                     </Form.Item>
@@ -94,14 +70,14 @@ export const EditPsdmData: React.FunctionComponent<EditProps> = ({
                     <Form.Item
                         name="axialCollocatPts"
                         label="Axial Direction"
-                        rules={[...NORMAL_RULES, { min: 1, type: 'number' }]}
+                        rules={vdator.getFormValidators('axialCollocatPts')}
                         normalize={v => (v ? +v : '')}>
                         <Input type="number" />
                     </Form.Item>
                     <Form.Item
                         name="radialCollocatPts"
                         label="Radial Direction"
-                        rules={[...NORMAL_RULES, { min: 1, type: 'number' }]}
+                        rules={vdator.getFormValidators('radialCollocatPts')}
                         normalize={v => (v ? +v : '')}>
                         <Input type="number" />
                     </Form.Item>

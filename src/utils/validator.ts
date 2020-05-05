@@ -103,6 +103,7 @@ export class Validator {
         target: string | number,
         label: string
     ): ValidatorOutput {
+        console.log('validateOne', rule, target, label);
         const valid = {
             valid: ValidLevels.Valid,
             message: ''
@@ -113,7 +114,7 @@ export class Validator {
         });
 
         if (rule.type === 'required') {
-            return target ? valid : invalid(Validator.messageTemplate.required);
+            return target || target === 0 ? valid : invalid(Validator.messageTemplate.required);
         }
         if (rule.limit === 'len') {
             // rule.type === 'number' | 'string'
@@ -160,14 +161,14 @@ export class Validator {
         );
     }
 
-    public static validateWithFirstMsg(
+    public static validateForFirstMsg(
         rules: Rule[],
         target: number | string,
         label: string
     ): string {
         for (const rule of rules) {
             const isValid = Validator.validateOne(rule, target, label);
-            if (isValid.valid === ValidLevels.Valid) {
+            if (isValid.valid !== ValidLevels.Valid) {
                 return isValid.message;
             }
         }
