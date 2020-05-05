@@ -2,7 +2,7 @@ import * as React from 'react';
 import { AutoComplete, Col, Divider, Form, Input, Row } from 'antd';
 
 import { EditProps } from '../../../container/TableWithEditSection';
-import { Rule } from '../../../../../utils/validators/common';
+import { Rule } from '../../../../../mods/validators/common';
 
 const styles = require('./EditAdsorbentData.module.less');
 

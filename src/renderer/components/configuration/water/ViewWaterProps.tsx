@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Divider, Form } from 'antd';
 
-import { Calculation } from '../../../../utils/calculation/basic';
-import { Water } from '../../../../utils/calculation/waterProperties.maths';
+import { Calculation } from '../../../../mods/calculation/basic';
+import { Water } from '../../../../mods/calculation/waterProperties.maths';
 import { WaterParams } from '../../../store/water.store';
 import { ViewDataProps } from '../../container/TableWithEditSection';
 

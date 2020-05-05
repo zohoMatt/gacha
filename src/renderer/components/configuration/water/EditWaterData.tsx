@@ -2,10 +2,10 @@ import * as React from 'react';
 import { Divider, Form, Input } from 'antd';
 
 import { TextSwitcher } from '../../common/TextSwticher';
-import { Water } from '../../../../utils/calculation/waterProperties.maths';
-import { Calculation } from '../../../../utils/calculation/basic';
+import { Water } from '../../../../mods/calculation/waterProperties.maths';
+import { Calculation } from '../../../../mods/calculation/basic';
 import { EditProps } from '../../container/TableWithEditSection';
-import { Rule } from '../../../../utils/validators/common';
+import { Rule } from '../../../../mods/validators/common';
 
 const styles = require('./EditWaterData.module.less');
 

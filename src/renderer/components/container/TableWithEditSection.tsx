@@ -5,9 +5,9 @@ import { message } from 'antd';
 import { OperationPanel, OperationPanelButtons } from '../common/OperationPanel';
 import { RecordList } from '../common/RecordList';
 import { IdleStatePrompt } from '../common/IdleStatePrompt';
-import { Automation } from '../../../utils/validators/common';
+import { Automation } from '../../../mods/validators/common';
 
-import { Validator, ValidLevels } from '../../../utils/validators/types';
+import { Validator, ValidLevels } from '../../../mods/validators/types';
 import { BriefRecordType, BasicTableWithEditStore } from '../../store/types';
 import { WaterParams } from '../../store/water.store';
 

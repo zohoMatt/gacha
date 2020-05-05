@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Divider, Form, Input } from 'antd';
 
 import { EditProps } from '../../container/TableWithEditSection';
-import { PsdmSimParamsValidators } from '../../../../utils/validators/psdmSimParams.valid';
-import { ValidLevels } from '../../../../utils/validators/types';
-import { Rule } from '../../../../utils/validators/common';
+import { PsdmSimParamsValidators } from '../../../../mods/validators/psdmSimParams.valid';
+import { ValidLevels } from '../../../../mods/validators/types';
+import { Rule } from '../../../../mods/validators/common';
 
 const styles = require('./EditPsdmData.module.less');
 

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 
 import { TableWithEditSection } from '../../container/TableWithEditSection';
-import { WaterPropertiesValidators } from '../../../../utils/validators/waterProperties.valid';
+import { WaterPropertiesValidators } from '../../../../mods/validators/waterProperties.valid';
 import { WaterParams, WaterStore } from '../../../store/water.store';
 import { BriefRecordType } from '../../../store/types';
 import { EditWaterData } from './EditWaterData';
