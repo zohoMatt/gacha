@@ -2,8 +2,8 @@ import * as React from 'react';
 import classnames from 'classnames';
 import { Input, message, Popconfirm, Table } from 'antd';
 
-import { FullRecordType, Params } from '../../store/types';
-import { WaterParams } from '../../store/water.store';
+import { FullRecordType, Params } from '../../../store/types';
+import { WaterParams } from '../../../store/water.store';
 
 const styles = require('./RecordList.module.less');
 

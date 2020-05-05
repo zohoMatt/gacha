@@ -2,8 +2,8 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 import { message } from 'antd';
 
-import { OperationPanel, OperationPanelButtons } from '../common/OperationPanel';
-import { RecordList } from '../common/RecordList';
+import { OperationPanel, OperationPanelButtons } from '../configuration/common/OperationPanel';
+import { RecordList } from '../configuration/common/RecordList';
 import { IdleStatePrompt } from '../common/IdleStatePrompt';
 
 import { BriefRecordType, BasicTableWithEditStore } from '../../store/types';

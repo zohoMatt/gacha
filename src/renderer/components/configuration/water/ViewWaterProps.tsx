@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Divider, Form } from 'antd';
 
+import { ViewBasicInfo } from '../common/BasicInfo';
 import { Calculation } from '../../../../mods/calculation/basic';
 import { Water } from '../../../../mods/calculation/waterProperties.maths';
 import { WaterParams } from '../../../store/water.store';
@@ -12,12 +13,7 @@ const ViewWaterProps: React.FunctionComponent<ViewDataProps<WaterParams>> = ({ d
     const { name, description, pressure, temperature, density, viscosity } = data;
     return (
         <Form size="small" layout="horizontal" labelCol={{ span: 6 }} wrapperCol={{ span: 8 }}>
-            <Form.Item label="Name">
-                <span className={styles.text}>{name}</span>
-            </Form.Item>
-            <Form.Item label="Description">
-                <span className={styles.text}>{description}</span>
-            </Form.Item>
+            <ViewBasicInfo name={name} description={description} />
             <Divider orientation="left" />
             <Form.Item label="Pressure">
                 <span className={styles.text}>{`${pressure} atm`}</span>

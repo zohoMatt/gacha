@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Divider, Form, Input } from 'antd';
 
+import { BasicInfoFormFields } from '../../common/BasicInfo';
 import { EditProps } from '../../../container/TableWithEditSection';
 import { VALIDATE_MSG_TEMPLATE } from '../../../../../utils/validator';
 
@@ -26,24 +27,7 @@ export const EditBedData: React.FunctionComponent<EditProps> = ({
                     wrapperCol={{ span: 8 }}
                     onValuesChange={(s, all: any) => onValuesChange(all)}
                     initialValues={initValues}>
-                    <Form.Item
-                        name="name"
-                        label="Name"
-                        rules={[...NORMAL_RULES, { max: 20, type: 'string' }]}>
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        name="description"
-                        label="Description"
-                        rules={[{ max: 80, type: 'string' }]}>
-                        <Input.TextArea rows={4} />
-                    </Form.Item>
-                    <Form.Item
-                        name="manufacturer"
-                        label="Manufacturer"
-                        rules={[{ max: 20, type: 'string' }]}>
-                        <Input />
-                    </Form.Item>
+                    <BasicInfoFormFields manufacturer={true} />
                     <Divider orientation="left" />
                     <Form.Item
                         name="length"

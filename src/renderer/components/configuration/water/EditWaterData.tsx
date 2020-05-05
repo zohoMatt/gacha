@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Divider, Form, Input } from 'antd';
 
+import { BasicInfoFormFields } from '../common/BasicInfo';
 import { TextSwitcher } from '../../common/TextSwticher';
 import { Water } from '../../../../mods/calculation/waterProperties.maths';
 import { Calculation } from '../../../../mods/calculation/basic';
@@ -31,15 +32,7 @@ export const EditWaterData: React.FunctionComponent<EditProps> = ({
                     wrapperCol={{ span: 8 }}
                     onValuesChange={(s, all: any) => onValuesChange(all)}
                     initialValues={initValues}>
-                    <Form.Item name="name" label="Name" rules={vdator.getFormValidators('name')}>
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        name="description"
-                        label="Description"
-                        rules={vdator.getFormValidators('description')}>
-                        <Input.TextArea rows={4} />
-                    </Form.Item>
+                    <BasicInfoFormFields />
                     <Divider orientation="left" />
                     <Form.Item
                         name="pressure"

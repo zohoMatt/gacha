@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Divider, Form, Input } from 'antd';
 
+import { BasicInfoFormFields } from '../common/BasicInfo';
 import { EditProps } from '../../container/TableWithEditSection';
 import { PsdmValidator } from '../../../../mods/validators/psdm.validator';
 import { VALIDATE_MSG_TEMPLATE } from '../../../../utils/validator';
@@ -28,15 +29,7 @@ export const EditPsdmData: React.FunctionComponent<EditProps> = ({
                     wrapperCol={{ span: 8 }}
                     onValuesChange={(s, all: any) => onValuesChange(all)}
                     initialValues={initValues}>
-                    <Form.Item name="name" label="Name" rules={vdator.getFormValidators('name')}>
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        name="description"
-                        label="Description"
-                        rules={[{ max: 80, type: 'string' }]}>
-                        <Input.TextArea rows={4} />
-                    </Form.Item>
+                    <BasicInfoFormFields />
                     <Divider orientation="left" />
                     <Form.Item
                         name="totalRunTime"

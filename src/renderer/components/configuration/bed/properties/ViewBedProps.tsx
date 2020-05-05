@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Col, Divider, Form, Row } from 'antd';
 
+import { ViewBasicInfo } from '../../common/BasicInfo';
 import { BriefRecordType } from '../../../../store/types';
 import { BedParams } from '../../../../store/bed.store';
 import { Calculation } from '../../../../../mods/calculation/basic';
@@ -14,15 +15,7 @@ export const ViewBedProps: React.FunctionComponent<ViewBedPropsComponentProps> =
     const { name, description, manufacturer, length, diameter, mass, flowrate, ebct } = data;
     return (
         <Form size="small" layout="horizontal" labelCol={{ span: 12 }} wrapperCol={{ span: 12 }}>
-            <Form.Item label="Name">
-                <span>{name}</span>
-            </Form.Item>
-            <Form.Item label="Description">
-                <span>{description}</span>
-            </Form.Item>
-            <Form.Item label="Manufacture">
-                <span>{manufacturer}</span>
-            </Form.Item>
+            <ViewBasicInfo name={name} description={description} manufacturer={manufacturer} />
             <Divider orientation="left" />
             <Row>
                 <Col span={11} offset={2}>

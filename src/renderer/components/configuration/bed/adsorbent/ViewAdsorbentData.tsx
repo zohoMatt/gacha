@@ -1,6 +1,7 @@
 import * as React from 'react';
-
 import { Col, Divider, Form, Row } from 'antd';
+
+import { ViewBasicInfo } from '../../common/BasicInfo';
 import { BriefRecordType } from '../../../../store/types';
 import { AdsorbentParams } from '../../../../store/adsorbent.store';
 
@@ -27,15 +28,11 @@ export const ViewAdsorbentData: React.FunctionComponent<ViewAdsorbentDataProps> 
                     layout="horizontal"
                     labelCol={{ span: 8 }}
                     wrapperCol={{ span: 8 }}>
-                    <Form.Item label="Name">
-                        <span>{name}</span>
-                    </Form.Item>
-                    <Form.Item label="Description">
-                        <span>{description}</span>
-                    </Form.Item>
-                    <Form.Item label="Manufacture">
-                        <span>{manufacturer}</span>
-                    </Form.Item>
+                    <ViewBasicInfo
+                        name={name}
+                        description={description}
+                        manufacturer={manufacturer}
+                        />
                     <Divider orientation="left" />
                     <Form.Item label="Apparent Density">
                         <span>{`${density} g/cm³`}</span>

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Divider, Form } from 'antd';
 
+import { ViewBasicInfo } from '../common/BasicInfo';
 import { BriefRecordType } from '../../../store/types';
 import { PsdmParams } from '../../../store/psdm.store';
 
@@ -21,12 +22,7 @@ const ViewPsdmParams: React.FunctionComponent<ViewWaterPropsComponentProps> = ({
     } = data;
     return (
         <Form size="small" layout="horizontal" labelCol={{ span: 8 }} wrapperCol={{ span: 8 }}>
-            <Form.Item label="Name">
-                <span>{name}</span>
-            </Form.Item>
-            <Form.Item label="Description">
-                <span>{description}</span>
-            </Form.Item>
+            <ViewBasicInfo name={name} description={description} />
             <Divider orientation="left" />
             <Form.Item label="Total Run Time">
                 <span>{`${totalRunTime} d`}</span>
