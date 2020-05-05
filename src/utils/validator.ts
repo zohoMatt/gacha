@@ -81,6 +81,7 @@ export class Validator {
 
     protected static render(template: string, params: MsgTemplateParams) {
         mustache.tags = ['${', '}'];
+
         return mustache.render(template, params);
     }
 
@@ -97,7 +98,11 @@ export class Validator {
         );
     }
 
-    public static validate(rule: Rule, target: string | number, label: string): ValidatorOutput {
+    protected static validateOne(
+        rule: Rule,
+        target: string | number,
+        label: string
+    ): ValidatorOutput {
         const valid = {
             valid: ValidLevels.Valid,
             message: ''
@@ -109,7 +114,8 @@ export class Validator {
 
         if (rule.type === 'required') {
             return target ? valid : invalid(Validator.messageTemplate.required);
-        } if (rule.limit === 'len') {
+        }
+        if (rule.limit === 'len') {
             // rule.type === 'number' | 'string'
             if (!rule.values || rule.values.length < 1)
                 throw new Error(`Invalid params when checking ${target} with ${label}.`);
@@ -117,41 +123,54 @@ export class Validator {
             const checked =
                 typeof target === 'string' ? target.length === limit.value : target === limit.value;
             return checked ? valid : invalid(Validator.messageTemplate[rule.type].len);
-        } 
-            if (!rule.values || rule.values.length < 1)
-                throw new Error(`Invalid params when checking ${target} with ${label}.`);
-            const { value: limit1, include: limit1Included } = rule.values[0];
-            const { value: limit2, include: limit2Included } = rule.values[1] || {
-                value: Infinity,
-                include: false
-            };
-            const trueTarget = typeof target === 'string' ? target.length : target;
-            let min = 0;
-            let max = 0;
-            let isChecked = false;
-            if (rule.limit === 'max') {
-                max = limit1;
-                isChecked = Validator.rangeCheck(
-                    trueTarget,
-                    -Infinity,
-                    false,
-                    max,
-                    !!limit1Included
-                );
-            } else {
-                min = limit1;
-                max = limit2;
-                isChecked = Validator.rangeCheck(
-                    trueTarget,
-                    limit1,
-                    !!limit1Included,
-                    limit2,
-                    !!limit2Included
-                );
+        }
+        if (!rule.values || rule.values.length < 1)
+            throw new Error(`Invalid params when checking ${target} with ${label}.`);
+        const { value: limit1, include: limit1Included } = rule.values[0];
+        const { value: limit2, include: limit2Included } = rule.values[1] || {
+            value: Infinity,
+            include: false
+        };
+        const trueTarget = typeof target === 'string' ? target.length : target;
+        let min = 0;
+        let max = 0;
+        let isChecked = false;
+        if (rule.limit === 'max') {
+            max = limit1;
+            isChecked = Validator.rangeCheck(trueTarget, -Infinity, false, max, !!limit1Included);
+        } else {
+            min = limit1;
+            max = limit2;
+            isChecked = Validator.rangeCheck(
+                trueTarget,
+                limit1,
+                !!limit1Included,
+                limit2,
+                !!limit2Included
+            );
+        }
+        return isChecked
+            ? valid
+            : invalid(Validator.messageTemplate[rule.type][rule.limit!], min, max);
+    }
+
+    public static validate(rules: Rule[], target: number | string, label: string) {
+        return rules.every(
+            rule => Validator.validateOne(rule, target, label).valid === ValidLevels.Valid
+        );
+    }
+
+    public static validateWithFirstMsg(
+        rules: Rule[],
+        target: number | string,
+        label: string
+    ): string {
+        for (const rule of rules) {
+            const isValid = Validator.validateOne(rule, target, label);
+            if (isValid.valid === ValidLevels.Valid) {
+                return isValid.message;
             }
-            return isChecked
-                ? valid
-                : invalid(Validator.messageTemplate[rule.type][rule.limit!], min, max);
-        
+        }
+        return '';
     }
 }
