@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { message } from 'antd';
+import { message, Typography } from 'antd';
 
 import { OperationPanel, OperationPanelButtons } from '../configuration/common/OperationPanel';
 import { RecordList } from '../configuration/common/RecordList';
@@ -116,7 +116,9 @@ export class TableWithEditSection extends React.Component<
         const { Edit, Save, SaveAs, Cancel } = OperationPanelButtons;
         return (
             <div className={styles.container}>
-                <div className={styles.title}>{title}</div>
+                <div className={styles.title}>
+                    <Typography.Title level={3}>{title}</Typography.Title>
+                </div>
                 <div className={styles.table}>
                     <RecordList
                         database={tableList}
