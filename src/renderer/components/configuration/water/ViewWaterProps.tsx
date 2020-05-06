@@ -21,15 +21,11 @@ const ViewWaterProps: React.FunctionComponent<ViewDataProps<WaterParams>> = ({ d
             </Form.Item>
             <Divider orientation="left">Correlations</Divider>
             <Form.Item label="Density">
-                <span>
-                    {density.use ? Calculation.display(Water.density(temperature)) : 'Not applied'}
-                </span>
+                <span>{density.use ? Calculation.display(Water.density(temperature)) : 'N/A'}</span>
             </Form.Item>
             <Form.Item label="Viscosity">
                 <span>
-                    {viscosity.use
-                        ? Calculation.display(Water.viscosity(temperature))
-                        : 'Not applied'}
+                    {viscosity.use ? Calculation.display(Water.viscosity(temperature)) : 'N/A'}
                 </span>
             </Form.Item>
         </Form>

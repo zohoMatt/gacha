@@ -29,8 +29,15 @@ const NavBar: React.FunctionComponent = () => {
                         </Item>
                     </Group>
                     <Group key="component" title="Components">
+                        <Item key="component.adsorb">
+                            <Link to={`${match.url}/settings/components/adsorb`}>
+                                Kinetics & Isotherm
+                            </Link>
+                        </Item>
                         <Item key="component.props">
-                            <Link to={`${match.url}/settings/components/prop`}>Properties</Link>
+                            <Link to={`${match.url}/settings/components/prop`}>
+                                &nbsp;&nbsp;&nbsp;&nbsp;- Contaminants
+                            </Link>
                         </Item>
                     </Group>
                     <Group key="sim" title="Simulation Parameters">
@@ -39,11 +46,13 @@ const NavBar: React.FunctionComponent = () => {
                         </Item>
                     </Group>
                     <Group key="fixedBed" title="Fixed Bed">
-                        <Item key="adsorbent.database">
-                            <Link to={`${match.url}/settings/bed/adsorbent`}>Adsorbent</Link>
-                        </Item>
                         <Item key="fixedBed.props">
                             <Link to={`${match.url}/settings/bed/prop`}>Bed Properties</Link>
+                        </Item>
+                        <Item key="adsorbent.database">
+                            <Link to={`${match.url}/settings/bed/adsorbent`}>
+                                &nbsp;&nbsp;&nbsp;&nbsp;- Adsorbent
+                            </Link>
                         </Item>
                     </Group>
                 </SubMenu>
