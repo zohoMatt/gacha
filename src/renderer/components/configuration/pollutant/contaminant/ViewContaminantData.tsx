@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Form, Row, Col, Divider } from 'antd';
 
-import { BriefRecordType } from '../../../store/types';
-import { ContaminantParams } from '../../../store/contaminant.store';
-import { ViewBasicInfo } from '../common/BasicInfo';
+import { BriefRecordType } from '../../../../store/types';
+import { ContaminantParams } from '../../../../store/contaminant.store';
+import { ViewBasicInfo } from '../../common/BasicInfo';
 
 export interface ViewContaminantDataProps {
     data: BriefRecordType<ContaminantParams>;
@@ -31,7 +31,7 @@ export const ViewContaminantData: React.FunctionComponent<ViewContaminantDataPro
             <Col span={12} key={label}>
                 <Form.Item label={label}>
                     <span>{value}</span>
-                    {unit ? <span>{` ${  unit}`}</span> : null}
+                    {unit ? <span>{` ${unit}`}</span> : null}
                 </Form.Item>
             </Col>
         ));

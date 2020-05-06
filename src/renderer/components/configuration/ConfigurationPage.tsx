@@ -4,7 +4,7 @@ import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import NavBar from '../nav/NavBar';
 import { WaterProps } from './water/WaterProps';
 import { SimulationParameter } from './simParams/SimulationParameter';
-import ContaminantProps from './pollutant/ContaminantProps';
+import ContaminantProps from './pollutant/contaminant/ContaminantProps';
 import { FixedBedProps } from './bed/properties/FixedBedProps';
 import { AdsorbentDatabase } from './bed/adsorbent/AdsorbentDatabase';
 
