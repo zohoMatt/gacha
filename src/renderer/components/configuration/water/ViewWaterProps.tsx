@@ -7,8 +7,6 @@ import { Water } from '../../../../mods/calculation/waterProperties.maths';
 import { WaterParams } from '../../../store/water.store';
 import { ViewDataProps } from '../../container/TableWithEditSection';
 
-const styles = require('./ViewWaterProps.module.less');
-
 const ViewWaterProps: React.FunctionComponent<ViewDataProps<WaterParams>> = ({ data }) => {
     const { name, description, pressure, temperature, density, viscosity } = data;
     return (
@@ -16,19 +14,19 @@ const ViewWaterProps: React.FunctionComponent<ViewDataProps<WaterParams>> = ({ d
             <ViewBasicInfo name={name} description={description} />
             <Divider orientation="left" />
             <Form.Item label="Pressure">
-                <span className={styles.text}>{`${pressure} atm`}</span>
+                <span>{`${pressure} atm`}</span>
             </Form.Item>
             <Form.Item label="Temperature">
-                <span className={styles.text}>{`${temperature} ℃`}</span>
+                <span>{`${temperature} ℃`}</span>
             </Form.Item>
             <Divider orientation="left">Correlations</Divider>
             <Form.Item label="Density">
-                <span className={styles.text}>
+                <span>
                     {density.use ? Calculation.display(Water.density(temperature)) : 'Not applied'}
                 </span>
             </Form.Item>
             <Form.Item label="Viscosity">
-                <span className={styles.text}>
+                <span>
                     {viscosity.use
                         ? Calculation.display(Water.viscosity(temperature))
                         : 'Not applied'}

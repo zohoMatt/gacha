@@ -9,8 +9,6 @@ import { EditProps } from '../../container/TableWithEditSection';
 import { WaterValidator } from '../../../../mods/validators/water.validator';
 import { VALIDATE_MSG_TEMPLATE } from '../../../../utils/validator';
 
-const styles = require('./EditWaterData.module.less');
-
 export const EditWaterData: React.FunctionComponent<EditProps> = ({
     form,
     initValues,
@@ -20,57 +18,45 @@ export const EditWaterData: React.FunctionComponent<EditProps> = ({
     const vdator = new WaterValidator();
 
     return (
-        <div className={styles.container}>
-            <div className={styles.formContainer}>
-                <Form
-                    size="small"
-                    layout="horizontal"
-                    ref={form}
-                    validateMessages={VALIDATE_MSG_TEMPLATE}
-                    hideRequiredMark={true}
-                    labelCol={{ span: 6 }}
-                    wrapperCol={{ span: 8 }}
-                    onValuesChange={(s, all: any) => onValuesChange(all)}
-                    initialValues={initValues}>
-                    <BasicInfoFormFields />
-                    <Divider orientation="left" />
-                    <Form.Item
-                        name="pressure"
-                        label="Pressure"
-                        rules={vdator.getFormValidators('pressure')}
-                        normalize={v => (v ? +v : '')}>
-                        <Input type="number" addonAfter="atm" />
-                    </Form.Item>
-                    <Form.Item
-                        name="temperature"
-                        label="Temperature"
-                        rules={vdator.getFormValidators('temperature')}
-                        normalize={v => (v ? +v : '')}>
-                        <Input type="number" addonAfter="℃" />
-                    </Form.Item>
-                    <Divider orientation="left">Correlations</Divider>
-                    <Form.Item label="Density">
-                        <Form.Item name={['density', 'use']}>
-                            <TextSwitcher
-                                text={
-                                    temperature
-                                        ? Calculation.display(Water.density(temperature))
-                                        : '-'
-                                }
-                                />
-                        </Form.Item>
-                    </Form.Item>
-                    <Form.Item name={['viscosity', 'use']} label="Viscosity">
-                        <TextSwitcher
-                            text={
-                                temperature
-                                    ? Calculation.display(Water.viscosity(temperature))
-                                    : '-'
-                            }
-                            />
-                    </Form.Item>
-                </Form>
-            </div>
-        </div>
+        <Form
+            size="small"
+            layout="horizontal"
+            ref={form}
+            validateMessages={VALIDATE_MSG_TEMPLATE}
+            hideRequiredMark={true}
+            labelCol={{ span: 6 }}
+            wrapperCol={{ span: 8 }}
+            onValuesChange={(s, all: any) => onValuesChange(all)}
+            initialValues={initValues}>
+            <BasicInfoFormFields />
+            <Divider orientation="left" />
+            <Form.Item
+                name="pressure"
+                label="Pressure"
+                rules={vdator.getFormValidators('pressure')}
+                normalize={v => (v ? +v : '')}>
+                <Input type="number" addonAfter="atm" />
+            </Form.Item>
+            <Form.Item
+                name="temperature"
+                label="Temperature"
+                rules={vdator.getFormValidators('temperature')}
+                normalize={v => (v ? +v : '')}>
+                <Input type="number" addonAfter="℃" />
+            </Form.Item>
+            <Divider orientation="left">Correlations</Divider>
+            <Form.Item label="Density">
+                <Form.Item name={['density', 'use']}>
+                    <TextSwitcher
+                        text={temperature ? Calculation.display(Water.density(temperature)) : '-'}
+                        />
+                </Form.Item>
+            </Form.Item>
+            <Form.Item name={['viscosity', 'use']} label="Viscosity">
+                <TextSwitcher
+                    text={temperature ? Calculation.display(Water.viscosity(temperature)) : '-'}
+                    />
+            </Form.Item>
+        </Form>
     );
 };

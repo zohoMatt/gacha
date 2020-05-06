@@ -2,9 +2,7 @@ import { v4 } from 'uuid';
 import { BasicTableWithEditStore } from './types';
 
 export interface ContaminantParams {
-    material: {
-        name: string;
-        description: string;
+    contaminant: {
         molecularWeight: number; // mg/mmol
         molarVolume: number; // mL/gmol
         boilingPt: number; // ℃
@@ -32,6 +30,8 @@ export interface ContaminantParams {
             correlation: boolean;
             value?: number; // cm^2/s
         };
+        spdfr: number;
+        tortuosity: number;
     };
 }
 
@@ -48,9 +48,7 @@ export class ContaminantStore extends BasicTableWithEditStore<ContaminantParams>
         this.activeRecord = {
             name: '',
             description: '',
-            material: {
-                name: '',
-                description: '',
+            contaminant: {
                 molecularWeight: 0, // mg/mmol
                 molarVolume: 0, // mL/gmol
                 boilingPt: 0, // ℃
@@ -77,7 +75,9 @@ export class ContaminantStore extends BasicTableWithEditStore<ContaminantParams>
                 poreDiffusion: {
                     correlation: false,
                     value: 0
-                }
+                },
+                spdfr: 1,
+                tortuosity: 0
             }
         };
     }
