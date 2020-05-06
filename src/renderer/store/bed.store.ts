@@ -1,6 +1,6 @@
 import { action } from 'mobx';
 import { v4 } from 'uuid';
-import { BasicTableWithEditStore } from './types';
+import { BasicTableWithEditStore, BriefRecordType } from './base';
 
 export interface BedParams {
     length: number; // cm
@@ -13,23 +13,18 @@ export interface BedParams {
 export class BedStore extends BasicTableWithEditStore<BedParams> {
     public STORE_NAME = 'BedStore';
 
+    public DEFAULT_STORE: BriefRecordType<BedParams> = {
+        name: '',
+        description: '',
+        manufacturer: '',
+        length: 0,
+        diameter: 0,
+        mass: 0,
+        flowrate: 0,
+        ebct: 0
+    };
+
     constructor() {
         super(['database', 'bed']);
-    }
-
-    @action
-    public createNew() {
-        this.changesHappen(false);
-        this.activeKey = v4();
-        this.activeRecord = {
-            name: '',
-            description: '',
-            manufacturer: '',
-            length: 0,
-            diameter: 0,
-            mass: 0,
-            flowrate: 0,
-            ebct: 0
-        };
     }
 }

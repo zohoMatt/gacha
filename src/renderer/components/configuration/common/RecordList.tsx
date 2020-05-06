@@ -2,7 +2,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import { Input, message, Popconfirm, Table } from 'antd';
 
-import { FullRecordType, Params } from '../../../store/types';
+import { FullRecordType, Params } from '../../../store/base';
 import { WaterParams } from '../../../store/water.store';
 
 const styles = require('./RecordList.module.less');
@@ -44,8 +44,7 @@ const RecordList: React.FunctionComponent<RecordListProps> = ({
         {
             title: 'Name',
             dataIndex: 'name',
-            key: 'name',
-            colSpan: 1
+            key: 'name'
         },
         {
             title: 'Action',

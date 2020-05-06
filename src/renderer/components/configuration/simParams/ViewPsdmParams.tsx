@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Divider, Form } from 'antd';
 
 import { ViewBasicInfo } from '../common/BasicInfo';
-import { BriefRecordType } from '../../../store/types';
+import { BriefRecordType } from '../../../store/base';
 import { PsdmParams } from '../../../store/psdm.store';
 
 export interface ViewWaterPropsComponentProps {

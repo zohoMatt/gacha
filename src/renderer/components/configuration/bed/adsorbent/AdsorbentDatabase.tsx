@@ -4,7 +4,7 @@ import { EditAdsorbentData } from './EditAdsorbentData';
 import { ViewAdsorbentData } from './ViewAdsorbentData';
 import { TableWithEditSection } from '../../../container/TableWithEditSection';
 import { AdsorbentParams, AdsorbentStore } from '../../../../store/adsorbent.store';
-import { BriefRecordType } from '../../../../store/types';
+import { BriefRecordType } from '../../../../store/base';
 
 export const AdsorbentDatabase: React.FunctionComponent<any> = () => {
     const store = new AdsorbentStore();

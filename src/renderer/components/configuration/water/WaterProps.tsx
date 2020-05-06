@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 
 import { TableWithEditSection } from '../../container/TableWithEditSection';
 import { WaterParams, WaterStore } from '../../../store/water.store';
-import { BriefRecordType } from '../../../store/types';
+import { BriefRecordType } from '../../../store/base';
 import { EditWaterData } from './EditWaterData';
 import { ViewWaterProps } from './ViewWaterProps';
 

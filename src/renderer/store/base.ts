@@ -49,6 +49,8 @@ export abstract class BasicTableWithEditStore<T> {
 
     public abstract STORE_NAME: string;
 
+    public abstract DEFAULT_STORE: BriefRecordType<T>;
+
     @computed get tableList(): FullRecordType<T>[] {
         return this.database.props;
     }
@@ -68,6 +70,13 @@ export abstract class BasicTableWithEditStore<T> {
         } catch (e) {
             console.error(`${this.STORE_NAME}::autorun Storage failed in updating.`);
         }
+    }
+
+    @action
+    public createNew() {
+        this.changesHappen(false);
+        this.activeKey = v4();
+        this.activeRecord = this.DEFAULT_STORE;
     }
 
     @action
@@ -152,6 +161,4 @@ export abstract class BasicTableWithEditStore<T> {
     public cancel() {
         this.resetActive();
     }
-
-    public abstract createNew(): void;
 }

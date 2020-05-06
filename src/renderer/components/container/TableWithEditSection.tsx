@@ -6,7 +6,7 @@ import { OperationPanel, OperationPanelButtons } from '../configuration/common/O
 import { RecordList } from '../configuration/common/RecordList';
 import { IdleStatePrompt } from '../common/IdleStatePrompt';
 
-import { BriefRecordType, BasicTableWithEditStore } from '../../store/types';
+import { BriefRecordType, BasicTableWithEditStore } from '../../store/base';
 import { WaterParams } from '../../store/water.store';
 
 const styles = require('./TableWithEditSection.module.less');
@@ -114,7 +114,7 @@ export class TableWithEditSection extends React.Component<
     public render() {
         const { warning, status } = this.state;
         const { title } = this.props;
-        const { changesMade, activeKey, activeRecord, tableList } = this.store;
+        const { activeRecord, tableList } = this.store;
         const { Edit, Save, SaveAs, Cancel } = OperationPanelButtons;
         return (
             <div className={styles.container}>
@@ -149,7 +149,6 @@ export class TableWithEditSection extends React.Component<
                                         ? [Edit, SaveAs, Cancel]
                                         : [Save, SaveAs, Cancel]
                                 }
-                                saveDisabled={!changesMade}
                                 warning={warning}
                                 onEdit={() => this.setState({ status: 'edit' })}
                                 onSave={() => this.save()}

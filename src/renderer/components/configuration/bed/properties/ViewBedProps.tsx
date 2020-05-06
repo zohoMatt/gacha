@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Col, Divider, Form, Row } from 'antd';
 
 import { ViewBasicInfo } from '../../common/BasicInfo';
-import { BriefRecordType } from '../../../../store/types';
+import { BriefRecordType } from '../../../../store/base';
 import { BedParams } from '../../../../store/bed.store';
 import { Calculation } from '../../../../../mods/calculation/basic';
 import { FixedBed } from '../../../../../mods/calculation/bedProps.maths';

@@ -1,6 +1,6 @@
 import { action } from 'mobx';
 import { v4 } from 'uuid';
-import { BasicTableWithEditStore } from './types';
+import { BasicTableWithEditStore, BriefRecordType } from './base';
 
 export interface AdsorbentParams {
     density: number; // g/cm^3
@@ -12,22 +12,17 @@ export interface AdsorbentParams {
 export class AdsorbentStore extends BasicTableWithEditStore<AdsorbentParams> {
     public STORE_NAME = 'AdsorbentStore';
 
+    public DEFAULT_STORE: BriefRecordType<AdsorbentParams> = {
+        name: '',
+        description: '',
+        manufacturer: '',
+        density: 0, // g/cm^3
+        particleRadius: 0, // cm
+        particlePorosity: 0, // no unit
+        adsorbentType: ''
+    };
+
     constructor() {
         super(['database', 'adsorbent']);
-    }
-
-    @action
-    public createNew() {
-        this.changesHappen(false);
-        this.activeKey = v4();
-        this.activeRecord = {
-            name: '',
-            description: '',
-            manufacturer: '',
-            density: 0, // g/cm^3
-            particleRadius: 0, // cm
-            particlePorosity: 0, // no unit
-            adsorbentType: ''
-        };
     }
 }

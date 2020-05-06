@@ -1,7 +1,7 @@
 import { action } from 'mobx';
 import { v4 } from 'uuid';
 
-import { SwitcherType, BasicTableWithEditStore } from './types';
+import { SwitcherType, BasicTableWithEditStore, BriefRecordType } from './base';
 
 export interface WaterParams {
     pressure: number; // atm
@@ -13,21 +13,16 @@ export interface WaterParams {
 export class WaterStore extends BasicTableWithEditStore<WaterParams> {
     public STORE_NAME = 'WaterStore';
 
+    public DEFAULT_STORE: BriefRecordType<WaterParams> = {
+        name: '',
+        description: '',
+        pressure: 1.0,
+        temperature: 25,
+        density: { use: false },
+        viscosity: { use: false }
+    };
+
     constructor() {
         super(['database', 'water']);
-    }
-
-    @action
-    public createNew() {
-        this.changesHappen(false);
-        this.activeKey = v4();
-        this.activeRecord = {
-            name: '',
-            description: '',
-            pressure: 1.0,
-            temperature: 25,
-            density: { use: false },
-            viscosity: { use: false }
-        };
     }
 }

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Col, Divider, Form, Row } from 'antd';
 
 import { ViewBasicInfo } from '../../common/BasicInfo';
-import { BriefRecordType } from '../../../../store/types';
+import { BriefRecordType } from '../../../../store/base';
 import { AdsorbentParams } from '../../../../store/adsorbent.store';
 
 export interface ViewAdsorbentDataProps {

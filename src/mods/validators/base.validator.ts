@@ -1,5 +1,5 @@
 import { Validator, Rule } from '../../utils/validator';
-import { BriefRecordType } from '../../renderer/store/types';
+import { BriefRecordType } from '../../renderer/store/base';
 
 export interface RulesDictionary {
     [key: string]: {

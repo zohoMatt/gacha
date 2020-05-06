@@ -5,7 +5,7 @@ import { ViewPsdmParams } from './ViewPsdmParams';
 import { EditPsdmData } from './EditPsdmData';
 
 import { PsdmParams, PsdmStore } from '../../../store/psdm.store';
-import { BriefRecordType } from '../../../store/types';
+import { BriefRecordType } from '../../../store/base';
 
 export const SimulationParameter: React.FunctionComponent<any> = () => {
     const store = new PsdmStore();

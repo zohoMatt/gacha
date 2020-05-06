@@ -4,9 +4,9 @@ import { TableWithEditSection } from '../../../container/TableWithEditSection';
 import { ViewContaminantData } from './ViewContaminantData';
 import { EditContaminantProps } from './EditContaminantProps';
 import { ContaminantParams, ContaminantStore } from '../../../../store/contaminant.store';
-import { BriefRecordType } from '../../../../store/types';
+import { BriefRecordType } from '../../../../store/base';
 
-const ContaminantProps: React.FunctionComponent = () => {
+export const ContaminantProps: React.FunctionComponent = () => {
     return (
         <TableWithEditSection
             title="Contaminant Properties"
@@ -24,5 +24,3 @@ const ContaminantProps: React.FunctionComponent = () => {
             />
     );
 };
-
-export default ContaminantProps;

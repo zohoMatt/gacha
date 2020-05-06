@@ -5,7 +5,7 @@ import { ViewBedProps } from './ViewBedProps';
 import { EditBedData } from './EditBedData';
 
 import { BedParams, BedStore } from '../../../../store/bed.store';
-import { BriefRecordType } from '../../../../store/types';
+import { BriefRecordType } from '../../../../store/base';
 
 export const FixedBedProps: React.FunctionComponent<any> = () => {
     const store = new BedStore();
