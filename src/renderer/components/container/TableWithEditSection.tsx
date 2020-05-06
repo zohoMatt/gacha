@@ -77,12 +77,14 @@ export class TableWithEditSection extends React.Component<
 
     public save = (name?: string) => {
         // Validate
-        const errors = this.formRef.current
-            .getFieldsError()
-            .filter((f: any) => f.errors.length > 0);
-        if (errors.length > 0) {
-            message.error(errors[0].errors[0]);
-            return;
+        if (this.state.status === 'edit') {
+            const errors = this.formRef.current
+                .getFieldsError()
+                .filter((f: any) => f.errors.length > 0);
+            if (errors.length > 0) {
+                message.error(errors[0].errors[0]);
+                return;
+            }
         }
 
         if (name === undefined) {
