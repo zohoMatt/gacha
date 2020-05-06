@@ -1,6 +1,7 @@
 import { BasicTableWithEditStore, BriefRecordType } from './base';
 
 export interface ContaminantParams {
+    fullName: string;
     molecularWeight: number; // mg/mmol
     molarVolume: number; // mL/gmol
     boilingPt: number; // ℃
@@ -18,6 +19,7 @@ export class ContaminantStore extends BasicTableWithEditStore<ContaminantParams>
     public DEFAULT_STORE: BriefRecordType<ContaminantParams> = {
         name: '',
         description: '',
+        fullName: '',
         molecularWeight: 0, // mg/mmol
         molarVolume: 0, // mL/gmol
         boilingPt: 0, // ℃

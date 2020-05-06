@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Form, Divider } from 'antd';
+import { Form, Divider, Input } from 'antd';
 
 import { BriefRecordType } from '../../../../store/base';
 import { ContaminantParams } from '../../../../store/contaminant.store';
@@ -15,6 +15,7 @@ export const ViewContaminantData: React.FunctionComponent<ViewContaminantDataPro
     const {
         name,
         description,
+        fullName,
         molecularWeight,
         molarVolume,
         boilingPt,
@@ -30,6 +31,9 @@ export const ViewContaminantData: React.FunctionComponent<ViewContaminantDataPro
         <Form size="small" layout="horizontal" labelCol={{ span: 6 }} wrapperCol={{ span: 8 }}>
             <ViewBasicInfo name={name} description={description} />
             <Divider orientation="left">Properties</Divider>
+            <Form.Item label="Full Name">
+                <span>{fullName}</span>
+            </Form.Item>
             <Form.Item label="Molecular Weight">
                 <span>{molecularWeight} mg/mol</span>
             </Form.Item>

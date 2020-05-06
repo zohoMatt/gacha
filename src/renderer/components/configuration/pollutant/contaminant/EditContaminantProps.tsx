@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Col, Form, Input, Row, Tabs } from 'antd';
+import { Form, Input } from 'antd';
 import { EditProps } from '../../../container/TableWithEditSection';
 import { VALIDATE_MSG_TEMPLATE } from '../../../../../utils/validator';
 import { BasicInfoFormFields } from '../../common/BasicInfo';
@@ -23,6 +23,9 @@ export const EditContaminantProps: React.FunctionComponent<EditProps> = ({
             onValuesChange={(s, all: any) => onValuesChange(all)}
             initialValues={initValues}>
             <BasicInfoFormFields />
+            <Form.Item name="fullName" label="Full Name">
+                <Input.TextArea rows={2} />
+            </Form.Item>
             <Form.Item
                 name="molecularWeight"
                 label="Molecular Weight"
