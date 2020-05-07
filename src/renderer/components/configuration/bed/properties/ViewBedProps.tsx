@@ -24,8 +24,8 @@ export const ViewBedProps: React.FunctionComponent<ViewBedPropsComponentProps> =
                     </Form.Item>
                 </Col>
                 <Col span={11}>
-                    <Form.Item label="Bed Length">
-                        <span>{`${length} cm`}</span>
+                    <Form.Item label="Bed Diameter">
+                        <span>{`${diameter} cm`}</span>
                     </Form.Item>
                 </Col>
             </Row>
