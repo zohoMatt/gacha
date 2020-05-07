@@ -1,4 +1,4 @@
-# MasterPFAS
+# PFAST
 
 ![](https://img.shields.io/badge/Electron-3.1.9-yellowgreen)
 ![](https://img.shields.io/badge/React-16.8.6-green)
