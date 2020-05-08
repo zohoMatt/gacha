@@ -108,7 +108,7 @@ export class OperationPanel extends React.Component<OperationPanelProps> {
                         onConfirm={onConfirmCancel}
                         onCancel={onQuitCancel}
                         onVisibleChange={this.onPopConfirmChange}>
-                        <Button type="danger" ghost onClick={onTriggerCancel}>
+                        <Button danger onClick={onTriggerCancel}>
                             Cancel
                         </Button>
                     </Popconfirm>
