@@ -28,5 +28,5 @@ message.config({
     top: 240
 });
 // Init storage and import data
-Storage.init({ filename: 'maspfas-user-data' });
+Storage.init({ filename: 'pfast-user-data' });
 Storage.import().then(() => render(Application));
