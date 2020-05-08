@@ -1,23 +1,19 @@
 import { BasicTableWithEditStore, BriefRecordType } from './base';
 
+export interface CorrelationOrInput {
+    correlation: boolean;
+    value?: number; // ignored when correlation === true
+}
+
 export interface AdsorptionParams {
     freundlich: {
         k: number;
         nth: number;
     };
     kinetics: {
-        filmDiffusion: {
-            correlation: boolean;
-            value?: number; // cm/s, ignored when correlation === true
-        };
-        surfaceDiffusion: {
-            correlation: boolean;
-            value?: number; // cm^2/s
-        };
-        poreDiffusion: {
-            correlation: boolean;
-            value?: number; // cm^2/s
-        };
+        filmDiffusion: CorrelationOrInput; // cm/s,
+        surfaceDiffusion: CorrelationOrInput; // cm^2/s
+        poreDiffusion: CorrelationOrInput; // cm^2/s
         spdfr: number;
         tortuosity: number;
     };

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Form, Divider } from 'antd';
 
+import { toJS } from 'mobx';
 import { BriefRecordType } from '../../../../store/base';
 import { ViewBasicInfo } from '../../common/BasicInfo';
 import { AdsorptionParams } from '../../../../store/adsorption.store';
@@ -15,29 +16,31 @@ export const ViewAdsorptionData: React.FunctionComponent<ViewAdsorptionDataProps
     const { filmDiffusion, poreDiffusion, surfaceDiffusion, spdfr, tortuosity } = kinetics;
     const { k, nth } = freundlich;
 
+    console.log('data', toJS(data));
+
     return (
         <Form size="small" layout="horizontal" labelCol={{ span: 6 }} wrapperCol={{ span: 8 }}>
             <ViewBasicInfo name={name} description={description} />
             <Divider orientation="left">Properties</Divider>
             <Form.Item label="Film Diffusion">
                 <span>
-                    {`${200  } ${  filmDiffusion.correlation}`
-                        ? 'cm/s (Gnielinski)'
-                        : 'cm/s (User Input)'}
+                    {`${200} ${
+                        filmDiffusion.correlation ? 'cm/s (Gnielinski)' : 'cm/s (User Input)'
+                    }`}
                 </span>
             </Form.Item>
             <Form.Item label="Surface Diffusion">
                 <span>
-                    {`${200  } ${  surfaceDiffusion.correlation}`
-                        ? 'cm²/s (Sontheimer)'
-                        : 'cm²/s (User Input)'}
+                    {`${200} ${
+                        surfaceDiffusion.correlation ? 'cm²/s (Sontheimer)' : 'cm²/s (User Input)'
+                    }`}
                 </span>
             </Form.Item>
             <Form.Item label="Pore Diffusion">
                 <span>
-                    {`${200  } ${  poreDiffusion.correlation}`
-                        ? 'cm²/s (Hayduk & Laudie)'
-                        : 'cm²/s (User Input)'}
+                    {`${200} ${
+                        poreDiffusion.correlation ? 'cm²/s (Hayduk & Laudie)' : 'cm²/s (User Input)'
+                    }`}
                 </span>
             </Form.Item>
             <Form.Item label="SPDFR">
