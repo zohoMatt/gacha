@@ -2,7 +2,6 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 import { message, Typography } from 'antd';
 
-import { toJS } from 'mobx';
 import { OperationPanel, OperationPanelButtons } from '../configuration/common/OperationPanel';
 import { RecordList } from '../configuration/common/RecordList';
 import { IdleStatePrompt } from '../common/IdleStatePrompt';
@@ -108,7 +107,6 @@ export class TableWithEditSection extends React.Component<
     };
 
     public changeParams = (allParams: BriefRecordType<any>) => {
-        console.log('changeparams', toJS(allParams));
         this.store.changeParams(allParams);
     };
 
