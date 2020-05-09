@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import { TableWithEditSection } from '../../../common/container/TableWithEditSection';
+import { TableWithEditSection } from '../../common/container/TableWithEditSection';
 import { ViewContaminantData } from './ViewContaminantData';
 import { EditContaminantProps } from './EditContaminantProps';
-import { ContaminantParams, ContaminantStore } from '../../../../store/contaminant.store';
-import { BriefRecordType } from '../../../../store/base';
+import { ContaminantParams, ContaminantStore } from '../../../store/contaminant.store';
+import { BriefRecordType } from '../../../store/base';
 
 export const ContaminantProps: React.FunctionComponent = () => {
     return (

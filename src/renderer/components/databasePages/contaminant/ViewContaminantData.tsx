@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Form, Divider, Input } from 'antd';
 
-import { BriefRecordType } from '../../../../store/base';
-import { ContaminantParams } from '../../../../store/contaminant.store';
-import { ViewBasicInfo } from '../../../common/BasicInfo';
+import { BriefRecordType } from '../../../store/base';
+import { ContaminantParams } from '../../../store/contaminant.store';
+import { ViewBasicInfo } from '../../common/BasicInfo';
 
 export interface ViewContaminantDataProps {
     data: BriefRecordType<ContaminantParams>;

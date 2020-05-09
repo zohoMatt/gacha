@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Form, Input } from 'antd';
-import { EditProps } from '../../../common/container/TableWithEditSection';
-import { VALIDATE_MSG_TEMPLATE } from '../../../../../utils/validator';
-import { BasicInfoFormFields } from '../../../common/BasicInfo';
+import { EditProps } from '../../common/container/TableWithEditSection';
+import { VALIDATE_MSG_TEMPLATE } from '../../../../utils/validator';
+import { BasicInfoFormFields } from '../../common/BasicInfo';
 
 const styles = require('./EditContaminantProps.module.less');
 

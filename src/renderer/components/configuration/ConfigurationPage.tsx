@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 
 import NavBar from '../nav/NavBar';
-import { ContaminantProps } from '../databasePages/contaminant/contaminant/ContaminantProps';
+import { ContaminantProps } from '../databasePages/contaminant/ContaminantProps';
 import { AdsorbentDatabase } from '../databasePages/adsorbent/AdsorbentDatabase';
 import { ProfileSettings } from '../experimentPages/ProfileSettings';
 
