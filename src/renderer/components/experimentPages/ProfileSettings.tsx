@@ -2,7 +2,9 @@ import * as React from 'react';
 
 import { TableWithEditSection } from '../common/container/TableWithEditSection';
 import { EditProfileData } from './EditProfileData';
-import { ExperimentStore } from '../../store/experiment.store';
+import { ExperimentStore, ExpProfileParams } from '../../store/experiment.store';
+import { BriefRecordType } from '../../store/base';
+import { ViewProfile } from './ViewProfile';
 
 export const ProfileSettings: React.FunctionComponent = () => {
     return (
@@ -16,7 +18,9 @@ export const ProfileSettings: React.FunctionComponent = () => {
                     onValuesChange={onValuesChange}
                     />
             )}
-            renderView={() => null}
+            renderView={(activeRecord: BriefRecordType<ExpProfileParams>) => (
+                <ViewProfile data={activeRecord} />
+            )}
             />
     );
 };

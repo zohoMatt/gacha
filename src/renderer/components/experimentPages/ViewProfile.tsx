@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Tabs } from 'antd';
+import { Form, Tabs } from 'antd';
 
 import { BriefRecordType } from '../../store/base';
 import { ExpProfileParams } from '../../store/experiment.store';
@@ -16,7 +16,13 @@ export const ViewProfile: React.FunctionComponent<ViewProfileProps> = ({ data })
     return (
         <Tabs defaultActiveKey="basic">
             <TabPane tab="Basic" key="basic">
-                <ViewBasicInfo name={name} description={description} />
+                <Form
+                    size="small"
+                    layout="horizontal"
+                    labelCol={{ span: 6 }}
+                    wrapperCol={{ span: 8 }}>
+                    <ViewBasicInfo name={name} description={description} />
+                </Form>
             </TabPane>
             <TabPane tab="Water" key="water" />
             <TabPane tab="Fixed Bed" key="bed" />
