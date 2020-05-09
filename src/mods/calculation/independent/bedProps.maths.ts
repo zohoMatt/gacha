@@ -1,6 +1,6 @@
 import { evaluate, unit, format, multiply, divide } from 'mathjs';
 
-import { CalculationResult } from './basic';
+import { CalculationResult } from '../basic';
 
 export class FixedBed {
     /**

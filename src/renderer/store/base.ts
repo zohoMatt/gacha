@@ -3,6 +3,12 @@ import { omit } from 'lodash';
 import { v4 } from 'uuid';
 import { Storage } from '../../utils/localStore';
 
+// todo
+export interface QuantityValue {
+    value: number;
+    unit: string | void;
+}
+
 export interface Params<T> {
     params: T;
 }

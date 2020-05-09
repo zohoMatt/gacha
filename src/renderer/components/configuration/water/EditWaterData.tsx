@@ -3,7 +3,7 @@ import { Divider, Form, Input } from 'antd';
 
 import { BasicInfoFormFields } from '../common/BasicInfo';
 import { TextSwitcher } from '../../common/TextSwticher';
-import { Water } from '../../../../mods/calculation/waterProperties.maths';
+import { WaterMaths } from '../../../../mods/calculation/independent/waterProperties.maths';
 import { Calculation } from '../../../../mods/calculation/basic';
 import { EditProps } from '../../container/TableWithEditSection';
 import { WaterValidator } from '../../../../mods/validators/water.validator';
@@ -48,13 +48,19 @@ export const EditWaterData: React.FunctionComponent<EditProps> = ({
             <Form.Item label="Density">
                 <Form.Item name={['density', 'use']}>
                     <TextSwitcher
-                        text={temperature ? Calculation.display(Water.density(temperature)) : '-'}
+                        text={
+                            temperature ? Calculation.display(WaterMaths.density(temperature)) : '-'
+                        }
                         />
                 </Form.Item>
             </Form.Item>
-            <Form.Item name={['viscosity', 'use']} label="Viscosity">
+            <Form.Item name={['dynamicViscosity', 'use']} label="Viscosity">
                 <TextSwitcher
-                    text={temperature ? Calculation.display(Water.viscosity(temperature)) : '-'}
+                    text={
+                        temperature
+                            ? Calculation.display(WaterMaths.dynamicViscosity(temperature))
+                            : '-'
+                    }
                     />
             </Form.Item>
         </Form>

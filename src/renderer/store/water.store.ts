@@ -1,7 +1,26 @@
-import { action } from 'mobx';
-import { v4 } from 'uuid';
-
 import { SwitcherType, BasicTableWithEditStore, BriefRecordType } from './base';
+
+// todo Use quantity value
+export interface WaterQuantityValue {
+    pressure: {
+        value: number;
+        unit: string;
+    };
+    temperature: {
+        value: number;
+        unit: string;
+    };
+    density: {
+        use: boolean;
+        value: number;
+        unit: string;
+    };
+    viscosity: {
+        use: boolean;
+        value: number;
+        unit: string;
+    };
+}
 
 export interface WaterParams {
     pressure: number; // atm

@@ -3,7 +3,7 @@ import { Divider, Form } from 'antd';
 
 import { ViewBasicInfo } from '../common/BasicInfo';
 import { Calculation } from '../../../../mods/calculation/basic';
-import { Water } from '../../../../mods/calculation/waterProperties.maths';
+import { WaterMaths } from '../../../../mods/calculation/independent/waterProperties.maths';
 import { WaterParams } from '../../../store/water.store';
 import { ViewDataProps } from '../../container/TableWithEditSection';
 
@@ -21,11 +21,15 @@ const ViewWaterProps: React.FunctionComponent<ViewDataProps<WaterParams>> = ({ d
             </Form.Item>
             <Divider orientation="left">Correlations</Divider>
             <Form.Item label="Density">
-                <span>{density.use ? Calculation.display(Water.density(temperature)) : 'N/A'}</span>
+                <span>
+                    {density.use ? Calculation.display(WaterMaths.density(temperature)) : 'N/A'}
+                </span>
             </Form.Item>
             <Form.Item label="Viscosity">
                 <span>
-                    {viscosity.use ? Calculation.display(Water.viscosity(temperature)) : 'N/A'}
+                    {viscosity.use
+                        ? Calculation.display(WaterMaths.dynamicViscosity(temperature))
+                        : 'N/A'}
                 </span>
             </Form.Item>
         </Form>

@@ -53,6 +53,7 @@ export const EditBedData: React.FunctionComponent<EditProps> = ({
                 normalize={v => (v ? +v : '')}>
                 <Input type="number" addonAfter="mL/min" />
             </Form.Item>
+            {/* fixme EBCT is dependent on volume and flowrate */}
             <Form.Item
                 name="ebct"
                 label="EBCT"
@@ -61,6 +62,7 @@ export const EditBedData: React.FunctionComponent<EditProps> = ({
                 <Input type="number" addonAfter="min" />
             </Form.Item>
             <Divider orientation="left">Calculation</Divider>
+            {/* todo hlr, ebct */}
         </Form>
     );
 };
