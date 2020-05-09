@@ -6,6 +6,7 @@ import { VALIDATE_MSG_TEMPLATE } from '../../../utils/validator';
 import { EditWaterTab } from './profile/water/EditWaterTab';
 import { BasicInfoFormFields } from '../common/BasicInfo';
 import { EditBedTab } from './profile/bed/EditBedTab';
+import { EditPsdmTab } from './profile/simParams/EditPsdmTab';
 
 export const EditProfileData: React.FunctionComponent<EditProps> = ({
     form,
@@ -36,7 +37,9 @@ export const EditProfileData: React.FunctionComponent<EditProps> = ({
                     <EditBedTab {...initValues.bed} />
                 </TabPane>
                 <TabPane tab="Phys. Chem. Properties" key="physchem" />
-                <TabPane tab="PSDM Simulation" key="psdm" />
+                <TabPane tab="PSDM Simulation" key="psdm">
+                    <EditPsdmTab {...initValues.psdm} />
+                </TabPane>
             </Tabs>
         </Form>
     );
