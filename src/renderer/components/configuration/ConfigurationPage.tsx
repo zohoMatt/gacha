@@ -8,6 +8,7 @@ import { ContaminantProps } from '../databasePages/contaminant/contaminant/Conta
 import { FixedBedProps } from '../experimentPages/profile/bed/FixedBedProps';
 import { AdsorbentDatabase } from '../databasePages/adsorbent/AdsorbentDatabase';
 import { AdsorptionMechanisms } from '../databasePages/contaminant/adsorption/AdsorptionMechanisms';
+import { ProfileSettings } from '../experimentPages/ProfileSettings';
 
 const styles = require('./ConfigurationPage.module.less');
 
@@ -23,6 +24,9 @@ const ConfigurationPage: React.FunctionComponent = () => {
                     </Route>
                     <Route path={`${match.path}/database/contaminants`}>
                         <ContaminantProps />
+                    </Route>
+                    <Route path={`${match.path}/exp/profile`}>
+                        <ProfileSettings />
                     </Route>
 
                     {/* deprecated */}
