@@ -7,7 +7,6 @@ import { BedParams } from '../../renderer/store/bed.store';
 import { AdsorptionParams } from '../../renderer/store/adsorption.store';
 import { PsdmParams } from '../../renderer/store/psdm.store';
 import { QuantityValue } from '../../renderer/store/base';
-import { FixedBed } from './independent/bedProps.maths';
 
 export interface ProcessedProfile {
     // bed

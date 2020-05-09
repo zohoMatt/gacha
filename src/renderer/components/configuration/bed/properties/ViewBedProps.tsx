@@ -4,8 +4,8 @@ import { Col, Divider, Form, Row } from 'antd';
 import { ViewBasicInfo } from '../../common/BasicInfo';
 import { BriefRecordType } from '../../../../store/base';
 import { BedParams } from '../../../../store/bed.store';
+import { BedMaths } from '../../../../../mods/calculation/independent/bed.maths';
 import { Calculation } from '../../../../../mods/calculation/basic';
-import { FixedBed } from '../../../../../mods/calculation/independent/bedProps.maths';
 
 export interface ViewBedPropsComponentProps {
     data: BriefRecordType<BedParams>;
@@ -13,6 +13,16 @@ export interface ViewBedPropsComponentProps {
 
 export const ViewBedProps: React.FunctionComponent<ViewBedPropsComponentProps> = ({ data }) => {
     const { name, description, manufacturer, length, diameter, mass, flowrate, ebct } = data;
+    const areaVal =
+        `${Calculation.format(BedMaths.crossSectionalArea(`${diameter  }cm`).toNumber('cm^2'))  } cm²`;
+    const volumeVal =
+        `${Calculation.format(BedMaths.volume(`${length  }cm`, `${diameter  }cm`).toNumber('cm^3')) 
+        }cm³`;
+    const densityVal =
+        `${Calculation.format(
+            BedMaths.density(`${mass  }g`, `${length  }cm`, `${diameter  }cm`).toNumber('g/mL')
+        )  }g/mL`;
+
     return (
         <Form size="small" layout="horizontal" labelCol={{ span: 12 }} wrapperCol={{ span: 12 }}>
             <ViewBasicInfo name={name} description={description} manufacturer={manufacturer} />
@@ -52,7 +62,7 @@ export const ViewBedProps: React.FunctionComponent<ViewBedPropsComponentProps> =
             <Row>
                 <Col span={11} offset={2}>
                     <Form.Item label="Bed Density">
-                        <span>{Calculation.display(FixedBed.density(mass, length, diameter))}</span>
+                        <span>{densityVal}</span>
                     </Form.Item>
                 </Col>
                 <Col span={11}>
@@ -64,12 +74,12 @@ export const ViewBedProps: React.FunctionComponent<ViewBedPropsComponentProps> =
             <Row>
                 <Col span={11} offset={2}>
                     <Form.Item label="Cross-Sectional Area">
-                        <span>{Calculation.display(FixedBed.crossSectionalArea(diameter))}</span>
+                        <span>{areaVal}</span>
                     </Form.Item>
                 </Col>
                 <Col span={11}>
                     <Form.Item label="Bed Volume">
-                        <span>{Calculation.display(FixedBed.volume(length, diameter))}</span>
+                        <span>{volumeVal}</span>
                     </Form.Item>
                 </Col>
             </Row>
