@@ -9,28 +9,28 @@ export const EditBedTab: React.FunctionComponent<BedInputParams> = initValues =>
     return (
         <>
             <Form.Item
-                name="length"
+                name={['bed', 'length']}
                 label="Bed Length"
                 rules={NORMAL_RULES}
                 normalize={v => (v ? +v : '')}>
                 <Input type="number" addonAfter="cm" />
             </Form.Item>
             <Form.Item
-                name="diameter"
+                name={['bed', 'diameter']}
                 label="Bed Diameter"
                 rules={NORMAL_RULES}
                 normalize={v => (v ? +v : '')}>
                 <Input type="number" addonAfter="cm" />
             </Form.Item>
             <Form.Item
-                name="mass"
+                name={['bed', 'mass']}
                 label="Bed Mass"
                 rules={NORMAL_RULES}
                 normalize={v => (v ? +v : '')}>
                 <Input type="number" addonAfter="g" />
             </Form.Item>
             <Form.Item
-                name="flowrate"
+                name={['bed', 'flowrate']}
                 label="Flowrate"
                 rules={[...NORMAL_RULES, { min: 0, type: 'number' }]}
                 normalize={v => (v ? +v : '')}>
@@ -38,7 +38,7 @@ export const EditBedTab: React.FunctionComponent<BedInputParams> = initValues =>
             </Form.Item>
             {/* fixme EBCT is dependent on volume and flowrate */}
             <Form.Item
-                name="ebct"
+                name={['bed', 'ebct']}
                 label="EBCT"
                 rules={[...NORMAL_RULES, { min: 0, type: 'number' }]}
                 normalize={v => (v ? +v : '')}>

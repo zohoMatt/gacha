@@ -11,28 +11,28 @@ export const EditPsdmTab: React.FunctionComponent<PsdmInputParams> = () => {
     return (
         <>
             <Form.Item
-                name="totalRunTime"
+                name={['psdm', 'totalRunTime']}
                 label="Total Run Time"
                 rules={vdator.getFormValidators('totalRunTime', POINTS)}
                 normalize={v => (v ? +v : '')}>
                 <Input type="number" addonAfter="d" />
             </Form.Item>
             <Form.Item
-                name="firstPointDisplayed"
+                name={['psdm', 'firstPointDisplayed']}
                 label="First Point Displayed"
                 rules={vdator.getFormValidators('firstPointDisplayed', POINTS)}
                 normalize={v => (v ? +v : '')}>
                 <Input type="number" addonAfter="d" />
             </Form.Item>
             <Form.Item
-                name="timeStep"
+                name={['psdm', 'timeStep']}
                 label="Time Step"
                 rules={vdator.getFormValidators('timeStep', POINTS)}
                 normalize={v => (v ? +v : '')}>
                 <Input type="number" addonAfter="d" />
             </Form.Item>
             <Form.Item
-                name="numOfAxialElms"
+                name={['psdm', 'numOfAxialElms']}
                 label="Number of Axial Elements"
                 rules={vdator.getFormValidators('numOfAxialElms')}
                 normalize={v => (v ? +v : '')}>
@@ -40,14 +40,14 @@ export const EditPsdmTab: React.FunctionComponent<PsdmInputParams> = () => {
             </Form.Item>
             <Divider orientation="left">Number of Collocation Points</Divider>
             <Form.Item
-                name="axialCollocatPts"
+                name={['psdm', 'axialCollocatPts']}
                 label="Axial Direction"
                 rules={vdator.getFormValidators('axialCollocatPts')}
                 normalize={v => (v ? +v : '')}>
                 <Input type="number" />
             </Form.Item>
             <Form.Item
-                name="radialCollocatPts"
+                name={['psdm', 'radialCollocatPts']}
                 label="Radial Direction"
                 rules={vdator.getFormValidators('radialCollocatPts')}
                 normalize={v => (v ? +v : '')}>

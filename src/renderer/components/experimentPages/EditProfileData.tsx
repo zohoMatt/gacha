@@ -7,6 +7,7 @@ import { EditWaterTab } from './profile/water/EditWaterTab';
 import { BasicInfoFormFields } from '../common/BasicInfo';
 import { EditBedTab } from './profile/bed/EditBedTab';
 import { EditPsdmTab } from './profile/simParams/EditPsdmTab';
+import { EditAdsorptionTab } from './profile/adsorption/EditAdsorptionTab';
 
 export const EditProfileData: React.FunctionComponent<EditProps> = ({
     form,
@@ -36,7 +37,9 @@ export const EditProfileData: React.FunctionComponent<EditProps> = ({
                 <TabPane tab="Fixed Bed" key="bed">
                     <EditBedTab {...initValues.bed} />
                 </TabPane>
-                <TabPane tab="Phys. Chem. Properties" key="physchem" />
+                <TabPane tab="Phys. Chem. Properties" key="physchem">
+                    <EditAdsorptionTab {...initValues.adsorption} />
+                </TabPane>
                 <TabPane tab="PSDM Simulation" key="psdm">
                     <EditPsdmTab {...initValues.psdm} />
                 </TabPane>
