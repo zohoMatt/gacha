@@ -3,6 +3,7 @@ import { Link, useRouteMatch } from 'react-router-dom';
 
 import { Menu } from 'antd';
 import { AreaChartOutlined, DatabaseOutlined, InsertRowBelowOutlined } from '@ant-design/icons';
+import { ExperimentOutlined, SettingOutlined } from '@ant-design/icons/lib';
 
 const styles = require('./NavBar.module.less');
 
@@ -16,60 +17,34 @@ const NavBar: React.FunctionComponent = () => {
         <div className={styles.navbar}>
             <Menu style={{ width: '100%' }} mode="inline">
                 <SubMenu
-                    key="sub1"
+                    key="database"
                     title={
                         <span>
                             <DatabaseOutlined />
                             <span>Database</span>
                         </span>
                     }>
-                    <Group key="water" title="Water">
-                        <Item key="water.props">
-                            <Link to={`${match.url}/settings/water/prop`}>Properties</Link>
-                        </Item>
-                    </Group>
-                    <Group key="component" title="Components">
-                        <Item key="component.adsorb">
-                            <Link to={`${match.url}/settings/components/adsorb`}>
-                                Kinetics & Isotherm
-                            </Link>
-                        </Item>
-                        <Item key="component.props">
-                            <Link to={`${match.url}/settings/components/prop`}>
-                                &nbsp;&nbsp;&nbsp;&nbsp;- Contaminants
-                            </Link>
-                        </Item>
-                    </Group>
-                    <Group key="sim" title="Simulation Parameters">
-                        <Item key="sim.psdm">
-                            <Link to={`${match.url}/settings/sim/psdm`}>PSDM</Link>
-                        </Item>
-                    </Group>
-                    <Group key="fixedBed" title="Fixed Bed">
-                        <Item key="fixedBed.props">
-                            <Link to={`${match.url}/settings/bed/prop`}>Bed Properties</Link>
-                        </Item>
-                        <Item key="adsorbent.database">
-                            <Link to={`${match.url}/settings/bed/adsorbent`}>
-                                &nbsp;&nbsp;&nbsp;&nbsp;- Adsorbent
-                            </Link>
-                        </Item>
-                    </Group>
-                </SubMenu>
-                <SubMenu
-                    key="sub2"
-                    title={
-                        <span>
-                            <InsertRowBelowOutlined />
-                            <span>Data Sets</span>
-                        </span>
-                    }>
-                    <Item key="comb">
-                        <Link to={`${match.url}/dataset/comb`}>Combinations</Link>
+                    <Item key="contaminants">
+                        <Link to={`${match.url}/database/contaminants`}>Contaminants</Link>
+                    </Item>
+                    <Item key="adsorbent">
+                        <Link to={`${match.url}/database/adsorbent`}>Adsorbent</Link>
                     </Item>
                 </SubMenu>
                 <SubMenu
-                    key="sub3"
+                    key="experiment"
+                    title={
+                        <span>
+                            <ExperimentOutlined />
+                            <span>Experiment</span>
+                        </span>
+                    }>
+                    <Item key="profile">
+                        <Link to={`${match.url}/exp/profile`}>Profile</Link>
+                    </Item>
+                </SubMenu>
+                <SubMenu
+                    key="plot"
                     title={
                         <span>
                             <AreaChartOutlined />
@@ -81,6 +56,21 @@ const NavBar: React.FunctionComponent = () => {
                     </Item>
                     <Item key="comparison">
                         <Link to={`${match.url}/plot/compare`}>Comparison</Link>
+                    </Item>
+                </SubMenu>
+                <SubMenu
+                    key="system"
+                    title={
+                        <span>
+                            <SettingOutlined />
+                            <span>System</span>
+                        </span>
+                    }>
+                    <Item key="history">
+                        <Link to={`${match.url}/sys/history`}>History</Link>
+                    </Item>
+                    <Item key="prefer">
+                        <Link to={`${match.url}/sys/pref`}>Preference</Link>
                     </Item>
                 </SubMenu>
             </Menu>
