@@ -1,24 +1,16 @@
 import * as React from 'react';
 import { Form, Divider } from 'antd';
 
-import { BriefRecordType } from '../../../../store/base';
-import { ViewBasicInfo } from '../../../common/BasicInfo';
-import { AdsorptionParams } from '../../../../store/adsorption.store';
+import { AdsorptionInputParams } from '../../../../store/experiment.store';
 
-export interface ViewAdsorptionDataProps {
-    data: BriefRecordType<AdsorptionParams>;
-}
-
-export const ViewAdsorptionData: React.FunctionComponent<ViewAdsorptionDataProps> = ({ data }) => {
-    const { name, description, kinetics, freundlich } = data;
+export const ViewAdsorptionData: React.FunctionComponent<AdsorptionInputParams> = data => {
+    const { kinetics, freundlich } = data;
 
     const { filmDiffusion, poreDiffusion, surfaceDiffusion, spdfr, tortuosity } = kinetics;
     const { k, nth } = freundlich;
 
     return (
-        <Form size="small" layout="horizontal" labelCol={{ span: 6 }} wrapperCol={{ span: 8 }}>
-            <ViewBasicInfo name={name} description={description} />
-            <Divider orientation="left">Properties</Divider>
+        <>
             <Form.Item label="Film Diffusion">
                 <span>
                     {`${
@@ -59,6 +51,6 @@ export const ViewAdsorptionData: React.FunctionComponent<ViewAdsorptionDataProps
             <Form.Item label="1/n">
                 <span>{nth}</span>
             </Form.Item>
-        </Form>
+        </>
     );
 };

@@ -1,18 +1,10 @@
 import * as React from 'react';
 import { Divider, Form } from 'antd';
 
-import { ViewBasicInfo } from '../../../common/BasicInfo';
-import { BriefRecordType } from '../../../../store/base';
-import { PsdmParams } from '../../../../store/psdm.store';
+import { PsdmInputParams } from '../../../../store/experiment.store';
 
-export interface ViewWaterPropsComponentProps {
-    data: BriefRecordType<PsdmParams>;
-}
-
-export const ViewPsdmParams: React.FunctionComponent<ViewWaterPropsComponentProps> = ({ data }) => {
+export const ViewPsdmParams: React.FunctionComponent<PsdmInputParams> = data => {
     const {
-        name,
-        description,
         totalRunTime,
         firstPointDisplayed,
         timeStep,
@@ -21,9 +13,7 @@ export const ViewPsdmParams: React.FunctionComponent<ViewWaterPropsComponentProp
         radialCollocatPts
     } = data;
     return (
-        <Form size="small" layout="horizontal" labelCol={{ span: 8 }} wrapperCol={{ span: 8 }}>
-            <ViewBasicInfo name={name} description={description} />
-            <Divider orientation="left" />
+        <>
             <Form.Item label="Total Run Time">
                 <span>{`${totalRunTime} d`}</span>
             </Form.Item>
@@ -43,6 +33,6 @@ export const ViewPsdmParams: React.FunctionComponent<ViewWaterPropsComponentProp
             <Form.Item label="Radial Direction">
                 <span>{`${radialCollocatPts}`}</span>
             </Form.Item>
-        </Form>
+        </>
     );
 };

@@ -1,18 +1,12 @@
 import * as React from 'react';
 import { Col, Divider, Form, Row } from 'antd';
 
-import { ViewBasicInfo } from '../../../common/BasicInfo';
-import { BriefRecordType } from '../../../../store/base';
-import { BedParams } from '../../../../store/bed.store';
 import { BedMaths } from '../../../../../mods/calculation/independent/bed.maths';
 import { Calculation } from '../../../../../mods/calculation/basic';
+import { BedInputParams } from '../../../../store/experiment.store';
 
-export interface ViewBedPropsComponentProps {
-    data: BriefRecordType<BedParams>;
-}
-
-export const ViewBedProps: React.FunctionComponent<ViewBedPropsComponentProps> = ({ data }) => {
-    const { name, description, manufacturer, length, diameter, mass, flowrate, ebct } = data;
+export const ViewBedProps: React.FunctionComponent<BedInputParams> = data => {
+    const { length, diameter, mass, flowrate, ebct } = data;
     const areaVal = `${Calculation.format(
         BedMaths.crossSectionalArea(`${diameter}cm`).toNumber('cm^2')
     )} cm²`;
@@ -24,9 +18,7 @@ export const ViewBedProps: React.FunctionComponent<ViewBedPropsComponentProps> =
     )}g/mL`;
 
     return (
-        <Form size="small" layout="horizontal" labelCol={{ span: 12 }} wrapperCol={{ span: 12 }}>
-            <ViewBasicInfo name={name} description={description} manufacturer={manufacturer} />
-            <Divider orientation="left" />
+        <>
             <Row>
                 <Col span={11} offset={2}>
                     <Form.Item label="Bed Length">
@@ -95,6 +87,6 @@ export const ViewBedProps: React.FunctionComponent<ViewBedPropsComponentProps> =
                     </Form.Item>
                 </Col>
             </Row>
-        </Form>
+        </>
     );
 };
