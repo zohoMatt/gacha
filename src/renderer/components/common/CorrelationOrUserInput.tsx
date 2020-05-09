@@ -5,7 +5,7 @@ const styles = require('./CorrelationOrUserInput.module.less');
 
 export interface ValueFormat {
     correlation: boolean;
-    value: number | string;
+    value: number;
 }
 
 export interface CheckWithInputProps {
@@ -29,17 +29,17 @@ export const CorrelationOrUserInput: React.FunctionComponent<CheckWithInputProps
     onChange
 }) => {
     const [checked, setChecked] = React.useState(initValue ? initValue.correlation : false);
-    const [input, setInput] = React.useState(initValue ? initValue.value : '');
+    const [input, setInput] = React.useState(initValue ? initValue.value : 0);
 
     const onCheckboxChanged = (status: boolean) => {
         setChecked(status);
         if (onChange) onChange({ correlation: status, value: value ? value.value : input });
     };
 
-    const onInputChanged = (inputText: string | number) => {
-        setInput(inputText);
+    const onInputChanged = (inputNum: number) => {
+        setInput(inputNum);
         if (onChange)
-            onChange({ correlation: value ? value.correlation : checked, value: inputText });
+            onChange({ correlation: value ? value.correlation : checked, value: inputNum });
     };
 
     const isChecked = value ? value.correlation : checked;
@@ -67,9 +67,10 @@ export const CorrelationOrUserInput: React.FunctionComponent<CheckWithInputProps
                 <span>{checkedText || ''}</span>
             ) : (
                 <Input
+                    type="number"
                     addonAfter={unit || ''}
                     value={value ? value.value : input}
-                    onChange={e => onInputChanged(e.target.value)}
+                    onChange={e => onInputChanged(+e.target.value)}
                     />
             )}
         </div>

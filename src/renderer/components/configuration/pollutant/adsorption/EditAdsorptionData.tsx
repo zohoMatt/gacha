@@ -46,10 +46,10 @@ export const EditAdsorptionData: React.FunctionComponent<EditProps> = ({
                     />
             </Form.Item>
             <Divider orientation="left">Freundlich</Divider>
-            <Form.Item name={['freundlich', 'k']} label="K">
+            <Form.Item name={['freundlich', 'k']} label="K" normalize={v => +v}>
                 <Input type="number" />
             </Form.Item>
-            <Form.Item name={['freundlich', 'nth']} label="1/n">
+            <Form.Item name={['freundlich', 'nth']} label="1/n" normalize={v => +v}>
                 <Input type="number" />
             </Form.Item>
         </Form>
