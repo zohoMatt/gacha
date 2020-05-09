@@ -3,11 +3,10 @@ import { Divider, Form, Input } from 'antd';
 
 import { BasicInfoFormFields } from '../common/BasicInfo';
 import { TextSwitcher } from '../../common/TextSwticher';
-import { WaterMaths } from '../../../../mods/calculation/independent/waterProperties.maths';
-import { Calculation } from '../../../../mods/calculation/basic';
 import { EditProps } from '../../container/TableWithEditSection';
 import { WaterValidator } from '../../../../mods/validators/water.validator';
 import { VALIDATE_MSG_TEMPLATE } from '../../../../utils/validator';
+import { calcDensityAndViscosity } from './calculation';
 
 export const EditWaterData: React.FunctionComponent<EditProps> = ({
     form,
@@ -16,6 +15,8 @@ export const EditWaterData: React.FunctionComponent<EditProps> = ({
 }) => {
     const { temperature } = initValues;
     const vdator = new WaterValidator();
+
+    const [density, viscosity] = calcDensityAndViscosity(temperature);
 
     return (
         <Form
@@ -47,21 +48,11 @@ export const EditWaterData: React.FunctionComponent<EditProps> = ({
             <Divider orientation="left">Correlations</Divider>
             <Form.Item label="Density">
                 <Form.Item name={['density', 'use']}>
-                    <TextSwitcher
-                        text={
-                            temperature ? Calculation.display(WaterMaths.density(temperature)) : '-'
-                        }
-                        />
+                    <TextSwitcher text={temperature < 100 && temperature > 0 ? density : '-'} />
                 </Form.Item>
             </Form.Item>
             <Form.Item name={['dynamicViscosity', 'use']} label="Viscosity">
-                <TextSwitcher
-                    text={
-                        temperature
-                            ? Calculation.display(WaterMaths.dynamicViscosity(temperature))
-                            : '-'
-                    }
-                    />
+                <TextSwitcher text={temperature < 100 && temperature > 0 ? viscosity : '-'} />
             </Form.Item>
         </Form>
     );

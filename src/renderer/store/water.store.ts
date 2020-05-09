@@ -12,12 +12,10 @@ export interface WaterQuantityValue {
     };
     density: {
         use: boolean;
-        value: number;
         unit: string;
     };
     viscosity: {
         use: boolean;
-        value: number;
         unit: string;
     };
 }

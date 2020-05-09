@@ -1,5 +1,3 @@
-import { action } from 'mobx';
-import { v4 } from 'uuid';
 import { BasicTableWithEditStore, BriefRecordType } from './base';
 
 export interface BedParams {

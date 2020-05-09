@@ -1,3 +1,5 @@
+import { format } from 'mathjs';
+
 export interface CalculationResult {
     value: number;
     unit?: string;
@@ -18,6 +20,8 @@ export const UnitTypes = {
 };
 
 export class Calculation {
+    public static readonly FIXED = 4;
+
     public static readonly UNIT_TO_DISPLAY = {
         atm: 'atm',
         Pa: 'Pa',
@@ -27,5 +31,9 @@ export class Calculation {
 
     public static display(result: CalculationResult) {
         return `${result.value} ${result.displayUnit}`;
+    }
+
+    public static format(result: number, fixed?: number) {
+        return +format(result, { precision: fixed || Calculation.FIXED });
     }
 }

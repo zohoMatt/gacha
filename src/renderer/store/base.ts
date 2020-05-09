@@ -6,7 +6,8 @@ import { Storage } from '../../utils/localStore';
 // todo
 export interface QuantityValue {
     value: number;
-    unit: string | void;
+    unit?: string | null;
+    display: string | number;
 }
 
 export interface Params<T> {

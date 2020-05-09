@@ -2,13 +2,13 @@ import * as React from 'react';
 import { Divider, Form } from 'antd';
 
 import { ViewBasicInfo } from '../common/BasicInfo';
-import { Calculation } from '../../../../mods/calculation/basic';
-import { WaterMaths } from '../../../../mods/calculation/independent/waterProperties.maths';
 import { WaterParams } from '../../../store/water.store';
 import { ViewDataProps } from '../../container/TableWithEditSection';
+import { calcDensityAndViscosity } from './calculation';
 
-const ViewWaterProps: React.FunctionComponent<ViewDataProps<WaterParams>> = ({ data }) => {
+export const ViewWaterProps: React.FunctionComponent<ViewDataProps<WaterParams>> = ({ data }) => {
     const { name, description, pressure, temperature, density, viscosity } = data;
+    const [densityVal, viscosityVal] = calcDensityAndViscosity(temperature);
     return (
         <Form size="small" layout="horizontal" labelCol={{ span: 6 }} wrapperCol={{ span: 8 }}>
             <ViewBasicInfo name={name} description={description} />
@@ -21,19 +21,11 @@ const ViewWaterProps: React.FunctionComponent<ViewDataProps<WaterParams>> = ({ d
             </Form.Item>
             <Divider orientation="left">Correlations</Divider>
             <Form.Item label="Density">
-                <span>
-                    {density.use ? Calculation.display(WaterMaths.density(temperature)) : 'N/A'}
-                </span>
+                <span>{density.use ? densityVal : 'N/A'}</span>
             </Form.Item>
             <Form.Item label="Viscosity">
-                <span>
-                    {viscosity.use
-                        ? Calculation.display(WaterMaths.dynamicViscosity(temperature))
-                        : 'N/A'}
-                </span>
+                <span>{viscosity.use ? viscosityVal : 'N/A'}</span>
             </Form.Item>
         </Form>
     );
 };
-
-export { ViewWaterProps };
