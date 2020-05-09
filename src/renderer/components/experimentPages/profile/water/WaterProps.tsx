@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import { TableWithEditSection } from '../../../common/container/TableWithEditSection';
 import { WaterParams, WaterStore } from '../../../../store/water.store';
 import { BriefRecordType } from '../../../../store/base';
-import { EditWaterData } from './EditWaterData';
+import { EditWaterTab } from './EditWaterTab';
 import { ViewWaterProps } from './ViewWaterProps';
 
 @observer
@@ -17,7 +17,7 @@ export class WaterProps extends React.Component {
                 title="Water Properties"
                 store={this.store}
                 renderEdit={({ form, initValues, onValuesChange }) => (
-                    <EditWaterData
+                    <EditWaterTab
                         form={form}
                         initValues={initValues}
                         onValuesChange={onValuesChange}

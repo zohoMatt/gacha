@@ -1,30 +1,13 @@
 import * as React from 'react';
 import { Divider, Form, Input } from 'antd';
 
-import { BasicInfoFormFields } from '../../../common/BasicInfo';
-import { EditProps } from '../../../common/container/TableWithEditSection';
-import { VALIDATE_MSG_TEMPLATE } from '../../../../../utils/validator';
+import { BedInputParams } from '../../../../store/experiment.store';
 
-export const EditBedData: React.FunctionComponent<EditProps> = ({
-    form,
-    initValues,
-    onValuesChange
-}) => {
+export const EditBedTab: React.FunctionComponent<BedInputParams> = initValues => {
     const NORMAL_RULES = [{ required: true }];
 
     return (
-        <Form
-            size="small"
-            layout="horizontal"
-            validateMessages={VALIDATE_MSG_TEMPLATE}
-            ref={form}
-            hideRequiredMark={true}
-            labelCol={{ span: 6 }}
-            wrapperCol={{ span: 8 }}
-            onValuesChange={(s, all: any) => onValuesChange(all)}
-            initialValues={initValues}>
-            <BasicInfoFormFields manufacturer={true} />
-            <Divider orientation="left" />
+        <>
             <Form.Item
                 name="length"
                 label="Bed Length"
@@ -63,6 +46,6 @@ export const EditBedData: React.FunctionComponent<EditProps> = ({
             </Form.Item>
             <Divider orientation="left">Calculation</Divider>
             {/* todo hlr, ebct */}
-        </Form>
+        </>
     );
 };

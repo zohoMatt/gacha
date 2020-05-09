@@ -6,7 +6,7 @@ import { WaterValidator } from '../../../../../mods/validators/water.validator';
 import { calcDensityAndViscosity } from './calculation';
 import { WaterInputParams } from '../../../../store/experiment.store';
 
-export const EditWaterData: React.FunctionComponent<WaterInputParams> = initValues => {
+export const EditWaterTab: React.FunctionComponent<WaterInputParams> = initValues => {
     const { temperature } = initValues;
     const vdator = new WaterValidator();
 

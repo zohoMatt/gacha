@@ -3,8 +3,9 @@ import { Form, Tabs } from 'antd';
 
 import { EditProps } from '../common/container/TableWithEditSection';
 import { VALIDATE_MSG_TEMPLATE } from '../../../utils/validator';
-import { EditWaterData } from './profile/water/EditWaterData';
+import { EditWaterTab } from './profile/water/EditWaterTab';
 import { BasicInfoFormFields } from '../common/BasicInfo';
+import { EditBedTab } from './profile/bed/EditBedTab';
 
 export const EditProfileData: React.FunctionComponent<EditProps> = ({
     form,
@@ -29,9 +30,11 @@ export const EditProfileData: React.FunctionComponent<EditProps> = ({
                     <BasicInfoFormFields />
                 </TabPane>
                 <TabPane tab="Water" key="water">
-                    <EditWaterData {...initValues.water} />
+                    <EditWaterTab {...initValues.water} />
                 </TabPane>
-                <TabPane tab="Fixed Bed" key="bed" />
+                <TabPane tab="Fixed Bed" key="bed">
+                    <EditBedTab {...initValues.bed} />
+                </TabPane>
                 <TabPane tab="Phys. Chem. Properties" key="physchem" />
                 <TabPane tab="PSDM Simulation" key="psdm" />
             </Tabs>
