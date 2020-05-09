@@ -9,7 +9,7 @@ export interface ViewWaterPropsComponentProps {
     data: BriefRecordType<PsdmParams>;
 }
 
-const ViewPsdmParams: React.FunctionComponent<ViewWaterPropsComponentProps> = ({ data }) => {
+export const ViewPsdmParams: React.FunctionComponent<ViewWaterPropsComponentProps> = ({ data }) => {
     const {
         name,
         description,
@@ -46,5 +46,3 @@ const ViewPsdmParams: React.FunctionComponent<ViewWaterPropsComponentProps> = ({
         </Form>
     );
 };
-
-export { ViewPsdmParams };
