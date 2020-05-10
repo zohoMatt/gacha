@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { Divider, Form, Input } from 'antd';
+import { Divider, Form, Input, Switch } from 'antd';
 
-import { TextSwitcher } from '../../../common/elements/TextSwticher';
 import { WaterValidator } from '../../../../../mods/validators/water.validator';
 import { calcDensityAndViscosity } from './calculation';
 import { WaterInputParams } from '../../../../store/experiment.store';
@@ -30,12 +29,20 @@ export const EditWaterTab: React.FunctionComponent<WaterInputParams> = initValue
             </Form.Item>
             <Divider orientation="left">Correlations</Divider>
             <Form.Item label="Density">
-                <Form.Item name={['water', 'useDensity']}>
-                    <TextSwitcher text={temperature < 100 && temperature > 0 ? density : '-'} />
+                <Form.Item name={['water', 'useDensity']} valuePropName="checked" noStyle>
+                    <Switch />
                 </Form.Item>
+                <span style={{ marginLeft: '0.5vw' }}>
+                    {temperature < 100 && temperature > 0 ? density : '-'}
+                </span>
             </Form.Item>
-            <Form.Item name={['water', 'useViscosity']} label="Viscosity">
-                <TextSwitcher text={temperature < 100 && temperature > 0 ? viscosity : '-'} />
+            <Form.Item label="Viscosity">
+                <Form.Item name={['water', 'useViscosity']} valuePropName="checked" noStyle>
+                    <Switch />
+                </Form.Item>
+                <span style={{ marginLeft: '0.5vw' }}>
+                    {temperature < 100 && temperature > 0 ? viscosity : '-'}
+                </span>
             </Form.Item>
         </>
     );
