@@ -4,8 +4,6 @@ import { EditProps } from '../../common/container/TableWithEditSection';
 import { VALIDATE_MSG_TEMPLATE } from '../../../../utils/validator';
 import { BasicInfoFormFields } from '../../common/BasicInfo';
 
-const styles = require('./EditContaminantProps.module.less');
-
 export const EditContaminantProps: React.FunctionComponent<EditProps> = ({
     form,
     initValues,

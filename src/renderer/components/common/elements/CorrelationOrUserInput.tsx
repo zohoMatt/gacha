@@ -49,20 +49,20 @@ export const CorrelationOrUserInput: React.FunctionComponent<CheckWithInputProps
             <Checkbox
                 style={{ marginRight: '0.2vw' }}
                 checked={isChecked}
-                onChange={e => onCheckboxChanged(e.target.checked)}
-                />
-            <Typography.Text style={{ marginRight: '1.5vw' }} type="secondary">
-                <span>{decorationText}</span>
-                {tooltip ? (
-                    <>
-                        <span>(</span>
-                        <Tooltip title={tooltip}>
-                            <a>?</a>
-                        </Tooltip>
-                        <span>)</span>
-                    </>
-                ) : null}
-            </Typography.Text>
+                onChange={e => onCheckboxChanged(e.target.checked)}>
+                <Typography.Text style={{ marginRight: '1.5vw' }} type="secondary">
+                    <span>{decorationText}</span>
+                    {tooltip ? (
+                        <>
+                            <span>(</span>
+                            <Tooltip title={tooltip}>
+                                <a>?</a>
+                            </Tooltip>
+                            <span>)</span>
+                        </>
+                    ) : null}
+                </Typography.Text>
+            </Checkbox>
             {isChecked ? (
                 <span>{checkedText || ''}</span>
             ) : (
