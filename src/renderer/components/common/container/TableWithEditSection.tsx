@@ -110,7 +110,7 @@ export class TableWithEditSection extends React.Component<
     };
 
     public changeParams = (allParams: BriefRecordType<any>) => {
-        this.store.changeParams(allParams);
+        this.store.updateActiveRecord(allParams);
     };
 
     public render() {

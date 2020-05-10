@@ -8,10 +8,6 @@ import { BedInputParams } from '../../../../store/experiment.store';
 import { WeakTitle } from '../../../common/elements/WeakTitle';
 import { FullRecordType } from '../../../../store/base';
 import { AdsorbentParams } from '../../../../store/adsorbent.store';
-
-// fixme This component use global store directly. Not a good practice.
-// However, the usage of this store is for READONLY without side effects.
-// So no worries but better refactor it.
 import { Store } from '../../../../store/init';
 
 export const ViewBedProps: React.FunctionComponent<BedInputParams> = data => {
@@ -26,9 +22,7 @@ export const ViewBedProps: React.FunctionComponent<BedInputParams> = data => {
         BedMaths.density(`${mass}g`, `${length}cm`, `${diameter}cm`).toNumber('g/mL')
     )}g/mL`;
 
-    const ads = Store.root.adsorbent.database.props.find(
-        (r: FullRecordType<AdsorbentParams>) => r.key === adsorbent
-    );
+    const ads = Store.adsorbents.find((r: FullRecordType<AdsorbentParams>) => r.key === adsorbent);
 
     return (
         <>

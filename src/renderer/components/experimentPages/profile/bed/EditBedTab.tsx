@@ -4,10 +4,6 @@ import { Divider, Form, Input, Select } from 'antd';
 import { BedInputParams } from '../../../../store/experiment.store';
 import { FullRecordType } from '../../../../store/base';
 import { AdsorbentParams } from '../../../../store/adsorbent.store';
-
-// fixme This component use global store directly. Not a good practice.
-// However, the usage of this store is for READONLY without side effects.
-// So no worries but better refactor it.
 import { Store } from '../../../../store/init';
 
 export interface EditBedTabProps extends BedInputParams {
@@ -18,13 +14,11 @@ export const EditBedTab: React.FunctionComponent<EditBedTabProps> = ({ adsorbent
     const REQUIRED = [{ required: true }];
 
     const { Option } = Select;
-    const options = Store.root.adsorbent.database.props.map(
-        (ads: FullRecordType<AdsorbentParams>) => (
-            <Option key={ads.key} value={ads.key}>
-                {ads.name}
-            </Option>
-        )
-    );
+    const options = Store.adsorbents.map((ads: FullRecordType<AdsorbentParams>) => (
+        <Option key={ads.key} value={ads.key}>
+            {ads.name}
+        </Option>
+    ));
 
     return (
         <>

@@ -1,6 +1,7 @@
 import { action, autorun, computed, observable, toJS } from 'mobx';
-import { omit } from 'lodash';
+import { omit, set as seto } from 'lodash';
 import { v4 } from 'uuid';
+
 import { Storage } from '../../utils/localStore';
 
 // todo
@@ -95,7 +96,7 @@ export abstract class BasicTableWithEditStore<T> {
     }
 
     @action
-    public changeParams(value: BriefRecordType<T>) {
+    public updateActiveRecord(value: BriefRecordType<T>) {
         this.activeRecord = value;
         this.changesHappen();
     }
