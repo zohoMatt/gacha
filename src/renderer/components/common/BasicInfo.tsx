@@ -8,14 +8,11 @@ export interface BasicInfoFormProps {
 export const BasicInfoFormFields: React.FunctionComponent<BasicInfoFormProps> = ({
     manufacturer
 }) => {
-    const NORMAL_RULES = [{ required: true }];
+    const REQRUIRED = [{ required: true }];
 
     return (
         <>
-            <Form.Item
-                name="name"
-                label="Name"
-                rules={[...NORMAL_RULES, { max: 20, type: 'string' }]}>
+            <Form.Item name="name" label="Name" rules={[...REQRUIRED, { max: 20, type: 'string' }]}>
                 <Input />
             </Form.Item>
             <Form.Item name="description" label="Description" rules={[{ max: 80, type: 'string' }]}>

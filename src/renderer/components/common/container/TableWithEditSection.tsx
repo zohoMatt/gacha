@@ -74,16 +74,19 @@ export class TableWithEditSection extends React.Component<
         message.info('Successfully deleted');
     };
 
-    public save = (name?: string) => {
+    public save = async (name?: string) => {
         // Validate
+        const form = this.formRef.current;
         if (this.state.status === 'edit') {
-            const errors = this.formRef.current
-                .getFieldsError()
-                .filter((f: any) => f.errors.length > 0);
-            if (errors.length > 0) {
-                message.error(errors[0].errors[0]);
-                return;
+            let valid = true;
+            try {
+                await form.validateFields();
+            } catch (errors) {
+                console.log(errors);
+                message.error(errors.errorFields[0].errors[0]);
+                valid = false;
             }
+            if (!valid) return;
         }
 
         if (name === undefined) {
