@@ -24,15 +24,6 @@ export interface BasicInfo {
     manufacturer?: string;
 }
 
-export interface InputSwitcherType {
-    use: boolean;
-    value: number;
-}
-
-export interface SwitcherType {
-    use: boolean;
-}
-
 // Used to store into local files
 export type FullRecordType<T> = KeyID & BasicInfo & Params<T>;
 
