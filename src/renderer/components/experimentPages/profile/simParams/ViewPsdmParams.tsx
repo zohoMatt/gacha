@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { Divider, Form } from 'antd';
+import { Descriptions } from 'antd';
 
 import { PsdmInputParams } from '../../../../store/experiment.store';
+import { WeakTitle } from '../../../common/elements/WeakTitle';
 
 export const ViewPsdmParams: React.FunctionComponent<PsdmInputParams> = data => {
     const {
@@ -14,25 +15,24 @@ export const ViewPsdmParams: React.FunctionComponent<PsdmInputParams> = data => 
     } = data;
     return (
         <>
-            <Form.Item label="Total Run Time">
-                <span>{`${totalRunTime} d`}</span>
-            </Form.Item>
-            <Form.Item label="First Point Displayed">
-                <span>{`${firstPointDisplayed} d`}</span>
-            </Form.Item>
-            <Form.Item label="Time Step">
-                <span>{`${timeStep} d`}</span>
-            </Form.Item>
-            <Form.Item label="Number of Axial Elements">
-                <span>{`${numOfAxialElms}`}</span>
-            </Form.Item>
-            <Divider orientation="left">Number of Collocation Points</Divider>
-            <Form.Item label="Axial Direction">
-                <span>{`${axialCollocatPts}`}</span>
-            </Form.Item>
-            <Form.Item label="Radial Direction">
-                <span>{`${radialCollocatPts}`}</span>
-            </Form.Item>
+            <Descriptions>
+                <Descriptions.Item label="Total Run Time">{`${totalRunTime} d`}</Descriptions.Item>
+                <Descriptions.Item label="First Point Displayed">
+                    {`${firstPointDisplayed} d`}
+                </Descriptions.Item>
+                <Descriptions.Item label="Time Step">{`${timeStep} d`}</Descriptions.Item>
+                <Descriptions.Item label="Number of Axial Elements">
+                    {`${numOfAxialElms}`}
+                </Descriptions.Item>
+            </Descriptions>
+            <Descriptions title={<WeakTitle title="Number of Collocation Points" />}>
+                <Descriptions.Item label="Axial Direction">
+                    {`${axialCollocatPts}`}
+                </Descriptions.Item>
+                <Descriptions.Item label="Radial Direction">
+                    {`${radialCollocatPts}`}
+                </Descriptions.Item>
+            </Descriptions>
         </>
     );
 };

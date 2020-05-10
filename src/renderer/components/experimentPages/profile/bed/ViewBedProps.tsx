@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { Col, Divider, Form, Row } from 'antd';
+import { Descriptions } from 'antd';
 
 import { BedMaths } from '../../../../../mods/calculation/independent/bed.maths';
 import { Calculation } from '../../../../../mods/calculation/basic';
 import { BedInputParams } from '../../../../store/experiment.store';
+import { WeakTitle } from '../../../common/elements/WeakTitle';
 
 export const ViewBedProps: React.FunctionComponent<BedInputParams> = data => {
     const { length, diameter, mass, flowrate, ebct } = data;
@@ -19,74 +20,23 @@ export const ViewBedProps: React.FunctionComponent<BedInputParams> = data => {
 
     return (
         <>
-            <Row>
-                <Col span={11} offset={2}>
-                    <Form.Item label="Bed Length">
-                        <span>{`${length} cm`}</span>
-                    </Form.Item>
-                </Col>
-                <Col span={11}>
-                    <Form.Item label="Bed Diameter">
-                        <span>{`${diameter} cm`}</span>
-                    </Form.Item>
-                </Col>
-            </Row>
-            <Row>
-                <Col span={11} offset={2}>
-                    <Form.Item label="Mass">
-                        <span>{`${mass} g`}</span>
-                    </Form.Item>
-                </Col>
-                <Col span={11}>
-                    <Form.Item label="Flowrate">
-                        <span>{`${flowrate} mL/min`}</span>
-                    </Form.Item>
-                </Col>
-            </Row>
-            <Row>
-                <Col span={11} offset={2}>
-                    <Form.Item label="EBCT">
-                        <span>{`${ebct} min`}</span>
-                    </Form.Item>
-                </Col>
-            </Row>
-            <Divider orientation="left">Calculation</Divider>
-            <Row>
-                <Col span={11} offset={2}>
-                    <Form.Item label="Bed Density">
-                        <span>{densityVal}</span>
-                    </Form.Item>
-                </Col>
-                <Col span={11}>
-                    <Form.Item label="Bed Porosity">
-                        <span>{`${0}`}</span>
-                    </Form.Item>
-                </Col>
-            </Row>
-            <Row>
-                <Col span={11} offset={2}>
-                    <Form.Item label="Cross-Sectional Area">
-                        <span>{areaVal}</span>
-                    </Form.Item>
-                </Col>
-                <Col span={11}>
-                    <Form.Item label="Bed Volume">
-                        <span>{volumeVal}</span>
-                    </Form.Item>
-                </Col>
-            </Row>
-            <Row>
-                <Col span={11} offset={2}>
-                    <Form.Item label="Superficial Velocity">
-                        <span>{`${ebct} m/h`}</span>
-                    </Form.Item>
-                </Col>
-                <Col span={11}>
-                    <Form.Item label="Interstitial Velocity">
-                        <span>{`${ebct} m/h`}</span>
-                    </Form.Item>
-                </Col>
-            </Row>
+            <Descriptions>
+                <Descriptions.Item label="Bed Length">{`${length} cm`}</Descriptions.Item>
+                <Descriptions.Item label="Bed Diameter">{`${diameter} cm`}</Descriptions.Item>
+                <Descriptions.Item label="Mass">{`${mass} g`}</Descriptions.Item>
+                <Descriptions.Item label="Flowrate">{`${flowrate} mL/min`}</Descriptions.Item>
+                <Descriptions.Item label="EBCT" span={2}>
+                    {`${ebct} min`}
+                </Descriptions.Item>
+            </Descriptions>
+            <Descriptions title={<WeakTitle title="Calculation" />}>
+                <Descriptions.Item label="Bed Density">{densityVal}</Descriptions.Item>
+                <Descriptions.Item label="Bed Porosity">{`${0}`}</Descriptions.Item>
+                <Descriptions.Item label="Cross-Sectional Area">{areaVal}</Descriptions.Item>
+                <Descriptions.Item label="Bed Volume">{volumeVal}</Descriptions.Item>
+                <Descriptions.Item label="Superficial Velocity">{`${ebct} m/h`}</Descriptions.Item>
+                <Descriptions.Item label="Interstitial Velocity">{`${ebct} m/h`}</Descriptions.Item>
+            </Descriptions>
         </>
     );
 };

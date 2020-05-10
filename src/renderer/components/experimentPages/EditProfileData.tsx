@@ -34,13 +34,13 @@ export const EditProfileData: React.FunctionComponent<EditProps> = ({
                 <TabPane tab="Water" key="water">
                     <EditWaterTab {...initValues.water} />
                 </TabPane>
+                <TabPane tab="Contaminant" key="physchem">
+                    <EditAdsorptionTab {...initValues.adsorption} />
+                </TabPane>
                 <TabPane tab="Fixed Bed" key="bed">
                     <EditBedTab {...initValues.bed} />
                 </TabPane>
-                <TabPane tab="Phys. Chem. Properties" key="physchem">
-                    <EditAdsorptionTab {...initValues.adsorption} />
-                </TabPane>
-                <TabPane tab="PSDM Simulation" key="psdm">
+                <TabPane tab="Simulation: PSDM" key="psdm">
                     <EditPsdmTab {...initValues.psdm} />
                 </TabPane>
             </Tabs>

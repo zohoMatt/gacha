@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { Form, Tabs } from 'antd';
+import { Divider, Descriptions } from 'antd';
 
 import { BriefRecordType } from '../../store/base';
 import { ExpProfileParams } from '../../store/experiment.store';
-import { ViewBasicInfo } from '../common/BasicInfo';
 import { ViewWaterProps } from './profile/water/ViewWaterProps';
 import { ViewBedProps } from './profile/bed/ViewBedProps';
 import { ViewAdsorptionData } from './profile/adsorption/ViewAdsorptionData';
@@ -14,28 +13,23 @@ export interface ViewProfileProps {
 }
 
 export const ViewProfile: React.FunctionComponent<ViewProfileProps> = ({ data }) => {
-    const { TabPane } = Tabs;
     const { name, description, water, bed, psdm, adsorption } = data;
 
     return (
-        <Form size="small" layout="horizontal" labelCol={{ span: 6 }} wrapperCol={{ span: 8 }}>
-            <Tabs defaultActiveKey="basic">
-                <TabPane tab="Basic" key="basic">
-                    <ViewBasicInfo name={name} description={description} />
-                </TabPane>
-                <TabPane tab="Water" key="water">
-                    <ViewWaterProps {...water} />
-                </TabPane>
-                <TabPane tab="Fixed Bed" key="bed">
-                    <ViewBedProps {...bed} />
-                </TabPane>
-                <TabPane tab="Phys. Chem. Properties" key="physchem">
-                    <ViewAdsorptionData {...adsorption} />
-                </TabPane>
-                <TabPane tab="PSDM Simulation" key="psdm">
-                    <ViewPsdmParams {...psdm} />
-                </TabPane>
-            </Tabs>
-        </Form>
+        <>
+            <Divider orientation="center">Info</Divider>
+            <Descriptions>
+                <Descriptions.Item label="Profile Name">{name}</Descriptions.Item>
+                <Descriptions.Item label="Description">{description}</Descriptions.Item>
+            </Descriptions>
+            <Divider orientation="center">Water</Divider>
+            <ViewWaterProps {...water} />
+            <Divider orientation="center">Contaminant</Divider>
+            <ViewAdsorptionData {...adsorption} />
+            <Divider orientation="center">Fixed Bed</Divider>
+            <ViewBedProps {...bed} />
+            <Divider orientation="center">Simulation: PSDM</Divider>
+            <ViewPsdmParams {...psdm} />
+        </>
     );
 };
