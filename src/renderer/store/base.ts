@@ -24,8 +24,13 @@ export interface BasicInfo {
     manufacturer?: string;
 }
 
+export interface RecordStatus {
+    draft?: boolean;
+    cited?: string[];
+}
+
 // Used to store into local files
-export type FullRecordType<T> = KeyID & BasicInfo & Params<T>;
+export type FullRecordType<T> = KeyID & BasicInfo & Params<T> & RecordStatus;
 
 // Used to display and modification
 export type BriefRecordType<T> = BasicInfo & T;
