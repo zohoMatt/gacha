@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AutoComplete, Col, Divider, Form, Input, Row } from 'antd';
+import { Col, Divider, Form, Input, Row } from 'antd';
 
 import { BasicInfoFormFields } from '../../common/BasicInfo';
 import { EditProps } from '../../common/container/TableWithEditSection';

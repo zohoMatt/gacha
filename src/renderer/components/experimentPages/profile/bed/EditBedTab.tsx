@@ -2,8 +2,14 @@ import * as React from 'react';
 import { Divider, Form, Input } from 'antd';
 
 import { BedInputParams } from '../../../../store/experiment.store';
+import { FullRecordType } from '../../../../store/base';
+import { AdsorbentParams } from '../../../../store/adsorbent.store';
 
-export const EditBedTab: React.FunctionComponent<BedInputParams> = initValues => {
+export interface EditBedTabProps extends BedInputParams {
+    adsorbents: FullRecordType<AdsorbentParams>;
+}
+
+export const EditBedTab: React.FunctionComponent<EditBedTabProps> = ({ adsorbents }) => {
     const NORMAL_RULES = [{ required: true }];
 
     return (

@@ -17,6 +17,7 @@ export interface PsdmInputParams {
 }
 
 export interface BedInputParams {
+    adsorbent: string;
     length: number; // cm
     diameter: number; // cm
     mass: number; // g
@@ -30,6 +31,7 @@ export interface CorrelationOrInput {
 }
 
 export interface AdsorptionInputParams {
+    contaminant: string;
     freundlich: {
         k: number;
         nth: number;
@@ -71,6 +73,7 @@ export class ExperimentStore extends BasicTableWithEditStore<ExpProfileParams> {
             radialCollocatPts: 3
         },
         bed: {
+            adsorbent: '',
             length: 100, // cm
             diameter: 20, // cm
             mass: 800, // g
@@ -78,6 +81,7 @@ export class ExperimentStore extends BasicTableWithEditStore<ExpProfileParams> {
             ebct: 15 // min
         },
         adsorption: {
+            contaminant: '',
             freundlich: {
                 k: 100,
                 nth: 0.5
