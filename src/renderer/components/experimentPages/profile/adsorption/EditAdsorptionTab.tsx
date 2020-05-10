@@ -8,7 +8,10 @@ export const EditAdsorptionTab: React.FunctionComponent<AdsorptionParams> = () =
     return (
         <>
             <Divider orientation="left">Kinetics</Divider>
-            <Form.Item name={['adsorption', 'kinetics', 'filmDiffusion']} label="Film Diffusion">
+            <Form.Item
+                name={['adsorption', 'kinetics', 'filmDiffusion']}
+                label="Film Diffusion"
+                wrapperCol={{ span: 12 }}>
                 <CorrelationOrUserInput
                     decorationText="Correlation"
                     tooltip="Gnielinski Correlation"
@@ -17,14 +20,18 @@ export const EditAdsorptionTab: React.FunctionComponent<AdsorptionParams> = () =
             </Form.Item>
             <Form.Item
                 name={['adsorption', 'kinetics', 'surfaceDiffusion']}
-                label="Surface Diffusion">
+                label="Surface Diffusion"
+                wrapperCol={{ span: 12 }}>
                 <CorrelationOrUserInput
                     decorationText="Correlation"
                     tooltip="Sontheimer Correlation"
                     unit="cm²/s"
                     />
             </Form.Item>
-            <Form.Item name={['adsorption', 'kinetics', 'poreDiffusion']} label="Pore Diffusion">
+            <Form.Item
+                name={['adsorption', 'kinetics', 'poreDiffusion']}
+                label="Pore Diffusion"
+                wrapperCol={{ span: 12 }}>
                 <CorrelationOrUserInput
                     decorationText="Correlation"
                     tooltip="Hayduk and Laudie"
