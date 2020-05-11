@@ -3,10 +3,31 @@ import { Divider, Form, Input, Select } from 'antd';
 
 import { CorrelationOrUserInput } from '../../../common/elements/CorrelationOrUserInput';
 import { AdsorptionInputParams } from '../../../../store/experiment.store';
+import { Store } from '../../../../store/init';
+import { FullRecordType } from '../../../../store/base';
+import { ContaminantParams } from '../../../../store/contaminant.store';
 
 export const EditAdsorptionTab: React.FunctionComponent<AdsorptionInputParams> = () => {
+    const { Option } = Select;
+    const options = Store.contaminants.map((c: FullRecordType<ContaminantParams>) => (
+        <Option key={c.key} value={c.key}>
+            {c.name}
+        </Option>
+    ));
+
     return (
         <>
+            <Form.Item name={['adsorption', 'contaminant']} label="Contaminant">
+                <Select
+                    showSearch
+                    placeholder="Select a contaminant"
+                    optionFilterProp="children"
+                    filterOption={(input: string, option: any) =>
+                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                    }>
+                    {options}
+                </Select>
+            </Form.Item>
             <Divider orientation="left">Kinetics</Divider>
             <Form.Item
                 name={['adsorption', 'kinetics', 'filmDiffusion']}

@@ -23,7 +23,15 @@ export const EditBedTab: React.FunctionComponent<EditBedTabProps> = ({ adsorbent
     return (
         <>
             <Form.Item name={['bed', 'adsorbent']} label="Adsorbent" rules={REQUIRED}>
-                <Select>{options}</Select>
+                <Select
+                    showSearch
+                    placeholder="Select an adsorbent"
+                    optionFilterProp="children"
+                    filterOption={(input: string, option: any) =>
+                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                    }>
+                    {options}
+                </Select>
             </Form.Item>
             <Form.Item
                 name={['bed', 'length']}

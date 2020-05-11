@@ -19,7 +19,7 @@ export class Store {
     }
 
     public static get contaminants() {
-        return Store.root.adsorbent.database.props;
+        return Store.root.contaminant.database.props;
     }
 
     public static get citedAdsorbentKeys() {
