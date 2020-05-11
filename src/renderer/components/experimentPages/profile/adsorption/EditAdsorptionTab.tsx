@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Divider, Form, Input, Select } from 'antd';
 
 import { CorrelationOrUserInput } from '../../../common/elements/CorrelationOrUserInput';
-import { AdsorptionParams } from '../../../../store/adsorption.store';
+import { AdsorptionInputParams } from '../../../../store/experiment.store';
 
-export const EditAdsorptionTab: React.FunctionComponent<AdsorptionParams> = () => {
+export const EditAdsorptionTab: React.FunctionComponent<AdsorptionInputParams> = () => {
     return (
         <>
             <Divider orientation="left">Kinetics</Divider>
