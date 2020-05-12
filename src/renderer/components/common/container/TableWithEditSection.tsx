@@ -23,11 +23,6 @@ export interface EditProps {
     onValuesChange: (params: BriefRecordType<any>) => any;
 }
 
-// Render props component
-export interface ViewDataProps<T> {
-    data: BriefRecordType<T>;
-}
-
 export interface TableWithEditSectionProps {
     title: string;
     store: BasicTableWithEditStore<any>;
