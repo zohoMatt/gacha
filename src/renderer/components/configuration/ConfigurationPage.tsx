@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 
-import NavBar from '../nav/NavBar';
+import { NavBar, NAV_KEYS, ITEM_KEYS } from '../nav/NavBar';
 import { ContaminantProps } from '../databasePages/contaminant/ContaminantProps';
 import { AdsorbentDatabase } from '../databasePages/adsorbent/AdsorbentDatabase';
 import { ProfileSettings } from '../experimentPages/ProfileSettings';
@@ -15,13 +15,13 @@ const ConfigurationPage: React.FunctionComponent = () => {
             <NavBar />
             <div className={styles.mainConfigArea}>
                 <Switch>
-                    <Route path={`${match.path}/database/adsorbent`}>
+                    <Route path={`${match.path}/${NAV_KEYS.Database}/${ITEM_KEYS.Adsorbent}`}>
                         <AdsorbentDatabase />
                     </Route>
-                    <Route path={`${match.path}/database/contaminants`}>
+                    <Route path={`${match.path}/${NAV_KEYS.Database}/${ITEM_KEYS.Contaminant}`}>
                         <ContaminantProps />
                     </Route>
-                    <Route path={`${match.path}/exp/profile`}>
+                    <Route path={`${match.path}/${NAV_KEYS.Experiment}/${ITEM_KEYS.Profile}`}>
                         <ProfileSettings />
                     </Route>
                 </Switch>
