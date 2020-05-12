@@ -4,28 +4,25 @@ import * as path from 'path';
 import { set as setObj, get } from 'lodash';
 
 export class Storage {
-    public static userDataPath = '';
+    public userDataPath: string;
 
-    public static data: any = {};
+    public data: any;
 
-    public static init({ filename }: any) {
-        Storage.userDataPath = path.join(
-            (app || remote.app).getPath('appData'),
-            `${filename}.json`
-        );
-        console.info(`Current user data path: ${Storage.userDataPath}`);
+    constructor({ filename }: any) {
+        this.userDataPath = path.join((app || remote.app).getPath('appData'), `${filename}.json`);
+        console.info(`Current user data path: ${this.userDataPath}`);
     }
 
-    public static async update(keyPath: string[] | string, value: any) {
-        const newData = setObj(Storage.data, keyPath, value);
-        return fs.writeFile(Storage.userDataPath, JSON.stringify(newData));
+    public async update(keyPath: string[] | string, value: any) {
+        const newData = setObj(this.data, keyPath, value);
+        return fs.writeFile(this.userDataPath, JSON.stringify(newData));
     }
 
-    public static async import() {
-        Storage.data = await fs.readJSON(Storage.userDataPath);
+    public async import() {
+        this.data = await fs.readJSON(this.userDataPath);
     }
 
-    public static read(keyPath: string[] | string) {
-        return get(Storage.data, keyPath);
+    public read(keyPath: string[] | string) {
+        return get(this.data, keyPath);
     }
 }

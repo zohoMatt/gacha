@@ -7,7 +7,6 @@ import { AppContainer } from 'react-hot-loader';
 import { message } from 'antd';
 import Application from './components/Application';
 import { Storage } from '../utils/localStore';
-import { Store } from './store/init';
 
 // Create main element
 const mainElement = document.createElement('div');
@@ -29,8 +28,8 @@ message.config({
     top: 240
 });
 // Init storage and import data
-Storage.init({ filename: 'pfast-user-data' });
-Storage.import().then(() => {
+export const DataFileStorage = new Storage({ filename: 'pfast-user-data' });
+DataFileStorage.import().then(() => {
     // Functions that dependent on data import
 
     // Render

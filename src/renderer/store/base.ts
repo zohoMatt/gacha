@@ -2,8 +2,8 @@ import { action, autorun, computed, observable, toJS } from 'mobx';
 import { omit } from 'lodash';
 import { v4 } from 'uuid';
 
-import { Storage } from '../../utils/localStore';
 import { Store } from './init';
+import { DataFileStorage } from '../app';
 
 // todo
 export interface QuantityValue {
@@ -64,7 +64,7 @@ export abstract class BasicTableWithEditStore<T> {
 
     protected constructor(storedPath: string[], rootStore: any) {
         this.root = rootStore;
-        this.database = Storage.read(storedPath) || { props: [] };
+        this.database = DataFileStorage.read(storedPath) || { props: [] };
         this.STORED_PATH = storedPath;
         autorun(async () => {
             return this.listeners();
@@ -73,7 +73,7 @@ export abstract class BasicTableWithEditStore<T> {
 
     public async listeners() {
         try {
-            await Storage.update(this.STORED_PATH, toJS(this.database));
+            await DataFileStorage.update(this.STORED_PATH, toJS(this.database));
             console.log(`${this.STORE_NAME}::autorun Storage updated successfully.`);
         } catch (e) {
             console.error(`${this.STORE_NAME}::autorun Storage failed in updating.`);
