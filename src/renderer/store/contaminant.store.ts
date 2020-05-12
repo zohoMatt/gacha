@@ -1,4 +1,5 @@
 import { BasicTableWithEditStore, BriefRecordType } from './base';
+import { Store } from './init';
 
 export interface ContaminantParams {
     fullName: string;
@@ -31,7 +32,7 @@ export class ContaminantStore extends BasicTableWithEditStore<ContaminantParams>
         cas: 0
     };
 
-    constructor() {
-        super(['database', 'contaminant']);
+    constructor(rootStore: Store) {
+        super(['database', 'contaminant'], rootStore);
     }
 }

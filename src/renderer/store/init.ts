@@ -2,31 +2,20 @@ import { AdsorbentStore } from './adsorbent.store';
 import { ContaminantStore } from './contaminant.store';
 import { ExperimentStore } from './experiment.store';
 
+export interface StoreInjectedProp {
+    store?: Store;
+}
+
 export class Store {
-    public static root: any;
+    public adsorbent: AdsorbentStore;
 
-    public static init() {
-        Store.root = {
-            adsorbent: new AdsorbentStore(),
-            contaminant: new ContaminantStore(),
-            exp: new ExperimentStore()
-        };
-    }
+    public contaminant: ContaminantStore;
 
-    // readonly methods
-    public static get adsorbents() {
-        return Store.root.adsorbent.database.props;
-    }
+    public exp: ExperimentStore;
 
-    public static get contaminants() {
-        return Store.root.contaminant.database.props;
-    }
-
-    public static get citedAdsorbentKeys() {
-        return Store.root.exp.database.props.map((r: any) => r.bed.adsorbent);
-    }
-
-    public static get citedContaminants() {
-        return Store.root.exp.database.props.map((r: any) => r.adsorption.contaminant);
+    public constructor() {
+        this.adsorbent = new AdsorbentStore(this);
+        this.contaminant = new ContaminantStore(this);
+        this.exp = new ExperimentStore(this);
     }
 }

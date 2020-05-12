@@ -1,8 +1,9 @@
 import { action, autorun, computed, observable, toJS } from 'mobx';
-import { omit, set as seto } from 'lodash';
+import { omit } from 'lodash';
 import { v4 } from 'uuid';
 
 import { Storage } from '../../utils/localStore';
+import { Store } from './init';
 
 // todo
 export interface QuantityValue {
@@ -49,6 +50,8 @@ export abstract class BasicTableWithEditStore<T> {
 
     @observable changesMade = false;
 
+    public root: Store;
+
     public STORED_PATH: string[] = [];
 
     public abstract STORE_NAME: string;
@@ -59,7 +62,8 @@ export abstract class BasicTableWithEditStore<T> {
         return this.database.props;
     }
 
-    protected constructor(storedPath: string[]) {
+    protected constructor(storedPath: string[], rootStore: any) {
+        this.root = rootStore;
         this.database = Storage.read(storedPath) || { props: [] };
         this.STORED_PATH = storedPath;
         autorun(async () => {

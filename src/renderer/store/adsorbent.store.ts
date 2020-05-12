@@ -1,4 +1,5 @@
 import { BasicTableWithEditStore, BriefRecordType } from './base';
+import { Store } from './init';
 
 export interface AdsorbentParams {
     density: number; // g/cm^3
@@ -20,7 +21,7 @@ export class AdsorbentStore extends BasicTableWithEditStore<AdsorbentParams> {
         adsorbentType: ''
     };
 
-    constructor() {
-        super(['database', 'adsorbent']);
+    constructor(rootStore: Store) {
+        super(['database', 'adsorbent'], rootStore);
     }
 }

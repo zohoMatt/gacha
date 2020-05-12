@@ -1,4 +1,7 @@
+import { computed } from 'mobx';
+
 import { BasicTableWithEditStore, BriefRecordType } from './base';
+import { Store } from './init';
 
 export interface WaterInputParams {
     pressure: number; // atm
@@ -105,7 +108,7 @@ export class ExperimentStore extends BasicTableWithEditStore<ExpProfileParams> {
         }
     };
 
-    constructor() {
-        super(['experiment', 'profile']);
+    constructor(rootStore: Store) {
+        super(['experiment', 'profile'], rootStore);
     }
 }

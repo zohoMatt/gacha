@@ -33,8 +33,6 @@ Storage.init({ filename: 'pfast-user-data' });
 Storage.import().then(() => {
     // Functions that dependent on data import
 
-    // Init stores
-    Store.init();
     // Render
     render(Application);
 });
