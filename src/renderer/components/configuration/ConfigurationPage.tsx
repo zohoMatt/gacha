@@ -5,7 +5,7 @@ import { NavBar, NAV_KEYS, ITEM_KEYS } from '../nav/NavBar';
 import { ContaminantProps } from '../databasePages/contaminant/ContaminantProps';
 import { AdsorbentDatabase } from '../databasePages/adsorbent/AdsorbentDatabase';
 import { ProfileSettings } from '../experimentPages/ProfileSettings';
-import { ProfileStatus } from '../plotPages/ProfileStatus';
+import { ProfileStatus } from '../plotPages/results/ProfileStatus';
 
 const styles = require('./ConfigurationPage.module.less');
 
