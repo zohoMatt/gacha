@@ -5,6 +5,7 @@ import { NavBar, NAV_KEYS, ITEM_KEYS } from '../nav/NavBar';
 import { ContaminantProps } from '../databasePages/contaminant/ContaminantProps';
 import { AdsorbentDatabase } from '../databasePages/adsorbent/AdsorbentDatabase';
 import { ProfileSettings } from '../experimentPages/ProfileSettings';
+import { ProfileStatus } from '../plotPages/ProfileStatus';
 
 const styles = require('./ConfigurationPage.module.less');
 
@@ -23,6 +24,9 @@ const ConfigurationPage: React.FunctionComponent = () => {
                     </Route>
                     <Route path={`${match.path}/${NAV_KEYS.Experiment}/${ITEM_KEYS.Profile}`}>
                         <ProfileSettings />
+                    </Route>
+                    <Route path={`${match.path}/${NAV_KEYS.Plot}/${ITEM_KEYS.Result}`}>
+                        <ProfileStatus />
                     </Route>
                 </Switch>
             </div>
