@@ -6,6 +6,7 @@ import { ContaminantProps } from '../databasePages/contaminant/ContaminantProps'
 import { AdsorbentDatabase } from '../databasePages/adsorbent/AdsorbentDatabase';
 import { ProfileSettings } from '../experimentPages/ProfileSettings';
 import { ProfileStatus } from '../plotPages/results/ProfileStatus';
+import { GraphComparison } from '../plotPages/comparison/GraphComparison';
 
 const styles = require('./ConfigurationPage.module.less');
 
@@ -27,6 +28,9 @@ const ConfigurationPage: React.FunctionComponent = () => {
                     </Route>
                     <Route path={`${match.path}/${NAV_KEYS.Plot}/${ITEM_KEYS.Result}`}>
                         <ProfileStatus />
+                    </Route>
+                    <Route path={`${match.path}/${NAV_KEYS.Plot}/${ITEM_KEYS.Comparison}`}>
+                        <GraphComparison />
                     </Route>
                 </Switch>
             </div>
