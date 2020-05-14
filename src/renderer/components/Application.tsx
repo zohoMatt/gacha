@@ -7,13 +7,13 @@ import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 
 import WelcomePage from './welcome/WelcomePage';
 import ConfigurationPage from './configuration/ConfigurationPage';
-import { Store } from '../store/init';
+import { store } from '../app';
 
 const styles = require('./Application.less');
 const headPic = require('../assets/images/pfas.png');
 
 const Application = () => (
-    <Provider store={new Store()}>
+    <Provider store={store}>
         <Router basename="/">
             <div className={styles.app}>
                 <Switch>
