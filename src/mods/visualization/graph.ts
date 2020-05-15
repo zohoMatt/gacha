@@ -85,7 +85,7 @@ export class Graph {
             .text(title);
     }
 
-    public paintXAxis(labelOpt: LabelOptions, tickOpt: TickOptions) {
+    public paintXAxis(labelOpt: LabelOptions, tickOpt: TickOptions, axisClass?: string) {
         const { text, className } = labelOpt;
         const { ticks, padding, size } = tickOpt;
         const xScale = d3
@@ -100,6 +100,7 @@ export class Graph {
             .tickPadding(padding);
         const xAxisDom = this.validArea
             .append('g')
+            .attr('class', axisClass || '')
             .call(xAxis)
             .attr('transform', `translate(0,${this.innerHeight})`);
         xAxisDom
@@ -107,13 +108,13 @@ export class Graph {
             .attr('class', className)
             .attr('text-anchor', 'middle')
             .attr('x', this.innerWidth / 2)
-            .attr('y', 50)
+            .attr('y', 70)
             .text(text);
 
         return { xScale, xAxis, xAxisDom };
     }
 
-    public paintYAxis(labelOpt: LabelOptions, tickOpt: TickOptions) {
+    public paintYAxis(labelOpt: LabelOptions, tickOpt: TickOptions, axisClass?: string) {
         const { text, className } = labelOpt;
         const { ticks, padding, size } = tickOpt;
         // Scales
@@ -125,17 +126,21 @@ export class Graph {
         // Axis
         const yAxis = d3
             .axisLeft(yScale)
+            .ticks(ticks)
             .tickSize(size)
             .tickPadding(padding);
         // DOM
-        const yAxisDom = this.validArea.append('g').call(yAxis);
+        const yAxisDom = this.validArea
+            .append('g')
+            .attr('class', axisClass || '')
+            .call(yAxis);
         yAxisDom
             .append('text')
             .attr('class', className)
             .attr('text-anchor', 'middle')
-            .attr('x', this.innerHeight / 2)
-            .attr('y', 60)
-            .attr('transform', 'rotate(90)')
+            .attr('x', -this.innerHeight / 2)
+            .attr('y', -60)
+            .attr('transform', 'rotate(-90)')
             .text(text);
 
         return { yScale, yAxis, yAxisDom };

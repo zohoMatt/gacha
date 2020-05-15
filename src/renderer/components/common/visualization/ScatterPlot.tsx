@@ -42,25 +42,23 @@ export const ScatterPlot: React.FC = () => {
         const svg = d3.select(svgRef.current);
         const width = +svg.attr('width');
         const height = +svg.attr('height');
-        const innerWidth = width - MARGIN.left - MARGIN.right;
-        const innerHeight = height - MARGIN.top - MARGIN.bottom;
 
         const xVal = (d: Dot) => d.time;
         const yVal = (d: Dot) => d.c;
 
         const graph = new Graph(svg, DATA, { width, height, margin: MARGIN }, xVal, yVal);
 
-        graph.paintTitle('Concentration vs. Time', styles.title);
         const { xScale } = graph.paintXAxis(
             {
                 text: 'Time (minutes)',
                 className: styles.axisLabel
             },
             {
-                ticks: 10,
+                ticks: 5,
                 size: 4,
                 padding: 10
-            }
+            },
+            styles.axisGroup
         );
         const { yScale } = graph.paintYAxis(
             {
@@ -68,23 +66,13 @@ export const ScatterPlot: React.FC = () => {
                 className: styles.axisLabel
             },
             {
-                ticks: 10,
+                ticks: 5,
                 size: 4,
                 padding: 10
-            }
+            },
+            styles.axisGroup
         );
         const g = graph.getValidArea();
-
-        /** ******** Plot ********* */
-        const RADIUS = 5;
-        g.selectAll('circle')
-            .data(DATA)
-            .enter()
-            .append('circle')
-            .attr('cx', (d: Dot) => xScale(xVal(d)))
-            .attr('cy', (d: Dot) => yScale(yVal(d)))
-            .attr('fill', 'steelblue')
-            .attr('r', RADIUS);
 
         /** ******** Line ********* */
         const getLine = d3
