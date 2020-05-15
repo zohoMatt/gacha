@@ -1,6 +1,8 @@
 import * as React from 'react';
 import * as d3 from 'd3';
 
+import { Graph } from '../../../../mods/visualization/graph';
+
 const styles = require('./ScatterPlot.module.less');
 
 const DATA = [
@@ -46,70 +48,32 @@ export const ScatterPlot: React.FC = () => {
         const xVal = (d: Dot) => d.time;
         const yVal = (d: Dot) => d.c;
 
-        const g = svg.append('g').attr('transform', `translate(${MARGIN.left},${MARGIN.top})`);
+        const graph = new Graph(svg, DATA, { width, height, margin: MARGIN }, xVal, yVal);
 
-        /** ******** Title ********* */
-        const TITLE = 'Concentration to Time';
-        g.append('text')
-            .attr('class', styles.title)
-            .attr('text-anchor', 'middle')
-            .attr('x', innerWidth / 2)
-            .attr('y', -10)
-            .text(TITLE);
-
-        /** ******** Axis ********* */
-        const X_AXIS_LABEL = 'Time (minutes)';
-        const Y_AXIS_LABEL = 'Concentration (mg/L)';
-        const X_TICKS_PADDING = 15;
-        const TICK_SIZE = 4;
-        const Y_TICKS_PADDING = 10;
-        // Scales
-        const X_TICKS = 10;
-        const xmax = (Math.floor(d3.max(DATA.map(xVal))! / X_TICKS) + 1) * 10;
-        const xScale = d3
-            .scaleLinear()
-            .domain([0, xmax])
-            .range([0, innerWidth])
-            .nice();
-
-        const yScale = d3
-            .scaleLinear()
-            .domain(d3.extent(DATA, yVal) as [number, number])
-            .range([innerHeight, 0])
-            .nice();
-        // Axis
-        const xAxis = d3
-            .axisBottom(xScale)
-            .ticks(X_TICKS)
-            .tickSize(TICK_SIZE)
-            .tickPadding(X_TICKS_PADDING);
-        const yAxis = d3
-            .axisLeft(yScale)
-            .tickSize(TICK_SIZE)
-            .tickPadding(Y_TICKS_PADDING);
-        // DOM
-        const xAxisDom = g
-            .append('g')
-            .call(xAxis)
-            .attr('transform', `translate(0,${innerHeight})`);
-        const yAxisDom = g.append('g').call(yAxis);
-
-        // Labels & Ticks
-        xAxisDom
-            .append('text')
-            .attr('class', styles.axisLabel)
-            .attr('text-anchor', 'middle')
-            .attr('x', innerWidth / 2)
-            .attr('y', 50)
-            .text(X_AXIS_LABEL);
-        yAxisDom
-            .append('text')
-            .attr('class', styles.axisLabel)
-            .attr('text-anchor', 'middle')
-            .attr('x', innerHeight / 2)
-            .attr('y', 60)
-            .attr('transform', 'rotate(90)')
-            .text(Y_AXIS_LABEL);
+        graph.paintTitle('Concentration vs. Time', styles.title);
+        const { xScale } = graph.paintXAxis(
+            {
+                text: 'Time (minutes)',
+                className: styles.axisLabel
+            },
+            {
+                ticks: 10,
+                size: 4,
+                padding: 10
+            }
+        );
+        const { yScale } = graph.paintYAxis(
+            {
+                text: 'Concentration (mg/L)',
+                className: styles.axisLabel
+            },
+            {
+                ticks: 10,
+                size: 4,
+                padding: 10
+            }
+        );
+        const g = graph.getValidArea();
 
         /** ******** Plot ********* */
         const RADIUS = 5;
