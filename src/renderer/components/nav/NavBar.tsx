@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { Menu } from 'antd';
+import { createHashHistory } from 'history';
 import { ExperimentOutlined, SettingOutlined } from '@ant-design/icons/lib';
 import { AreaChartOutlined, DatabaseOutlined, InsertRowBelowOutlined } from '@ant-design/icons';
 
@@ -27,10 +28,26 @@ export enum ITEM_KEYS {
 
 export const NavBar: React.FunctionComponent = () => {
     const match = useRouteMatch();
+    const [selected, setMenu] = React.useState(ITEM_KEYS.Adsorbent);
+
+    // Auto-select specified menu item
+    const history = createHashHistory({
+        basename: match.path
+    });
+    React.useEffect(() => {
+        history.listen((location: any) => {
+            const item = location.pathname.split('/')[2];
+            if (item) setMenu(item);
+        });
+    }, [0]);
 
     return (
         <div className={styles.navbar}>
-            <Menu style={{ width: '100%' }} defaultOpenKeys={Object.values(NAV_KEYS)} mode="inline">
+            <Menu
+                mode="inline"
+                style={{ width: '100%' }}
+                defaultOpenKeys={Object.values(NAV_KEYS)}
+                selectedKeys={[selected]}>
                 <SubMenu
                     key={NAV_KEYS.Database}
                     title={

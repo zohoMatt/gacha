@@ -34,15 +34,17 @@ export const DataFileStorage = new Storage({ filename: 'pfast-user-data' });
 /* eslint-disable import/no-mutable-exports */
 let store: any = null;
 
-DataFileStorage.import().then(() => {
-    // Functions that dependent on data import
+DataFileStorage.import()
+    .then(() => {
+        // Functions that dependent on data import
 
-    // Init Store here to prevent HMR error
-    store = new Store();
+        // Init Store here to prevent HMR error
+        store = new Store();
 
-    // Render
-    render(Application);
-});
+        // Render
+        render(Application);
+    })
+    .catch(err => console.error(err));
 
 export { store };
 /* eslint-enable import/no-mutable-exports */
