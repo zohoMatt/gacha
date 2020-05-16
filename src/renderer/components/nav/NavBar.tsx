@@ -28,7 +28,9 @@ export enum ITEM_KEYS {
 
 export const NavBar: React.FunctionComponent = () => {
     const match = useRouteMatch();
-    const [selected, setMenu] = React.useState(ITEM_KEYS.Adsorbent);
+    const [selected, setMenu] = React.useState(
+        window.location.href.split('/').pop() || ITEM_KEYS.Contaminant
+    );
 
     // Auto-select specified menu item
     const history = createHashHistory({
