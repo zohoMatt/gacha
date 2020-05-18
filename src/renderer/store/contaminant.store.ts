@@ -6,7 +6,7 @@ export interface ContaminantParams {
     molecularWeight: number; // mg/mmol
     molarVolume: number; // mL/gmol
     boilingPt: number; // ℃
-    initConcent: number; // mg/L
+    // initConcent: number; // mg/L
     liquidDensity: number; // g/mL
     solubility: number; // mg/L
     vaporPressure: number; // Pa
@@ -24,7 +24,7 @@ export class ContaminantStore extends BasicTableWithEditStore<ContaminantParams>
         molecularWeight: 0, // mg/mmol
         molarVolume: 0, // mL/gmol
         boilingPt: 0, // ℃
-        initConcent: 0, // mg/L
+        // initConcent: 0, // mg/L
         liquidDensity: 0, // g/mL
         solubility: 0, // mg/L
         vaporPressure: 0, // Pa

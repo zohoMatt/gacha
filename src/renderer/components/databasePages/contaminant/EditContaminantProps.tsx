@@ -46,13 +46,6 @@ export const EditContaminantProps: React.FunctionComponent<EditProps> = ({
                 <Input type="number" addonAfter="℃" />
             </Form.Item>
             <Form.Item
-                name="initConcent"
-                label="Initial Concentration"
-                rules={[]}
-                normalize={v => (v ? +v : '')}>
-                <Input type="number" addonAfter="mg/L" />
-            </Form.Item>
-            <Form.Item
                 name="liquidDensity"
                 label="Liquid Density"
                 rules={[]}

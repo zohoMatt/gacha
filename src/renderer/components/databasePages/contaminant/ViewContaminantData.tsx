@@ -19,7 +19,6 @@ export const ViewContaminantData: React.FunctionComponent<ViewContaminantDataPro
         molecularWeight,
         molarVolume,
         boilingPt,
-        initConcent,
         liquidDensity,
         solubility,
         vaporPressure,
@@ -42,9 +41,6 @@ export const ViewContaminantData: React.FunctionComponent<ViewContaminantDataPro
             </Form.Item>
             <Form.Item label="Boiling Point">
                 <span>{boilingPt} ℃</span>
-            </Form.Item>
-            <Form.Item label="Initial Concentration">
-                <span>{initConcent} mg/L</span>
             </Form.Item>
             <Form.Item label="Liquid Density">
                 <span>{liquidDensity} g/mL</span>
