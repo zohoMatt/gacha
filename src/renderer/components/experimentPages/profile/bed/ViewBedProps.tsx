@@ -10,6 +10,7 @@ import { WeakTitle } from '../../../common/elements/WeakTitle';
 import { FullRecordType } from '../../../../store/base';
 import { AdsorbentParams } from '../../../../store/adsorbent.store';
 import { StoreInjectedProp } from '../../../../store/init';
+import { NAV_KEYS, ITEM_KEYS } from '../../../nav/NavBar';
 
 export const ViewBedProps: React.FunctionComponent<BedInputParams & StoreInjectedProp> = inject(
     'store'
@@ -35,7 +36,8 @@ export const ViewBedProps: React.FunctionComponent<BedInputParams & StoreInjecte
                 <Descriptions>
                     <Descriptions.Item label="Adsorbent" span={3}>
                         {ads ? (
-                            <Link to={`/workspace/database/adsorbent?key=${adsorbent}`}>
+                            <Link
+                                to={`/workspace/${NAV_KEYS.Database}/${ITEM_KEYS.Adsorbent}?key=${adsorbent}`}>
                                 {ads.name}
                             </Link>
                         ) : (

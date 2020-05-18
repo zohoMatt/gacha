@@ -49,6 +49,19 @@ export class TableWithEditSection extends React.Component<
 
     public formRef: React.RefObject<any> = React.createRef();
 
+    public componentDidMount() {
+        const key = this.getQueryParam();
+        if (key) this.toView(key);
+    }
+
+    public getQueryParam() {
+        const params = window.location.href.split('?')[1];
+        if (!params) return '';
+        const keyQuery = params.split('&').find(str => str.indexOf('key') === 0);
+        if (!keyQuery) return '';
+        return keyQuery.split('=')[1];
+    }
+
     public createNew = () => {
         this.store.createNew();
         this.setState({ status: 'edit' });

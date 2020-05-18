@@ -31,6 +31,9 @@ export const EditAdsorptionTab: React.FunctionComponent<AdsorptionInputParams &
                         {options}
                     </Select>
                 </Form.Item>
+                <Form.Item name={['adsorption', 'initConcent']} label="Initial Concentration">
+                    <Input type="number" addonAfter="μg/L" />
+                </Form.Item>
                 <Divider orientation="left">Kinetics</Divider>
                 <Form.Item
                     name={['adsorption', 'kinetics', 'filmDiffusion']}

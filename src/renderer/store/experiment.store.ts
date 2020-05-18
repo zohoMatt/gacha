@@ -35,6 +35,7 @@ export interface CorrelationOrInput {
 
 export interface AdsorptionInputParams {
     contaminant: string | null;
+    initConcent: number; // ug/L
     freundlich: {
         k: number;
         nth: number;
@@ -85,6 +86,7 @@ export class ExperimentStore extends BasicTableWithEditStore<ExpProfileParams> {
         },
         adsorption: {
             contaminant: null,
+            initConcent: 100,
             freundlich: {
                 k: 100,
                 nth: 0.5

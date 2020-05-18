@@ -80,6 +80,10 @@ export abstract class BasicTableWithEditStore<T> {
         }
     }
 
+    public queryWithKeyInList(key: string) {
+        return this.tableList.find(r => r.key === key);
+    }
+
     @action
     public createNew() {
         this.changesHappen(false);
