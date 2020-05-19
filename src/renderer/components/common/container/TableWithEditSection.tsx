@@ -54,6 +54,10 @@ export class TableWithEditSection extends React.Component<
         if (key) this.toView(key);
     }
 
+    public componentWillUnmount() {
+        this.store.resetActive();
+    }
+
     public getQueryParam() {
         const params = window.location.href.split('?')[1];
         if (!params) return '';
