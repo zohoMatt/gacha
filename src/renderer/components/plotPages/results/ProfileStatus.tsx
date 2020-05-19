@@ -1,7 +1,10 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { Badge, Popover, Select, Table, Typography } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons/lib';
+
 import { TableData } from './mock';
+import { ITEM_KEYS, NAV_KEYS } from '../../nav/NavBar';
 
 const styles = require('./ProfileStatus.module.less');
 
@@ -38,17 +41,20 @@ export const ProfileStatus: React.FC = () => {
             key: 'action',
             fixed: 'right',
             width: 100,
-            render: () => {
+            render: (val: any, record: any) => {
                 return (
                     <span style={{ wordWrap: 'break-word', wordBreak: 'break-word' }}>
-                        <a>Profile</a>
-                        <a>Plot</a>
+                        <Link
+                            to={`/workspace/${NAV_KEYS.Experiment}/${ITEM_KEYS.Profile}?key=${record.key}`}>
+                            Profile
+                        </Link>
+                        <a style={{ marginLeft: '1vw' }}>Plot</a>
                     </span>
                 );
             }
         }
     ];
-    const [columns, setCols] = React.useState(LEFT_FIXED_COLS);
+    const [columns, setCols] = React.useState(LEFT_FIXED_COLS.concat(RIGHT_FIXED_COLS as any[]));
 
     const onSelect = (values: string, options: any) => {
         const selectedCols = options.map((opt: any, i: number) => ({

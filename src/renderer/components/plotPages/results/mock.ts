@@ -1,5 +1,6 @@
 export const TableData = [
     {
+        key: '62367bf4-320c-4b2e-98e0-8f1a19a7f819',
         status: 'running',
         name: 'exp 001',
         pressure: 'random content',
@@ -18,6 +19,7 @@ export const TableData = [
         p10: 'random content'
     },
     {
+        key: '6ba68729-7bb1-4cc1-8a64-b8187f1317c4',
         status: 'error',
         name: 'exp 001',
         pressure: 'random content',

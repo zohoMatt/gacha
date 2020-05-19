@@ -68,8 +68,12 @@ export class TableWithEditSection extends React.Component<
     };
 
     public toView = (key: string) => {
-        this.store.edit(key);
-        this.setState({ status: 'view' });
+        try {
+            this.store.edit(key);
+            this.setState({ status: 'view' });
+        } catch (e) {
+            console.error(e);
+        }
     };
 
     public toDelete = (key: string) => {

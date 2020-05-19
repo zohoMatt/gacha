@@ -111,12 +111,12 @@ export abstract class BasicTableWithEditStore<T> {
 
     @action
     public edit(key: string) {
-        this.changesHappen(false);
-        this.activeKey = key;
         const entry = this.tableList.find(r => r.key === key);
         if (!entry) {
             throw new Error(`'edit()' No matching record.`);
         }
+        this.changesHappen(false);
+        this.activeKey = key;
         const { name, description } = entry;
         this.activeRecord = { name, description, ...entry.params };
     }
