@@ -1,5 +1,3 @@
-import { computed } from 'mobx';
-
 import { BasicTableWithEditStore, BriefRecordType } from './base';
 import { Store } from './init';
 

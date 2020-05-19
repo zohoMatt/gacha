@@ -4,6 +4,7 @@ import { Col, Divider, Form, Row } from 'antd';
 import { ViewBasicInfo } from '../../common/BasicInfo';
 import { BriefRecordType } from '../../../store/base';
 import { AdsorbentParams } from '../../../store/adsorbent.store';
+import { Calculation } from '../../../../mods/calculation/basic';
 
 export interface ViewAdsorbentDataProps {
     data: BriefRecordType<AdsorbentParams>;
@@ -20,6 +21,8 @@ export const ViewAdsorbentData: React.FunctionComponent<ViewAdsorbentDataProps> 
         particleRadius
     } = data;
 
+    const d = Calculation.display;
+
     return (
         <Row>
             <Col span={24}>
@@ -35,16 +38,16 @@ export const ViewAdsorbentData: React.FunctionComponent<ViewAdsorbentDataProps> 
                         />
                     <Divider orientation="left" />
                     <Form.Item label="Apparent Density">
-                        <span>{`${density} g/cm³`}</span>
+                        <span>{`${d(density)}`}</span>
                     </Form.Item>
                     <Form.Item label="Particle Radius">
-                        <span>{`${particleRadius} cm`}</span>
+                        <span>{`${d(particleRadius)}`}</span>
                     </Form.Item>
                     <Form.Item label="Particle Porosity">
-                        <span>{`${particlePorosity}`}</span>
+                        <span>{`${d(particlePorosity)}`}</span>
                     </Form.Item>
                     <Form.Item label="Adsorbent Type">
-                        <span>{`${adsorbentType}`}</span>
+                        <span>{adsorbentType}</span>
                     </Form.Item>
                 </Form>
             </Col>

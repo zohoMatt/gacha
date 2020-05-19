@@ -9,7 +9,6 @@ import { DataFileStorage } from '../app';
 export interface QuantityValue {
     value: number;
     unit?: string | null;
-    display: string | number;
 }
 
 export interface Params<T> {

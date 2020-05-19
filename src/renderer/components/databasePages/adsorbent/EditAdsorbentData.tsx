@@ -28,21 +28,21 @@ export const EditAdsorbentData: React.FunctionComponent<EditProps> = ({
                     <BasicInfoFormFields manufacturer={true} />
                     <Divider orientation="left" />
                     <Form.Item
-                        name="density"
+                        name={['density', 'value']}
                         label="Apparent Density"
                         rules={NORMAL_RULES}
                         normalize={v => (v ? +v : '')}>
                         <Input type="number" addonAfter="g/cm³" />
                     </Form.Item>
                     <Form.Item
-                        name="particleRadius"
+                        name={['particleRadius', 'value']}
                         label="Particle Radius"
                         rules={NORMAL_RULES}
                         normalize={v => (v ? +v : '')}>
                         <Input type="number" addonAfter="cm" />
                     </Form.Item>
                     <Form.Item
-                        name="particlePorosity"
+                        name={['particlePorosity', 'value']}
                         label="Particle Porosity"
                         rules={NORMAL_RULES}
                         normalize={v => (v ? +v : '')}>
