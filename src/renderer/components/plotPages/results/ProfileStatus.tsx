@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Popover, Select, Table, Typography } from 'antd';
+import { Badge, Popover, Select, Table, Typography } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons/lib';
 import { TableData } from './mock';
 
@@ -13,7 +13,16 @@ export const ProfileStatus: React.FC = () => {
             dataIndex: 'status',
             key: 'status',
             fixed: 'left',
-            width: 100
+            width: 100,
+            render(val: string) {
+                return (
+                    <>
+                        {val === 'running' ? <Badge status="processing" text="Running" /> : null}
+                        {val === 'success' ? <Badge status="success" text="Done" /> : null}
+                        {val === 'error' ? <Badge status="error" text="Error" /> : null}
+                    </>
+                );
+            }
         },
         {
             title: 'Name',
@@ -47,7 +56,7 @@ export const ProfileStatus: React.FC = () => {
             children: [
                 {
                     key: opt.key,
-                    title: 'cm',
+                    title: '(cm)',
                     dataIndex: opt.key
                 }
             ],
