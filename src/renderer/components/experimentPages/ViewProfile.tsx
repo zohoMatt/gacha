@@ -15,8 +15,17 @@ export interface ViewProfileProps {
 export const ViewProfile: React.FunctionComponent<ViewProfileProps> = ({ data }) => {
     const { name, description, water, bed, psdm, adsorption } = data;
 
+    // Scroll to top when switching profile
+    const containerRef = React.createRef<HTMLDivElement>();
+    React.useEffect(() => {
+        containerRef.current!.scroll({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
     return (
-        <>
+        <div ref={containerRef} style={{ height: '100%', overflow: 'scroll' }}>
             <Divider orientation="center">Info</Divider>
             <Descriptions>
                 <Descriptions.Item label="Profile Name">{name}</Descriptions.Item>
@@ -30,6 +39,6 @@ export const ViewProfile: React.FunctionComponent<ViewProfileProps> = ({ data })
             <ViewBedProps {...bed} />
             <Divider orientation="center">Simulation: PSDM</Divider>
             <ViewPsdmParams {...psdm} />
-        </>
+        </div>
     );
 };
