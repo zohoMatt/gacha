@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { Form, Divider, Input } from 'antd';
+import { Form, Divider } from 'antd';
 
 import { BriefRecordType } from '../../../store/base';
 import { ContaminantParams } from '../../../store/contaminant.store';
 import { ViewBasicInfo } from '../../common/BasicInfo';
+import { Calculation } from '../../../../mods/calculation/basic';
 
 export interface ViewContaminantDataProps {
     data: BriefRecordType<ContaminantParams>;
@@ -26,6 +27,8 @@ export const ViewContaminantData: React.FunctionComponent<ViewContaminantDataPro
         cas
     } = data;
 
+    const d = Calculation.display;
+
     return (
         <Form size="small" layout="horizontal" labelCol={{ span: 6 }} wrapperCol={{ span: 8 }}>
             <ViewBasicInfo name={name} description={description} />
@@ -34,26 +37,26 @@ export const ViewContaminantData: React.FunctionComponent<ViewContaminantDataPro
                 <span>{fullName}</span>
             </Form.Item>
             <Form.Item label="Molecular Weight">
-                <span>{molecularWeight} mg/mol</span>
+                <span>{d(molecularWeight)}</span>
             </Form.Item>
             <Form.Item label="MolarVolume @ NBP">
-                <span>{molarVolume} mg/gmol</span>
+                <span>{d(molarVolume)}</span>
             </Form.Item>
             <Form.Item label="Boiling Point">
-                <span>{boilingPt} ℃</span>
+                <span>{d(boilingPt)}</span>
             </Form.Item>
             <Form.Item label="Liquid Density">
-                <span>{liquidDensity} g/mL</span>
+                <span>{d(liquidDensity)}</span>
             </Form.Item>
             <Form.Item label="Solubility">
-                <span>{solubility} mg/L</span>
+                <span>{d(solubility)}</span>
             </Form.Item>
             <Form.Item label="Vapor Pressure">
-                <span>{vaporPressure} Pa</span>
+                <span>{d(vaporPressure)}</span>
             </Form.Item>
 
             <Form.Item label="Refractive Index">
-                <span>{refractive}</span>
+                <span>{d(refractive)}</span>
             </Form.Item>
             <Form.Item label="CAS Number">
                 <span>{cas}</span>

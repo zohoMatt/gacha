@@ -1,16 +1,16 @@
-import { BasicTableWithEditStore, BriefRecordType } from './base';
+import { BasicTableWithEditStore, BriefRecordType, QuantityValue } from './base';
 import { Store } from './init';
 
 export interface ContaminantParams {
     fullName: string;
-    molecularWeight: number; // mg/mmol
-    molarVolume: number; // mL/gmol
-    boilingPt: number; // ℃
-    liquidDensity: number; // g/mL
-    solubility: number; // mg/L
-    vaporPressure: number; // Pa
-    refractive: number;
-    cas: number;
+    molecularWeight: QuantityValue; // mg/mmol
+    molarVolume: QuantityValue; // mL/gmol
+    boilingPt: QuantityValue; // ℃
+    liquidDensity: QuantityValue; // g/mL
+    solubility: QuantityValue; // mg/L
+    vaporPressure: QuantityValue; // Pa
+    refractive: QuantityValue;
+    cas: string;
 }
 
 export class ContaminantStore extends BasicTableWithEditStore<ContaminantParams> {
@@ -20,14 +20,35 @@ export class ContaminantStore extends BasicTableWithEditStore<ContaminantParams>
         name: '',
         description: '',
         fullName: '',
-        molecularWeight: 0, // mg/mmol
-        molarVolume: 0, // mL/gmol
-        boilingPt: 0, // ℃
-        liquidDensity: 0, // g/mL
-        solubility: 0, // mg/L
-        vaporPressure: 0, // Pa
-        refractive: 0,
-        cas: 0
+        molecularWeight: {
+            value: 0,
+            unit: 'mg/mmol'
+        },
+        molarVolume: {
+            value: 0,
+            unit: 'mL/gmol'
+        },
+        boilingPt: {
+            value: 0,
+            unit: 'degC'
+        },
+        liquidDensity: {
+            value: 0,
+            unit: 'g/mL'
+        },
+        solubility: {
+            value: 0,
+            unit: 'mg/L'
+        },
+        vaporPressure: {
+            value: 0,
+            unit: 'Pa'
+        },
+        refractive: {
+            value: 0,
+            unit: ''
+        },
+        cas: ''
     };
 
     constructor(rootStore: Store) {

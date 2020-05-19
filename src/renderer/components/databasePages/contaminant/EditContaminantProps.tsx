@@ -25,56 +25,56 @@ export const EditContaminantProps: React.FunctionComponent<EditProps> = ({
                 <Input.TextArea rows={2} />
             </Form.Item>
             <Form.Item
-                name="molecularWeight"
+                name={['molecularWeight', 'value']}
                 label="Molecular Weight"
                 rules={[]}
                 normalize={v => (v ? +v : '')}>
                 <Input type="number" addonAfter="mg/mmol" />
             </Form.Item>
             <Form.Item
-                name="molarVolume"
+                name={['molarVolume', 'value']}
                 label="Molar Volume @ NBP"
                 rules={[]}
                 normalize={v => (v ? +v : '')}>
                 <Input type="number" addonAfter="mL/gmol" />
             </Form.Item>
             <Form.Item
-                name="boilingPt"
+                name={['boilingPt', 'value']}
                 label="Boiling Point"
                 rules={[]}
                 normalize={v => (v ? +v : '')}>
                 <Input type="number" addonAfter="℃" />
             </Form.Item>
             <Form.Item
-                name="liquidDensity"
+                name={['liquidDensity', 'value']}
                 label="Liquid Density"
                 rules={[]}
                 normalize={v => (v ? +v : '')}>
                 <Input type="number" addonAfter="g/mL" />
             </Form.Item>
             <Form.Item
-                name="solubility"
+                name={['solubility', 'value']}
                 label="Solubility"
                 rules={[]}
                 normalize={v => (v ? +v : '')}>
                 <Input type="number" addonAfter="mg/L" />
             </Form.Item>
             <Form.Item
-                name="vaporPressure"
+                name={['vaporPressure', 'value']}
                 label="Vapor Pressure"
                 rules={[]}
                 normalize={v => (v ? +v : '')}>
                 <Input type="number" addonAfter="Pa" />
             </Form.Item>
             <Form.Item
-                name="refractive"
+                name={['refractive', 'value']}
                 label="Refractive Index"
                 rules={[]}
                 normalize={v => (v ? +v : '')}>
                 <Input type="number" />
             </Form.Item>
-            <Form.Item name="cas" label="CAS Number" rules={[]} normalize={v => (v ? +v : '')}>
-                <Input type="number" />
+            <Form.Item name="cas" label="CAS Number" rules={[]}>
+                <Input type="string" />
             </Form.Item>
         </Form>
     );

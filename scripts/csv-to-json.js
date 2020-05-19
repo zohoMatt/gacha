@@ -13,32 +13,33 @@ const parseContaminantsCsv = () => {
             name: vals[0],
             description: '',
             params: {
+                fullName: vals[1],
                 molecularWeight: {
-                    value: vals[3],
+                    value: +vals[3],
                     unit: 'mg/mmol'
                 },
                 molarVolume: {
-                    value: vals[4],
+                    value: +vals[4],
                     unit: 'mL/gmol'
                 },
                 boilingPt: {
-                    value: vals[5],
+                    value: +vals[5],
                     unit: 'degC'
                 },
                 liquidDensity: {
-                    value: vals[6],
+                    value: +vals[6],
                     unit: 'g/mL'
                 },
                 solubility: {
-                    value: vals[7],
+                    value: +vals[7],
                     unit: 'mg/L'
                 },
                 vaporPressure: {
-                    value: vals[8],
+                    value: +vals[8],
                     unit: 'Pa'
                 },
                 refractive: {
-                    value: vals[9],
+                    value: +vals[9],
                     unit: ''
                 },
                 cas: vals[2]

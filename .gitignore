@@ -17,3 +17,7 @@ coverage/
 
 # Log
 *.log
+
+# Scripts output
+output/
+!output/.gitkeep
