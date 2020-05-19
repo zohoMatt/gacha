@@ -1,7 +1,6 @@
 import { chain, unit, divide, evaluate, multiply, Unit } from 'mathjs';
 
 import {
-    AdsorptionInputParams,
     BedInputParams,
     CorrelationOrInput,
     PsdmInputParams,
@@ -12,20 +11,15 @@ import { ContaminantParams } from '../../renderer/store/contaminant.store';
 
 // todo Will support multiple units in the future
 // todo Here is a temporary workaround
-type AdsorbentQuantityValues = { [key in keyof AdsorbentParams]: string | Unit };
-type WaterQuantityValues = { [key in keyof WaterInputParams]: string | Unit };
-type BedQuantityValues = { [key in keyof BedInputParams]: string | Unit };
-type ContaminantQuantityValues = { [key in keyof ContaminantParams]: string | Unit };
-type AdsorptionQuantityValues = { [key in keyof AdsorptionInputParams]: string | Unit };
-type PsdmQuantityValues = { [key in keyof PsdmInputParams]: string | Unit };
+type TempWorkAround<T> = { [key in keyof T]: string | Unit };
 
 export interface BasicInput {
-    adsorbent: AdsorbentQuantityValues;
-    water: WaterQuantityValues;
-    bed: BedQuantityValues;
-    contaminant: ContaminantQuantityValues;
+    adsorbent: TempWorkAround<AdsorbentParams>;
+    water: TempWorkAround<WaterInputParams>;
+    bed: TempWorkAround<BedInputParams>;
+    contaminant: TempWorkAround<ContaminantParams>;
     adsorption: {
-        contaminant: string;
+        initConcent: number;
         freundlich: {
             k: string | Unit;
             nth: string | Unit;
@@ -38,7 +32,7 @@ export interface BasicInput {
             tortuosity: string | Unit;
         };
     };
-    psdm: PsdmQuantityValues;
+    psdm: TempWorkAround<PsdmInputParams>;
 }
 
 export class ProfileMaths {
@@ -196,13 +190,13 @@ export class ProfileMaths {
         const { freundlich } = this.input.adsorption;
         const k = +freundlich.k.toString();
         const nth = +freundlich.nth.toString();
-        const { initConcent } = this.input.contaminant;
+        const { initConcent } = this.input.adsorption;
         const c = unit(initConcent.toString()).toNumber('ug/L');
         return unit(evaluate(`${k}*${c}^${nth}`), 'ug/g');
     }
 
     public get surfaceSoluteDistParam(): Unit {
-        const { initConcent } = this.input.contaminant;
+        const { initConcent } = this.input.adsorption;
         return unit(
             divide(
                 multiply(this.bedDensity, this.adsorptionCap),
@@ -226,7 +220,7 @@ export class ProfileMaths {
         const spdfr = this.input.adsorption.kinetics.spdfr.toString();
         const dw = this.diffusivityInWater.toString();
         const ep = this.input.adsorbent.particlePorosity.toString();
-        const c0 = this.input.contaminant.initConcent.toString();
+        const c0 = this.input.adsorption.initConcent.toString();
         const t = this.input.adsorption.kinetics.tortuosity.toString();
         const dens = this.input.adsorbent.density.toString();
         const qe = this.adsorptionCap.toString();
