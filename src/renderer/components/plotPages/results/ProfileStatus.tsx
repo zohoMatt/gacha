@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Select, Table, Typography } from 'antd';
+import { Popover, Select, Table, Typography } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons/lib';
 import { TableData } from './mock';
 
 const styles = require('./ProfileStatus.module.less');
@@ -76,21 +77,30 @@ export const ProfileStatus: React.FC = () => {
         </Option>
     ));
 
+    const TIPS = 'You can search and select multiple fields for the table to display.';
+
     return (
-        <div>
-            <Typography.Title level={3}>Profile Status</Typography.Title>
-            <Select
-                showSearch
-                mode="multiple"
-                placeholder="Select an adsorbent"
-                optionFilterProp="children"
-                style={{ width: '100%' }}
-                onChange={onSelect}
-                filterOption={(input: string, option: any) =>
-                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                }>
-                {options}
-            </Select>
+        <div className={styles.container}>
+            <Typography.Title className={styles.title} level={3}>
+                Profile Status
+            </Typography.Title>
+            <div className={styles.selector}>
+                <Select
+                    showSearch
+                    mode="multiple"
+                    placeholder="Select an adsorbent"
+                    optionFilterProp="children"
+                    style={{ width: '70%' }}
+                    onChange={onSelect}
+                    filterOption={(input: string, option: any) =>
+                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                    }>
+                    {options}
+                </Select>
+                <Popover content={TIPS} placement="left">
+                    <QuestionCircleOutlined className={styles.questionMark} />
+                </Popover>
+            </div>
             <Table
                 size="small"
                 style={{ height: '100%' }}
