@@ -16,7 +16,7 @@ export class ContaminantStore extends BasicTableWithEditStore<ContaminantParams>
         },
         molarVolume: {
             value: 0,
-            unit: 'mL/gmol'
+            unit: 'mL/mol'
         },
         boilingPt: {
             value: 0,

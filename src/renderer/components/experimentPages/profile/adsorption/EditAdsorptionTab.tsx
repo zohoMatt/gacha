@@ -72,6 +72,18 @@ export const EditAdsorptionTab: React.FunctionComponent<AdsorptionInputParams &
                         unit="cm²/s"
                         />
                 </Form.Item>
+                <Form.Item
+                    name={['adsorption', 'kinetics', 'spdfr', 'value']}
+                    label="SPDFR"
+                    normalize={v => +v}>
+                    <Input type="number" />
+                </Form.Item>
+                <Form.Item
+                    name={['adsorption', 'kinetics', 'tortuosity', 'value']}
+                    label="Tortuosity"
+                    normalize={v => +v}>
+                    <Input type="number" />
+                </Form.Item>
                 <Divider orientation="left">Freundlich</Divider>
                 <Form.Item
                     name={['adsorption', 'freundlich', 'k', 'value']}
