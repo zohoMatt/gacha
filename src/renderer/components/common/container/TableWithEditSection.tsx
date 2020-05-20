@@ -57,7 +57,7 @@ export class TableWithEditSection extends React.Component<
         if (key) this.toView(key);
 
         // Data
-        this.store.tableList().then(tableList => this.setState({ tableList }));
+        this.fetchList();
     }
 
     public componentWillUnmount() {
@@ -94,6 +94,9 @@ export class TableWithEditSection extends React.Component<
 
         await this.store.deleteRecord(key);
         message.info('Successfully deleted');
+
+        // Refresh data
+        return this.fetchList();
     };
 
     public save = async (name?: string) => {
@@ -134,6 +137,10 @@ export class TableWithEditSection extends React.Component<
     public changeParams = (allParams: BriefRecordType<any>) => {
         this.store.updateActiveRecord(allParams);
     };
+
+    public async fetchList() {
+        return this.store.tableList().then(tableList => this.setState({ tableList }));
+    }
 
     public render() {
         const { warning, status, tableList } = this.state;
