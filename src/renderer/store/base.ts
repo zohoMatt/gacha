@@ -1,47 +1,15 @@
 import { action, autorun, computed, observable, toJS } from 'mobx';
 import { omit } from 'lodash';
-import { v4 } from 'uuid';
+import { generate as id } from 'shortid';
 
 import { Store } from './init';
-import { DataFileStorage } from '../app';
-
-// todo
-export interface QuantityValue {
-    value: number;
-    unit: string;
-}
-
-export interface Params<T> {
-    params: T;
-}
-
-export interface KeyID {
-    key: string;
-}
-
-export interface BasicInfo {
-    name: string;
-    description: string;
-    manufacturer?: string;
-}
-
-export interface RecordStatus {
-    draft?: boolean;
-    cited?: string[];
-}
-
-// Used to store into local files
-export type FullRecordType<T> = KeyID & BasicInfo & Params<T> & RecordStatus;
+import { BasicInfo, DataStorage, FullRecordType } from '../../utils/storage/storage';
 
 // Used to display and modification
 export type BriefRecordType<T> = BasicInfo & T;
 
-export interface DataBaseType<T> {
-    [key: string]: FullRecordType<T>[];
-}
-
 export abstract class BasicTableWithEditStore<T> {
-    @observable database: DataBaseType<T> = { props: [] };
+    @observable database: DataStorage<FullRecordType<T>>;
 
     @observable activeKey: string | null = null;
 
@@ -57,36 +25,23 @@ export abstract class BasicTableWithEditStore<T> {
 
     public abstract DEFAULT_STORE: BriefRecordType<T>;
 
-    @computed get tableList(): FullRecordType<T>[] {
-        return this.database.props;
-    }
-
-    protected constructor(storedPath: string[], rootStore: any) {
+    protected constructor(rootStore: Store, database: DataStorage<FullRecordType<T>>) {
         this.root = rootStore;
-        this.database = DataFileStorage.read(storedPath) || { props: [] };
-        this.STORED_PATH = storedPath;
-        autorun(async () => {
-            return this.listeners();
-        });
+        this.database = database;
     }
 
-    public async listeners() {
-        try {
-            await DataFileStorage.update(this.STORED_PATH, toJS(this.database));
-            console.log(`${this.STORE_NAME}::autorun Storage updated successfully.`);
-        } catch (e) {
-            console.error(`${this.STORE_NAME}::autorun Storage failed in updating.`);
-        }
+    public async tableList(): Promise<FullRecordType<T>[]> {
+        return this.database.list();
     }
 
-    public queryWithKeyInList(key: string) {
-        return this.tableList.find(r => r.key === key);
+    public async queryWithKeyInList(key: string) {
+        return this.database.get({ key });
     }
 
     @action
     public createNew() {
         this.changesHappen(false);
-        this.activeKey = v4();
+        this.activeKey = id();
         this.activeRecord = this.DEFAULT_STORE;
     }
 
@@ -109,8 +64,8 @@ export abstract class BasicTableWithEditStore<T> {
     }
 
     @action
-    public edit(key: string) {
-        const entry = this.tableList.find(r => r.key === key);
+    public async edit(key: string) {
+        const entry = await this.database.get({ key });
         if (!entry) {
             throw new Error(`'edit()' No matching record.`);
         }
@@ -121,14 +76,14 @@ export abstract class BasicTableWithEditStore<T> {
     }
 
     @action
-    public save() {
+    public async save() {
         if (!this.activeRecord || !this.activeRecord.name) {
             const error = `'Name' cannot be left empty.`;
             throw new Error(error);
         }
         const { name, description } = this.activeRecord;
         const params: any = omit(this.activeRecord, ['name', 'description']);
-        const origin = this.tableList.find(p => p.key === this.activeKey);
+        const origin = await this.database.get({ key: this.activeKey });
 
         // New record
         if (!origin) {
@@ -137,13 +92,14 @@ export abstract class BasicTableWithEditStore<T> {
             origin.name = name;
             origin.description = description;
             origin.params = params;
+            await this.database.update({ key: this.activeKey }, { name, description, params });
         }
 
         this.changesHappen(false);
     }
 
-    public saveAs(name: string) {
-        const key = v4();
+    public async saveAs(name: string) {
+        const key = id();
         if (!this.activeRecord) {
             throw new Error(`saveAs(): No valid active record editing.`);
         }
@@ -155,17 +111,17 @@ export abstract class BasicTableWithEditStore<T> {
             description,
             params
         };
-        this.database.props = [toAdd].concat(this.tableList);
+        await this.database.create(toAdd);
         // Active new key
         this.edit(key);
     }
 
     @action
-    public deleteRecord(key: string) {
+    public async deleteRecord(key: string) {
         if (key === this.activeKey) {
             this.resetActive();
         }
-        this.database.props = this.tableList.filter(r => r.key !== key);
+        return this.database.remove({ key });
     }
 
     @action
