@@ -5,7 +5,7 @@ import {
     CorrelationOrInput,
     PsdmInputParams,
     WaterInputParams
-} from '../../renderer/store/experiment.store';
+} from '../../renderer/store/expProfile.store';
 import { AdsorbentParams } from '../../renderer/store/adsorbent.store';
 import { ContaminantParams } from '../../renderer/store/contaminant.store';
 

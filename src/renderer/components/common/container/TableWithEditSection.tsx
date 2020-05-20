@@ -98,7 +98,7 @@ export class TableWithEditSection extends React.Component<
             try {
                 await form.validateFields();
             } catch (errors) {
-                console.log(errors);
+                console.warn(errors);
                 message.error(errors.errorFields[0].errors[0]);
                 valid = false;
             }

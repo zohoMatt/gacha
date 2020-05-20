@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Divider, Form, Input } from 'antd';
 
 import { PsdmValidator } from '../../../../../mods/validators/psdm.validator';
-import { PsdmInputParams } from '../../../../store/experiment.store';
+import { PsdmInputParams } from '../../../../store/expProfile.store';
 
 export const EditPsdmTab: React.FunctionComponent<PsdmInputParams> = () => {
     const vdator = new PsdmValidator();
@@ -11,21 +11,21 @@ export const EditPsdmTab: React.FunctionComponent<PsdmInputParams> = () => {
     return (
         <>
             <Form.Item
-                name={['psdm', 'totalRunTime']}
+                name={['psdm', 'totalRunTime', 'value']}
                 label="Total Run Time"
                 rules={vdator.getFormValidators('totalRunTime', POINTS)}
                 normalize={v => (v ? +v : '')}>
                 <Input type="number" addonAfter="d" />
             </Form.Item>
             <Form.Item
-                name={['psdm', 'firstPointDisplayed']}
+                name={['psdm', 'firstPointDisplayed', 'value']}
                 label="First Point Displayed"
                 rules={vdator.getFormValidators('firstPointDisplayed', POINTS)}
                 normalize={v => (v ? +v : '')}>
                 <Input type="number" addonAfter="d" />
             </Form.Item>
             <Form.Item
-                name={['psdm', 'timeStep']}
+                name={['psdm', 'timeStep', 'value']}
                 label="Time Step"
                 rules={vdator.getFormValidators('timeStep', POINTS)}
                 normalize={v => (v ? +v : '')}>

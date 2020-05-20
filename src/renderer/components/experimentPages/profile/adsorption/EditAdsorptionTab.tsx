@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { Divider, Form, Input, Select } from 'antd';
 
 import { CorrelationOrUserInput } from '../../../common/elements/CorrelationOrUserInput';
-import { AdsorptionInputParams } from '../../../../store/experiment.store';
+import { AdsorptionInputParams } from '../../../../store/expProfile.store';
 import { StoreInjectedProp } from '../../../../store/init';
 import { FullRecordType } from '../../../../store/base';
 import { ContaminantParams } from '../../../../store/contaminant.store';
@@ -32,7 +32,7 @@ export const EditAdsorptionTab: React.FunctionComponent<AdsorptionInputParams &
                     </Select>
                 </Form.Item>
                 <Form.Item
-                    name={['adsorption', 'initConcent']}
+                    name={['adsorption', 'initConcent', 'value']}
                     label="Initial Concentration"
                     normalize={v => +v}>
                     <Input type="number" addonAfter="μg/L" />
@@ -69,11 +69,14 @@ export const EditAdsorptionTab: React.FunctionComponent<AdsorptionInputParams &
                         />
                 </Form.Item>
                 <Divider orientation="left">Freundlich</Divider>
-                <Form.Item name={['adsorption', 'freundlich', 'k']} label="K" normalize={v => +v}>
+                <Form.Item
+                    name={['adsorption', 'freundlich', 'k', 'value']}
+                    label="K"
+                    normalize={v => +v}>
                     <Input type="number" />
                 </Form.Item>
                 <Form.Item
-                    name={['adsorption', 'freundlich', 'nth']}
+                    name={['adsorption', 'freundlich', 'nth', 'value']}
                     label="1/n"
                     normalize={v => +v}>
                     <Input type="number" />

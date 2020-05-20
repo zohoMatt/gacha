@@ -31,28 +31,28 @@ export const EditBedTab: React.FunctionComponent<StoreInjectedProp> = inject('st
                     </Select>
                 </Form.Item>
                 <Form.Item
-                    name={['bed', 'length']}
+                    name={['bed', 'length', 'value']}
                     label="Bed Length"
                     rules={REQUIRED}
                     normalize={v => (v ? +v : '')}>
                     <Input type="number" addonAfter="cm" />
                 </Form.Item>
                 <Form.Item
-                    name={['bed', 'diameter']}
+                    name={['bed', 'diameter', 'value']}
                     label="Bed Diameter"
                     rules={REQUIRED}
                     normalize={v => (v ? +v : '')}>
                     <Input type="number" addonAfter="cm" />
                 </Form.Item>
                 <Form.Item
-                    name={['bed', 'mass']}
+                    name={['bed', 'mass', 'value']}
                     label="Bed Mass"
                     rules={REQUIRED}
                     normalize={v => (v ? +v : '')}>
                     <Input type="number" addonAfter="g" />
                 </Form.Item>
                 <Form.Item
-                    name={['bed', 'flowrate']}
+                    name={['bed', 'flowrate', 'value']}
                     label="Flowrate"
                     rules={[...REQUIRED, { min: 0, type: 'number' }]}
                     normalize={v => (v ? +v : '')}>
@@ -60,7 +60,7 @@ export const EditBedTab: React.FunctionComponent<StoreInjectedProp> = inject('st
                 </Form.Item>
                 {/* fixme EBCT is dependent on volume and flowrate */}
                 <Form.Item
-                    name={['bed', 'ebct']}
+                    name={['bed', 'ebct', 'value']}
                     label="EBCT"
                     rules={[...REQUIRED, { min: 0, type: 'number' }]}
                     normalize={v => (v ? +v : '')}>

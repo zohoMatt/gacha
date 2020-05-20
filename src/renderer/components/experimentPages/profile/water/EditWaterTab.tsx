@@ -3,25 +3,27 @@ import { Divider, Form, Input, Switch } from 'antd';
 
 import { WaterValidator } from '../../../../../mods/validators/water.validator';
 import { calcDensityAndViscosity } from './calculation';
-import { WaterInputParams } from '../../../../store/experiment.store';
+import { WaterInputParams } from '../../../../store/expProfile.store';
+import { Calculation } from '../../../../../mods/calculation/basic';
 
 export const EditWaterTab: React.FunctionComponent<WaterInputParams> = initValues => {
     const { temperature } = initValues;
     const vdator = new WaterValidator();
 
+    const { display } = Calculation;
     const [density, viscosity] = calcDensityAndViscosity(temperature);
 
     return (
         <>
             <Form.Item
-                name={['water', 'pressure']}
+                name={['water', 'pressure', 'value']}
                 label="Pressure"
                 rules={vdator.getFormValidators('pressure')}
                 normalize={v => (v ? +v : '')}>
                 <Input type="number" addonAfter="atm" />
             </Form.Item>
             <Form.Item
-                name={['water', 'temperature']}
+                name={['water', 'temperature', 'value']}
                 label="Temperature"
                 rules={vdator.getFormValidators('temperature')}
                 normalize={v => (v ? +v : '')}>
@@ -33,7 +35,7 @@ export const EditWaterTab: React.FunctionComponent<WaterInputParams> = initValue
                     <Switch />
                 </Form.Item>
                 <span style={{ marginLeft: '0.5vw' }}>
-                    {temperature < 100 && temperature > 0 ? density : '-'}
+                    {temperature.value < 100 && temperature.value > 0 ? display(density) : '-'}
                 </span>
             </Form.Item>
             <Form.Item label="Viscosity">
@@ -41,7 +43,7 @@ export const EditWaterTab: React.FunctionComponent<WaterInputParams> = initValue
                     <Switch />
                 </Form.Item>
                 <span style={{ marginLeft: '0.5vw' }}>
-                    {temperature < 100 && temperature > 0 ? viscosity : '-'}
+                    {temperature.value < 100 && temperature.value > 0 ? display(viscosity) : '-'}
                 </span>
             </Form.Item>
         </>

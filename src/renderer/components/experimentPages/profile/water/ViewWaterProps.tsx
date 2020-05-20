@@ -2,26 +2,29 @@ import * as React from 'react';
 import { Descriptions } from 'antd';
 
 import { calcDensityAndViscosity } from './calculation';
-import { WaterInputParams } from '../../../../store/experiment.store';
+import { WaterInputParams } from '../../../../store/expProfile.store';
 import { WeakTitle } from '../../../common/elements/WeakTitle';
+import { Calculation } from '../../../../../mods/calculation/basic';
 
 export const ViewWaterProps: React.FunctionComponent<WaterInputParams> = data => {
     const { pressure, temperature, useDensity, useViscosity } = data;
-    const [densityVal, viscosityVal] = calcDensityAndViscosity(temperature);
+    const [density, viscosity] = calcDensityAndViscosity(temperature);
+    const { display } = Calculation;
+
     return (
         <>
             <Descriptions>
-                <Descriptions.Item label="Pressure">{`${pressure} atm`}</Descriptions.Item>
+                <Descriptions.Item label="Pressure">{display(pressure)}</Descriptions.Item>
                 <Descriptions.Item label="Temperature" span={2}>
-                    {`${temperature} ℃`}
+                    {display(temperature)}
                 </Descriptions.Item>
             </Descriptions>
             <Descriptions title={<WeakTitle title="Correlation" />}>
                 <Descriptions.Item label="Density">
-                    {useDensity ? densityVal : 'N/A'}
+                    {useDensity ? display(density) : 'N/A'}
                 </Descriptions.Item>
                 <Descriptions.Item label="Viscosity">
-                    {useViscosity ? viscosityVal : 'N/A'}
+                    {useViscosity ? display(viscosity) : 'N/A'}
                 </Descriptions.Item>
             </Descriptions>
         </>

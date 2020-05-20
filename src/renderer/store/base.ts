@@ -8,7 +8,7 @@ import { DataFileStorage } from '../app';
 // todo
 export interface QuantityValue {
     value: number;
-    unit?: string | null;
+    unit: string;
 }
 
 export interface Params<T> {

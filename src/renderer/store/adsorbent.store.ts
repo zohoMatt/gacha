@@ -24,7 +24,8 @@ export class AdsorbentStore extends BasicTableWithEditStore<AdsorbentParams> {
             unit: 'cm'
         }, // cm
         particlePorosity: {
-            value: 0
+            value: 0,
+            unit: ''
         }, // no unit
         adsorbentType: ''
     };

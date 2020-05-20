@@ -1,6 +1,6 @@
 import { AdsorbentStore } from './adsorbent.store';
 import { ContaminantStore } from './contaminant.store';
-import { ExperimentStore } from './experiment.store';
+import { ExpProfileStore } from './expProfile.store';
 
 export interface StoreInjectedProp {
     store?: Store;
@@ -11,11 +11,11 @@ export class Store {
 
     public contaminant: ContaminantStore;
 
-    public exp: ExperimentStore;
+    public exp: ExpProfileStore;
 
     public constructor() {
         this.adsorbent = new AdsorbentStore(this);
         this.contaminant = new ContaminantStore(this);
-        this.exp = new ExperimentStore(this);
+        this.exp = new ExpProfileStore(this);
     }
 }

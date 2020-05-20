@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Divider, Descriptions } from 'antd';
 
 import { BriefRecordType } from '../../store/base';
-import { ExpProfileParams } from '../../store/experiment.store';
+import { ExpProfileParams } from '../../store/expProfile.store';
 import { ViewWaterProps } from './profile/water/ViewWaterProps';
 import { ViewBedProps } from './profile/bed/ViewBedProps';
 import { ViewAdsorptionData } from './profile/adsorption/ViewAdsorptionData';

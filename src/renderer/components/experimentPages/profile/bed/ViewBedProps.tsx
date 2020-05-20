@@ -5,7 +5,7 @@ import { Descriptions } from 'antd';
 
 import { BedMaths } from '../../../../../mods/calculation/independent/bed.maths';
 import { Calculation } from '../../../../../mods/calculation/basic';
-import { BedInputParams } from '../../../../store/experiment.store';
+import { BedInputParams } from '../../../../store/expProfile.store';
 import { WeakTitle } from '../../../common/elements/WeakTitle';
 import { FullRecordType } from '../../../../store/base';
 import { AdsorbentParams } from '../../../../store/adsorbent.store';
@@ -17,15 +17,10 @@ export const ViewBedProps: React.FunctionComponent<BedInputParams & StoreInjecte
 )(
     observer(props => {
         const { adsorbent, length, diameter, mass, flowrate, ebct } = props;
-        const areaVal = `${Calculation.format(
-            BedMaths.crossSectionalArea(`${diameter}cm`).toNumber('cm^2')
-        )} cm²`;
-        const volumeVal = `${Calculation.format(
-            BedMaths.volume(`${length}cm`, `${diameter}cm`).toNumber('cm^3')
-        )}cm³`;
-        const densityVal = `${Calculation.format(
-            BedMaths.density(`${mass}g`, `${length}cm`, `${diameter}cm`).toNumber('g/mL')
-        )}g/mL`;
+        const { display: d, combine: c } = Calculation;
+        const area = d(BedMaths.crossSectionalArea(c(diameter)));
+        const volume = d(BedMaths.volume(c(length), c(diameter)));
+        const density = d(BedMaths.density(c(mass), c(length), c(diameter)));
 
         const ads = props.store!.adsorbent.tableList.find(
             (r: FullRecordType<AdsorbentParams>) => r.key === adsorbent
@@ -44,21 +39,21 @@ export const ViewBedProps: React.FunctionComponent<BedInputParams & StoreInjecte
                             'N/A'
                         )}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Bed Length">{`${length} cm`}</Descriptions.Item>
-                    <Descriptions.Item label="Bed Diameter">{`${diameter} cm`}</Descriptions.Item>
-                    <Descriptions.Item label="Mass">{`${mass} g`}</Descriptions.Item>
-                    <Descriptions.Item label="Flowrate">{`${flowrate} mL/min`}</Descriptions.Item>
+                    <Descriptions.Item label="Bed Length">{d(length)}</Descriptions.Item>
+                    <Descriptions.Item label="Bed Diameter">{d(diameter)}</Descriptions.Item>
+                    <Descriptions.Item label="Mass">{d(mass)}</Descriptions.Item>
+                    <Descriptions.Item label="Flowrate">{d(flowrate)}</Descriptions.Item>
                     <Descriptions.Item label="EBCT" span={2}>
-                        {`${ebct} min`}
+                        {d(ebct)}
                     </Descriptions.Item>
                 </Descriptions>
                 <Descriptions title={<WeakTitle title="Calculation" />}>
-                    <Descriptions.Item label="Bed Density">{densityVal}</Descriptions.Item>
+                    <Descriptions.Item label="Bed Density">{density}</Descriptions.Item>
                     <Descriptions.Item label="Bed Porosity">{`${0}`}</Descriptions.Item>
-                    <Descriptions.Item label="Cross-Sectional Area">{areaVal}</Descriptions.Item>
-                    <Descriptions.Item label="Bed Volume">{volumeVal}</Descriptions.Item>
-                    <Descriptions.Item label="Superficial Velocity">{`${ebct} m/h`}</Descriptions.Item>
-                    <Descriptions.Item label="Interstitial Velocity">{`${ebct} m/h`}</Descriptions.Item>
+                    <Descriptions.Item label="Cross-Sectional Area">{area}</Descriptions.Item>
+                    <Descriptions.Item label="Bed Volume">{volume}</Descriptions.Item>
+                    <Descriptions.Item label="Superficial Velocity">xxx m/h</Descriptions.Item>
+                    <Descriptions.Item label="Interstitial Velocity">xxx m/h</Descriptions.Item>
                 </Descriptions>
             </>
         );

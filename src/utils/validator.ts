@@ -103,7 +103,6 @@ export class Validator {
         target: string | number,
         label: string
     ): ValidatorOutput {
-        console.log('validateOne', rule, target, label);
         const valid = {
             valid: ValidLevels.Valid,
             message: ''

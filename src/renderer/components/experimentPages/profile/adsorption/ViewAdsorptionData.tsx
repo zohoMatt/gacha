@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import { Descriptions } from 'antd';
 import { observer, inject } from 'mobx-react';
 
-import { AdsorptionInputParams } from '../../../../store/experiment.store';
+import { AdsorptionInputParams } from '../../../../store/expProfile.store';
 import { WeakTitle } from '../../../common/elements/WeakTitle';
 import { StoreInjectedProp } from '../../../../store/init';
 import { ITEM_KEYS, NAV_KEYS } from '../../../nav/NavBar';
+import { Calculation } from '../../../../../mods/calculation/basic';
 
 export const ViewAdsorptionData: React.FunctionComponent<AdsorptionInputParams &
     StoreInjectedProp> = inject('store')(
@@ -19,6 +20,8 @@ export const ViewAdsorptionData: React.FunctionComponent<AdsorptionInputParams &
         const contaminantRecord = contaminant
             ? store!.contaminant.queryWithKeyInList(contaminant)
             : null;
+
+        const d = Calculation.display;
 
         return (
             <>
@@ -34,7 +37,7 @@ export const ViewAdsorptionData: React.FunctionComponent<AdsorptionInputParams &
                         )}
                     </Descriptions.Item>
                     <Descriptions.Item label="Initial Concentration">
-                        {initConcent} μg/L
+                        {d(initConcent)}
                     </Descriptions.Item>
                 </Descriptions>
                 <Descriptions title={<WeakTitle title="Kinetics" />}>
@@ -42,29 +45,29 @@ export const ViewAdsorptionData: React.FunctionComponent<AdsorptionInputParams &
                         {`${
                             filmDiffusion.correlation
                                 ? `cm/s (Gnielinski)`
-                                : `${filmDiffusion.value}cm²/s (User Input)`
+                                : `${d(filmDiffusion)} (User Input)`
                         }`}
                     </Descriptions.Item>
                     <Descriptions.Item label="Surface Diffusion">
                         {`${
                             surfaceDiffusion.correlation
                                 ? `cm²/s (Sontheimer)`
-                                : `${surfaceDiffusion.value}cm²/s (User Input)`
+                                : `${d(surfaceDiffusion)} (User Input)`
                         }`}
                     </Descriptions.Item>
                     <Descriptions.Item label="Pore Diffusion">
                         {`${
                             poreDiffusion.correlation
                                 ? `cm²/s (Hayduk & Laudie)`
-                                : `${poreDiffusion.value}cm²/s (User Input)`
+                                : `${d(poreDiffusion)} (User Input)`
                         }`}
                     </Descriptions.Item>
-                    <Descriptions.Item label="SPDFR">{spdfr}</Descriptions.Item>
-                    <Descriptions.Item label="Tortuosity">{tortuosity}</Descriptions.Item>
+                    <Descriptions.Item label="SPDFR">{d(spdfr)}</Descriptions.Item>
+                    <Descriptions.Item label="Tortuosity">{d(tortuosity)}</Descriptions.Item>
                 </Descriptions>
                 <Descriptions title={<WeakTitle title="Freundlich" />}>
-                    <Descriptions.Item label="k">{k} (mg/g)*(L/mg)^(1/n)</Descriptions.Item>
-                    <Descriptions.Item label="1/n">{nth}</Descriptions.Item>
+                    <Descriptions.Item label="k">{k.value} (mg/g)*(L/mg)^(1/n)</Descriptions.Item>
+                    <Descriptions.Item label="1/n">{d(nth)}</Descriptions.Item>
                 </Descriptions>
             </>
         );

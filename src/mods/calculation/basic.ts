@@ -1,4 +1,4 @@
-import { format } from 'mathjs';
+import { format, unit as mathUnit, Unit } from 'mathjs';
 import { QuantityValue } from '../../renderer/store/base';
 
 export class Calculation {
@@ -11,23 +11,38 @@ export class Calculation {
         K: 'K'
     };
 
-    protected static displayUnit(unit: string) {
+    // todo More functional
+    protected static displayUnit(unit: string | Unit) {
         return unit
-            .replace('^3', '³')
-            .replace('^2', '²')
-            .replace('degC', '℃')
-            .replace('degF', '℉')
-            .replace('ug', 'μg');
+            .toString()
+            .replace(/\^3/g, '³')
+            .replace(/\^2/g, '²')
+            .replace(/degC/g, '℃')
+            .replace(/degF/g, '℉')
+            .replace(/mins/g, 'min')
+            .replace(/ug/g, 'μg');
     }
 
-    public static display(result: QuantityValue) {
-        return result.unit
-            ? `${result.value} ${Calculation.displayUnit(result.unit)}`
-            : `${result.value}`;
+    public static display(result: QuantityValue | string | Unit, fixed = 6) {
+        const { displayUnit, format: formatResult } = Calculation;
+        if (
+            (result as QuantityValue).unit === undefined ||
+            (result as QuantityValue).value === undefined
+        ) {
+            return displayUnit(formatResult(result as string | Unit, fixed));
+        }
+        const { unit, value } = result as any;
+        return unit
+            ? `${formatResult(value, fixed)} ${displayUnit(unit)}`
+            : formatResult(value, fixed);
     }
 
-    public static format(result: number, fixed?: number) {
-        return +format(result, { precision: fixed || Calculation.FIXED });
+    public static combine(result: QuantityValue): string {
+        return result.value + result.unit;
+    }
+
+    public static format(result: number | string | Unit, fixed = 6): string {
+        return format(mathUnit(result.toString()), { precision: fixed || Calculation.FIXED });
     }
 }
 
