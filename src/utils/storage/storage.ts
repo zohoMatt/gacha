@@ -79,7 +79,7 @@ export class DataStorage<T> {
             .write();
     }
 
-    public async get(condition: object) {
+    public async get(condition: object): Promise<T | undefined> {
         const query = await this.database
             .get('data')
             .filter(condition)

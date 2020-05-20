@@ -1,81 +1,62 @@
-import { chain, unit, divide, evaluate, multiply, Unit } from 'mathjs';
+import { unit, divide, evaluate, multiply, Unit } from 'mathjs';
 
-import {
-    BedInputParams,
-    CorrelationOrInput,
-    PsdmInputParams,
-    WaterInputParams
-} from '../../renderer/store/expProfile.store';
-import { AdsorbentParams } from '../../renderer/store/adsorbent.store';
-import { ContaminantParams } from '../../renderer/store/contaminant.store';
-
-// todo Will support multiple units in the future
-// todo Here is a temporary workaround
-type TempWorkAround<T> = { [key in keyof T]: string | Unit };
-
-export interface BasicInput {
-    adsorbent: TempWorkAround<AdsorbentParams>;
-    water: TempWorkAround<WaterInputParams>;
-    bed: TempWorkAround<BedInputParams>;
-    contaminant: TempWorkAround<ContaminantParams>;
-    adsorption: {
-        initConcent: number;
-        freundlich: {
-            k: string | Unit;
-            nth: string | Unit;
-        };
-        kinetics: {
-            filmDiffusion: CorrelationOrInput; // cm/s,
-            surfaceDiffusion: CorrelationOrInput; // cm^2/s
-            poreDiffusion: CorrelationOrInput; // cm^2/s
-            spdfr: string | Unit;
-            tortuosity: string | Unit;
-        };
-    };
-    psdm: TempWorkAround<PsdmInputParams>;
+export interface EssentialProfileInput {
+    waterTemperature: string;
+    adsorbentDensity: string;
+    adsorbentParticlePorosity: string;
+    adsorbentParticleRadius: string;
+    bedDiameter: string;
+    bedLength: string;
+    bedFlowrate: string;
+    bedMass: string;
+    tortuosity: string;
+    spdfr: string;
+    frendlichK: string;
+    frendlichNth: string;
+    initConcent: string;
+    contaminantMolarVolume: string;
 }
 
 export class ProfileMaths {
-    private input: BasicInput;
+    private readonly input: EssentialProfileInput;
 
-    constructor(inputParams: BasicInput) {
+    constructor(inputParams: EssentialProfileInput) {
         this.input = inputParams;
     }
 
     /** Bed * */
 
     public get bedCrossSectionalArea(): Unit {
-        const { diameter } = this.input.bed;
-        return unit(evaluate(`pi * (${diameter.toString()})^2 / 4`));
+        const { bedDiameter } = this.input;
+        return unit(evaluate(`pi * (${bedDiameter})^2 / 4`));
     }
 
     public get bedVolume(): Unit {
-        const { length } = this.input.bed;
+        const { bedLength } = this.input;
         const area = this.bedCrossSectionalArea.toString();
-        return unit(evaluate(`(${area}) * ${length.toString()}`));
+        return unit(evaluate(`(${area}) * ${bedLength}`));
     }
 
     public get bedDensity(): Unit {
-        const { mass } = this.input.bed;
-        const m = mass.toString();
+        const { bedMass } = this.input;
         const vb = this.bedVolume.toString();
-        return unit(evaluate(`(${m})/(${vb})`));
+        return unit(evaluate(`(${bedMass})/(${vb})`));
     }
 
     public get bedPorosity(): Unit {
         const bed = this.bedDensity.toString();
-        const { density } = this.input.adsorbent;
-        return unit(evaluate(`1 - (${bed})/(${density.toString()})`));
+        const { adsorbentDensity } = this.input;
+        return unit(evaluate(`1 - (${bed})/(${adsorbentDensity})`));
     }
 
     public get ebct(): Unit {
-        const { flowrate } = this.input.bed;
-        return divide(this.bedVolume, unit(flowrate.toString()));
+        const { bedFlowrate } = this.input;
+        return divide(this.bedVolume, unit(bedFlowrate));
     }
 
     public get hlr(): Unit {
-        const { flowrate } = this.input.bed;
-        return divide(unit(flowrate.toString()), this.bedCrossSectionalArea);
+        const { bedFlowrate } = this.input;
+        return divide(unit(bedFlowrate), this.bedCrossSectionalArea);
     }
 
     public get interstitialVelocity(): Unit {
@@ -85,8 +66,8 @@ export class ProfileMaths {
     /** Water * */
 
     public get waterDensity(): Unit {
-        const { temperature } = this.input.water;
-        const t = unit(temperature.toString()).toNumber('degC');
+        const { waterTemperature } = this.input;
+        const t = unit(waterTemperature).toNumber('degC');
         const kgpm3 = evaluate(
             `-0.000000136017092*${t}^4 + 0.000042945572506*${t}^3 - 0.007624720184594*${t}^2 + 0.054223297911449*${t} + 999.85329403558`
         );
@@ -94,8 +75,8 @@ export class ProfileMaths {
     }
 
     public get waterKineticViscosity(): Unit {
-        const { temperature } = this.input.water;
-        const t = unit(temperature.toString()).toNumber('degC');
+        const { waterTemperature } = this.input;
+        const t = unit(waterTemperature).toNumber('degC');
         return unit(
             evaluate(
                 `0.00000000000014005*${t}^4 - 0.000000000020716*${t}^3 + 0.0000000013967*${t}^2 - 0.000000059867*${t} + 0.0000017852`
@@ -110,8 +91,8 @@ export class ProfileMaths {
 
     public get diffusivityInWater(): Unit {
         const numericDv = this.waterDynamicViscosity.toNumber('g/(cm min)');
-        const { molarVolume } = this.input.contaminant;
-        const numericVb = unit(molarVolume.toString()).toNumber('cm^3/mol');
+        const { contaminantMolarVolume } = this.input;
+        const numericVb = unit(contaminantMolarVolume).toNumber('cm^3/mol');
         return unit(evaluate(`4.44*10^-3/${numericDv}^1.14/${numericVb}^0.589`), 'cm^2/mins');
     }
 
@@ -119,10 +100,10 @@ export class ProfileMaths {
 
     // [WARNING] math.js bug: calculation can transform type Unit to Number, in which case static type check is not valid
     public get nReynolds(): Unit {
-        const { particleRadius } = this.input.adsorbent;
+        const { adsorbentParticleRadius } = this.input;
         return unit(
             divide(
-                multiply(unit(particleRadius.toString()), this.hlr),
+                multiply(unit(adsorbentParticleRadius), this.hlr),
                 multiply(this.waterKineticViscosity, this.bedPorosity)
             ).toString()
         );
@@ -147,20 +128,20 @@ export class ProfileMaths {
     }
 
     public get nPeclet(): Unit {
-        const { length } = this.input.bed;
+        const { bedLength } = this.input;
         return unit(
             divide(
-                multiply(unit(length.toString()), this.hlr),
+                multiply(unit(bedLength), this.hlr),
                 multiply(this.dispersionCoeffi, this.bedPorosity)
             ).toString()
         );
     }
 
     public get filmMassTransferCoeffi(): Unit {
-        const { particleRadius } = this.input.adsorbent;
+        const { adsorbentParticleRadius } = this.input;
         const nSc = this.nSchmidt.toNumber('');
         const nRe = this.nReynolds.toNumber('');
-        const nDp = unit(particleRadius.toString()).toNumber('cm');
+        const nDp = unit(adsorbentParticleRadius).toNumber('cm');
         const nDw = this.diffusivityInWater.toNumber('cm^2/mins');
         const nPorosity = this.bedPorosity.toNumber('');
         return unit(
@@ -172,13 +153,12 @@ export class ProfileMaths {
     }
 
     public get nStanton(): Unit {
-        const { particleRadius } = this.input.adsorbent;
-        const rp = particleRadius.toString();
-        const { length } = this.input.bed;
+        const { adsorbentParticleRadius: rp } = this.input;
+        const { bedLength } = this.input;
         const kf = this.filmMassTransferCoeffi.toString();
         const p = this.bedPorosity.toString();
         const hlr = this.hlr.toString();
-        return unit(evaluate(`(2*(${kf})*(${length.toString()})*(1-${p}))/((${rp})*(${hlr}))`));
+        return unit(evaluate(`(2*(${kf})*(${bedLength.toString()})*(1-${p}))/((${rp})*(${hlr}))`));
     }
 
     public get mStanton(): Unit {
@@ -187,42 +167,43 @@ export class ProfileMaths {
 
     // Unit is tricky
     public get adsorptionCap(): Unit {
-        const { freundlich } = this.input.adsorption;
-        const k = +freundlich.k.toString();
-        const nth = +freundlich.nth.toString();
-        const { initConcent } = this.input.adsorption;
-        const c = unit(initConcent.toString()).toNumber('ug/L');
-        return unit(evaluate(`${k}*${c}^${nth}`), 'ug/g');
+        const { frendlichK } = this.input;
+        const { frendlichNth } = this.input;
+        const { initConcent } = this.input;
+        const c = unit(initConcent).toNumber('ug/L');
+        return unit(evaluate(`${frendlichK}*${c}^${frendlichNth}`), 'ug/g');
     }
 
     public get surfaceSoluteDistParam(): Unit {
-        const { initConcent } = this.input.adsorption;
+        const { initConcent } = this.input;
         return unit(
             divide(
                 multiply(this.bedDensity, this.adsorptionCap),
-                multiply(this.bedPorosity, unit(initConcent.toString()))
+                multiply(this.bedPorosity, unit(initConcent))
             ).toString()
         );
     }
 
     public get poreSoluteDistParam() {
-        const { particlePorosity } = this.input.adsorbent;
+        const { adsorbentParticlePorosity } = this.input;
         const pb = this.bedPorosity.toString();
-        return unit(evaluate(`(${particlePorosity.toString()}) * (1 - ${pb}) / ${pb}`));
+        return unit(evaluate(`(${adsorbentParticlePorosity}) * (1 - ${pb}) / ${pb}`));
     }
 
     public get poreDiffusion(): Unit {
-        const { tortuosity } = this.input.adsorption.kinetics;
-        return divide(this.diffusivityInWater, unit(tortuosity.toString()));
+        const { tortuosity } = this.input;
+        return divide(this.diffusivityInWater, unit(tortuosity));
     }
 
     public get surfaceDiffusion(): Unit {
-        const spdfr = this.input.adsorption.kinetics.spdfr.toString();
+        const { spdfr } = this.input;
         const dw = this.diffusivityInWater.toString();
-        const ep = this.input.adsorbent.particlePorosity.toString();
-        const c0 = this.input.adsorption.initConcent.toString();
-        const t = this.input.adsorption.kinetics.tortuosity.toString();
-        const dens = this.input.adsorbent.density.toString();
+        const {
+            adsorbentParticlePorosity: ep,
+            initConcent: c0,
+            tortuosity: t,
+            adsorbentDensity: dens
+        } = this.input;
         const qe = this.adsorptionCap.toString();
         return unit(
             evaluate(`(${spdfr}) * (${dw}) * (${ep}) * (${c0}) / ((${t}) * (${dens}) * (${qe}))`)
@@ -232,9 +213,8 @@ export class ProfileMaths {
     public get surfaceDiffusionMod(): Unit {
         const ds = this.surfaceDiffusion.toString();
         const dgs = this.surfaceSoluteDistParam.toString();
-        const l = this.input.bed.length.toString();
+        const { bedLength: l, adsorbentParticleRadius: dp } = this.input;
         const e = this.bedPorosity.toString();
-        const dp = this.input.adsorbent.particleRadius.toString();
         const hlr = this.hlr.toString();
         return unit(evaluate(`4 *(${ds}) * (${dgs}) * (${l}) * (${e}) / ((${dp})^2 * (${hlr}))`));
     }
@@ -242,9 +222,8 @@ export class ProfileMaths {
     public get poreDiffusionMod(): Unit {
         const pd = this.poreDiffusion.toString();
         const dgp = this.poreSoluteDistParam.toString();
-        const l = this.input.bed.length.toString();
+        const { bedLength: l, adsorbentParticleRadius: dp } = this.input;
         const e = this.bedPorosity.toString();
-        const dp = this.input.adsorbent.particleRadius.toString();
         const hlr = this.hlr.toString();
         return unit(evaluate(`4 *(${pd}) * (${dgp}) * (${l}) * (${e}) / ((${dp})^2 * (${hlr}))`));
     }

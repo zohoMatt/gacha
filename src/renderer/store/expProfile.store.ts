@@ -1,7 +1,10 @@
+import { autorun } from 'mobx';
 import { ExpProfilesStorage } from '../app';
 import { BasicTableWithEditStore, BriefRecordType } from './base';
 import { Store } from './init';
 import { ExpProfileParams } from '../../utils/storage/types';
+import { ProfileMaths } from '../../mods/calculation/profile.maths';
+import { Calculation } from '../../mods/calculation/basic';
 
 export class ExpProfileStore extends BasicTableWithEditStore<ExpProfileParams> {
     public STORE_NAME = 'BedStore';
@@ -60,7 +63,63 @@ export class ExpProfileStore extends BasicTableWithEditStore<ExpProfileParams> {
         }
     };
 
+    public calculation: ProfileMaths | null = null;
+
     constructor(rootStore: Store) {
         super(rootStore, ExpProfilesStorage);
+        // Update calculations when active record is changing
+        autorun(() => {
+            this.updateCalculation();
+        });
+    }
+
+    async updateCalculation() {
+        if (!this.activeRecord) {
+            this.calculation = null;
+            return;
+        }
+
+        const { water, bed, psdm, adsorption } = this.activeRecord;
+        const { temperature } = water;
+        const { diameter, length, flowrate, mass, adsorbent: adsorbentKey } = bed;
+        const { initConcent, kinetics, freundlich, contaminant: contaminantKey } = adsorption;
+        const { tortuosity, spdfr } = kinetics;
+        const { k, nth } = freundlich;
+
+        // Validate first
+        if (!contaminantKey || !adsorbentKey) {
+            this.calculation = null;
+            return;
+        }
+
+        const adsorbent = await this.root.adsorbent.queryWithKeyInList(adsorbentKey);
+        const contaminant = await this.root.contaminant.queryWithKeyInList(contaminantKey);
+
+        // Validate again
+        if (!adsorbent || !contaminant) {
+            this.calculation = null;
+            return;
+        }
+
+        const { density, particleRadius, particlePorosity } = adsorbent.params;
+        const { molarVolume } = contaminant.params;
+
+        const { combine: c } = Calculation;
+        this.calculation = new ProfileMaths({
+            waterTemperature: c(temperature),
+            adsorbentDensity: c(density),
+            adsorbentParticlePorosity: c(particlePorosity),
+            adsorbentParticleRadius: c(particleRadius),
+            bedDiameter: c(diameter),
+            bedLength: c(length),
+            bedFlowrate: c(flowrate),
+            bedMass: c(mass),
+            tortuosity: c(tortuosity),
+            spdfr: c(spdfr),
+            frendlichK: c(k),
+            frendlichNth: c(nth),
+            initConcent: c(initConcent),
+            contaminantMolarVolume: c(molarVolume)
+        });
     }
 }
