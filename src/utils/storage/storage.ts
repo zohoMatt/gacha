@@ -37,21 +37,25 @@ export interface StorageDataStructure<T> {
 
 export interface StorageInitOptions<T> {
     filename: string;
-    defaultStore: StorageDataStructure<T>;
+    defaultStore?: StorageDataStructure<T>;
 }
 
 export class DataStorage<T> {
+    public static VERSION = '0.1.0';
+
     public userDataPath: string;
 
     public database: any;
 
-    public defaultStore: StorageDataStructure<T>;
+    public defaultStore: StorageDataStructure<T> = { version: DataStorage.VERSION, data: [] };
 
-    protected constructor(opt: StorageInitOptions<T>) {
+    public constructor(opt: StorageInitOptions<T>) {
         const { filename, defaultStore } = opt;
+
         this.userDataPath = path.join((app || remote.app).getPath('appData'), `${filename}.json`);
         console.info(`Current user data path: ${this.userDataPath}`);
-        this.defaultStore = defaultStore;
+
+        if (defaultStore) this.defaultStore = defaultStore;
     }
 
     public async import() {

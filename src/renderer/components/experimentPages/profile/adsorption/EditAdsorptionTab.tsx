@@ -3,16 +3,20 @@ import { inject, observer } from 'mobx-react';
 import { Divider, Form, Input, Select } from 'antd';
 
 import { CorrelationOrUserInput } from '../../../common/elements/CorrelationOrUserInput';
-import { AdsorptionInputParams } from '../../../../store/expProfile.store';
 import { StoreInjectedProp } from '../../../../store/init';
-import { FullRecordType } from '../../../../store/base';
-import { ContaminantParams } from '../../../../store/contaminant.store';
+import { AdsorptionInputParams, ContaminantData } from '../../../../../utils/storage/types';
 
 export const EditAdsorptionTab: React.FunctionComponent<AdsorptionInputParams &
     StoreInjectedProp> = inject('store')(
     observer(({ store }) => {
+        // Hooks
+        const [options, setOpts] = React.useState([] as ContaminantData[]);
+        React.useEffect(() => {
+            store!.contaminant.tableList().then(setOpts);
+        });
+
         const { Option } = Select;
-        const options = store!.contaminant.tableList.map((c: FullRecordType<ContaminantParams>) => (
+        const optionComps = options.map((c: ContaminantData) => (
             <Option key={c.key} value={c.key}>
                 {c.name}
             </Option>
@@ -28,7 +32,7 @@ export const EditAdsorptionTab: React.FunctionComponent<AdsorptionInputParams &
                         filterOption={(input: string, option: any) =>
                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                         }>
-                        {options}
+                        {optionComps}
                     </Select>
                 </Form.Item>
                 <Form.Item

@@ -4,9 +4,9 @@ import { inject, observer } from 'mobx-react';
 import { EditAdsorbentData } from './EditAdsorbentData';
 import { ViewAdsorbentData } from './ViewAdsorbentData';
 import { TableWithEditSection } from '../../common/container/TableWithEditSection';
-import { AdsorbentParams } from '../../../store/adsorbent.store';
 import { BriefRecordType } from '../../../store/base';
 import { StoreInjectedProp } from '../../../store/init';
+import { AdsorbentParams } from '../../../../utils/storage/types';
 
 export const AdsorbentDatabase: React.FunctionComponent<StoreInjectedProp> = inject('store')(
     observer(({ store }) => {

@@ -3,10 +3,10 @@ import { inject, observer } from 'mobx-react';
 
 import { TableWithEditSection } from '../common/container/TableWithEditSection';
 import { EditProfileData } from './EditProfileData';
-import { ExpProfileParams } from '../../store/expProfile.store';
 import { BriefRecordType } from '../../store/base';
 import { ViewProfile } from './ViewProfile';
 import { StoreInjectedProp } from '../../store/init';
+import { ExpProfileParams } from '../../../utils/storage/types';
 
 export const ProfileSettings: React.FunctionComponent<StoreInjectedProp> = inject('store')(
     observer(({ store }) => {

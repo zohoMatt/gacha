@@ -1,12 +1,7 @@
-import { BasicTableWithEditStore, BriefRecordType, QuantityValue } from './base';
+import { BasicTableWithEditStore, BriefRecordType } from './base';
 import { Store } from './init';
-
-export interface AdsorbentParams {
-    density: QuantityValue; // g/cm^3
-    particleRadius: QuantityValue; // cm
-    particlePorosity: QuantityValue; // no unit
-    adsorbentType: string;
-}
+import { AdsorbentParams } from '../../utils/storage/types';
+import { AdsorbentDatabase } from '../app';
 
 export class AdsorbentStore extends BasicTableWithEditStore<AdsorbentParams> {
     public STORE_NAME = 'AdsorbentStore';
@@ -31,6 +26,6 @@ export class AdsorbentStore extends BasicTableWithEditStore<AdsorbentParams> {
     };
 
     constructor(rootStore: Store) {
-        super(['database', 'adsorbent'], rootStore);
+        super(rootStore, AdsorbentDatabase);
     }
 }

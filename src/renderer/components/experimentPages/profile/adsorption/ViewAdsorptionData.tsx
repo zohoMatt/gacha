@@ -3,23 +3,26 @@ import { Link } from 'react-router-dom';
 import { Descriptions } from 'antd';
 import { observer, inject } from 'mobx-react';
 
-import { AdsorptionInputParams } from '../../../../store/expProfile.store';
 import { WeakTitle } from '../../../common/elements/WeakTitle';
 import { StoreInjectedProp } from '../../../../store/init';
 import { ITEM_KEYS, NAV_KEYS } from '../../../nav/NavBar';
 import { Calculation } from '../../../../../mods/calculation/basic';
+import { AdsorptionInputParams, ContaminantData } from '../../../../../utils/storage/types';
 
 export const ViewAdsorptionData: React.FunctionComponent<AdsorptionInputParams &
     StoreInjectedProp> = inject('store')(
     observer(data => {
         const { store, contaminant, initConcent, kinetics, freundlich } = data;
 
+        // Hooks
+        const [contaminantRecord, setContaminant] = React.useState({} as ContaminantData);
+        React.useEffect(() => {
+            if (contaminant)
+                store!.contaminant.queryWithKeyInList(contaminant).then(v => v && setContaminant);
+        });
+
         const { filmDiffusion, poreDiffusion, surfaceDiffusion, spdfr, tortuosity } = kinetics;
         const { k, nth } = freundlich;
-
-        const contaminantRecord = contaminant
-            ? store!.contaminant.queryWithKeyInList(contaminant)
-            : null;
 
         const d = Calculation.display;
 
@@ -27,7 +30,7 @@ export const ViewAdsorptionData: React.FunctionComponent<AdsorptionInputParams &
             <>
                 <Descriptions>
                     <Descriptions.Item label="Contaminant">
-                        {contaminantRecord ? (
+                        {contaminantRecord.name ? (
                             <Link
                                 to={`/workspace/${NAV_KEYS.Database}/${ITEM_KEYS.Contaminant}?key=${contaminant}`}>
                                 {contaminantRecord.name}

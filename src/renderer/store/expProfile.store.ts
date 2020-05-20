@@ -1,6 +1,7 @@
-import { BasicTableWithEditStore, BriefRecordType, QuantityValue } from './base';
+import { ExpProfilesStorage } from '../app';
+import { BasicTableWithEditStore, BriefRecordType } from './base';
 import { Store } from './init';
-import { ExpProfileParams } from '../../utils/storage/expProfiles.types';
+import { ExpProfileParams } from '../../utils/storage/types';
 
 export class ExpProfileStore extends BasicTableWithEditStore<ExpProfileParams> {
     public STORE_NAME = 'BedStore';
@@ -60,6 +61,6 @@ export class ExpProfileStore extends BasicTableWithEditStore<ExpProfileParams> {
     };
 
     constructor(rootStore: Store) {
-        super(['experiment', 'profile'], rootStore);
+        super(rootStore, ExpProfilesStorage);
     }
 }

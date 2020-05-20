@@ -33,6 +33,7 @@ export interface TableWithEditSectionProps {
 export interface TableWithEditSectionState {
     warning: boolean;
     status: 'idle' | 'edit' | 'view';
+    tableList: any[];
 }
 
 @observer
@@ -42,7 +43,8 @@ export class TableWithEditSection extends React.Component<
 > {
     public state: TableWithEditSectionState = {
         warning: false,
-        status: 'idle'
+        status: 'idle',
+        tableList: []
     };
 
     public store = this.props.store;
@@ -50,8 +52,12 @@ export class TableWithEditSection extends React.Component<
     public formRef: React.RefObject<any> = React.createRef();
 
     public componentDidMount() {
+        // URL
         const key = this.getQueryParam();
         if (key) this.toView(key);
+
+        // Data
+        this.store.tableList().then(tableList => this.setState({ tableList }));
     }
 
     public componentWillUnmount() {
@@ -71,22 +77,22 @@ export class TableWithEditSection extends React.Component<
         this.setState({ status: 'edit' });
     };
 
-    public toView = (key: string) => {
+    public toView = async (key: string) => {
         try {
-            this.store.edit(key);
+            await this.store.edit(key);
             this.setState({ status: 'view' });
         } catch (e) {
             console.error(e);
         }
     };
 
-    public toDelete = (key: string) => {
+    public toDelete = async (key: string) => {
         // if deleting current
         if (key === this.store.activeKey) {
             this.setState({ status: 'idle' });
         }
 
-        this.store.deleteRecord(key);
+        await this.store.deleteRecord(key);
         message.info('Successfully deleted');
     };
 
@@ -106,10 +112,10 @@ export class TableWithEditSection extends React.Component<
         }
 
         if (name === undefined) {
-            this.store.save();
+            await this.store.save();
             this.setState({ status: 'view' });
         } else {
-            this.store.saveAs(name);
+            await this.store.saveAs(name);
             this.setState({ status: 'view' });
         }
         message.info('Successfully saved');
@@ -130,9 +136,9 @@ export class TableWithEditSection extends React.Component<
     };
 
     public render() {
-        const { warning, status } = this.state;
+        const { warning, status, tableList } = this.state;
         const { title } = this.props;
-        const { activeRecord, tableList } = this.store;
+        const { activeRecord } = this.store;
         const { Edit, Save, SaveAs, Cancel } = OperationPanelButtons;
         return (
             <div className={styles.container}>

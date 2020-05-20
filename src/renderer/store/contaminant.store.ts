@@ -1,17 +1,7 @@
-import { BasicTableWithEditStore, BriefRecordType, QuantityValue } from './base';
+import { ContaminantDatabase } from '../app';
+import { BasicTableWithEditStore, BriefRecordType } from './base';
 import { Store } from './init';
-
-export interface ContaminantParams {
-    fullName: string;
-    molecularWeight: QuantityValue; // mg/mmol
-    molarVolume: QuantityValue; // mL/gmol
-    boilingPt: QuantityValue; // ℃
-    liquidDensity: QuantityValue; // g/mL
-    solubility: QuantityValue; // mg/L
-    vaporPressure: QuantityValue; // Pa
-    refractive: QuantityValue;
-    cas: string;
-}
+import { ContaminantParams } from '../../utils/storage/types';
 
 export class ContaminantStore extends BasicTableWithEditStore<ContaminantParams> {
     public STORE_NAME = 'ContaminantParams';
@@ -52,6 +42,6 @@ export class ContaminantStore extends BasicTableWithEditStore<ContaminantParams>
     };
 
     constructor(rootStore: Store) {
-        super(['database', 'contaminant'], rootStore);
+        super(rootStore, ContaminantDatabase);
     }
 }

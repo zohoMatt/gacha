@@ -1,5 +1,31 @@
 import { DataStorage, FullRecordType, QuantityValue, StorageInitOptions } from './storage';
 
+/** ******** Contaminants ********* */
+export interface ContaminantParams {
+    fullName: string;
+    molecularWeight: QuantityValue; // mg/mmol
+    molarVolume: QuantityValue; // mL/gmol
+    boilingPt: QuantityValue; // ℃
+    liquidDensity: QuantityValue; // g/mL
+    solubility: QuantityValue; // mg/L
+    vaporPressure: QuantityValue; // Pa
+    refractive: QuantityValue;
+    cas: string;
+}
+
+export type ContaminantData = FullRecordType<ContaminantParams>;
+
+/** ******** Adsorbents ********* */
+export interface AdsorbentParams {
+    density: QuantityValue; // g/cm^3
+    particleRadius: QuantityValue; // cm
+    particlePorosity: QuantityValue; // no unit
+    adsorbentType: string;
+}
+
+export type AdsorbentData = FullRecordType<AdsorbentParams>;
+
+/** ******** Experimental Profiles ********* */
 export interface WaterInputParams {
     pressure: QuantityValue; // atm
     temperature: QuantityValue; // ℃

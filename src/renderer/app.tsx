@@ -8,6 +8,13 @@ import { message } from 'antd';
 import Application from './components/Application';
 import { DataStorage } from '../utils/storage/storage';
 import { Store } from './store/init';
+import {
+    AdsorbentData,
+    AdsorbentParams,
+    ContaminantData,
+    ExpProfileParams,
+    ProfileData
+} from '../utils/storage/types';
 
 // Create main element
 const mainElement = document.createElement('div');
@@ -29,18 +36,14 @@ message.config({
     top: 240
 });
 // Init storage and import data
-const DATA_VERSION = '0.1.0';
-export const ContaminantDatabase = new DataStorage({
-    filename: 'contaminants.pfast',
-    defaultStore: { version: DATA_VERSION, data: [] }
+export const ContaminantDatabase = new DataStorage<ContaminantData>({
+    filename: 'contaminants.pfast'
 });
-export const AdsorbentDatabase = new DataStorage({
-    filename: 'adsorbents.pfast',
-    defaultStore: { version: DATA_VERSION, data: [] }
+export const AdsorbentDatabase = new DataStorage<AdsorbentData>({
+    filename: 'adsorbents.pfast'
 });
-export const ExpProfilesStorage = new DataStorage({
-    filename: 'exp-profiles.pfast',
-    defaultStore: { version: '0.1.0', profiles: [] }
+export const ExpProfilesStorage = new DataStorage<ProfileData>({
+    filename: 'exp-profiles.pfast'
 });
 
 /* eslint-disable import/no-mutable-exports */

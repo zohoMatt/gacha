@@ -2,16 +2,21 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Divider, Form, Input, Select } from 'antd';
 
-import { FullRecordType } from '../../../../store/base';
-import { AdsorbentParams } from '../../../../store/adsorbent.store';
-import { Store, StoreInjectedProp } from '../../../../store/init';
+import { StoreInjectedProp } from '../../../../store/init';
+import { AdsorbentData } from '../../../../../utils/storage/types';
 
 export const EditBedTab: React.FunctionComponent<StoreInjectedProp> = inject('store')(
     observer(({ store }) => {
+        // Hooks
+        const [options, setOpts] = React.useState([] as AdsorbentData[]);
+        React.useEffect(() => {
+            store!.adsorbent.tableList().then(setOpts);
+        });
+
         const REQUIRED = [{ required: true }];
 
         const { Option } = Select;
-        const options = store!.adsorbent.tableList.map((ads: FullRecordType<AdsorbentParams>) => (
+        const optionComps = options.map((ads: AdsorbentData) => (
             <Option key={ads.key} value={ads.key}>
                 {ads.name}
             </Option>
@@ -27,7 +32,7 @@ export const EditBedTab: React.FunctionComponent<StoreInjectedProp> = inject('st
                         filterOption={(input: string, option: any) =>
                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                         }>
-                        {options}
+                        {optionComps}
                     </Select>
                 </Form.Item>
                 <Form.Item

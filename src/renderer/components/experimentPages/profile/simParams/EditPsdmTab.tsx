@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Divider, Form, Input } from 'antd';
 
 import { PsdmValidator } from '../../../../../mods/validators/psdm.validator';
-import { PsdmInputParams } from '../../../../store/expProfile.store';
+import { PsdmInputParams } from '../../../../../utils/storage/types';
 
 export const EditPsdmTab: React.FunctionComponent<PsdmInputParams> = () => {
     const vdator = new PsdmValidator();

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Descriptions } from 'antd';
 
-import { PsdmInputParams } from '../../../../store/expProfile.store';
 import { WeakTitle } from '../../../common/elements/WeakTitle';
 import { Calculation } from '../../../../../mods/calculation/basic';
+import { PsdmInputParams } from '../../../../../utils/storage/types';
 
 export const ViewPsdmParams: React.FunctionComponent<PsdmInputParams> = data => {
     const {

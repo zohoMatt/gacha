@@ -3,8 +3,8 @@ import { Divider, Form, Input, Switch } from 'antd';
 
 import { WaterValidator } from '../../../../../mods/validators/water.validator';
 import { calcDensityAndViscosity } from './calculation';
-import { WaterInputParams } from '../../../../store/expProfile.store';
 import { Calculation } from '../../../../../mods/calculation/basic';
+import { WaterInputParams } from '../../../../../utils/storage/types';
 
 export const EditWaterTab: React.FunctionComponent<WaterInputParams> = initValues => {
     const { temperature } = initValues;

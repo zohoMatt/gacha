@@ -3,8 +3,8 @@ import { Col, Divider, Form, Row } from 'antd';
 
 import { ViewBasicInfo } from '../../common/BasicInfo';
 import { BriefRecordType } from '../../../store/base';
-import { AdsorbentParams } from '../../../store/adsorbent.store';
 import { Calculation } from '../../../../mods/calculation/basic';
+import { AdsorbentParams } from '../../../../utils/storage/types';
 
 export interface ViewAdsorbentDataProps {
     data: BriefRecordType<AdsorbentParams>;

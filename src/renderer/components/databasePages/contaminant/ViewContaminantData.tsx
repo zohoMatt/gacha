@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Form, Divider } from 'antd';
 
 import { BriefRecordType } from '../../../store/base';
-import { ContaminantParams } from '../../../store/contaminant.store';
 import { ViewBasicInfo } from '../../common/BasicInfo';
 import { Calculation } from '../../../../mods/calculation/basic';
+import { ContaminantParams } from '../../../../utils/storage/types';
 
 export interface ViewContaminantDataProps {
     data: BriefRecordType<ContaminantParams>;

@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Descriptions } from 'antd';
 
 import { calcDensityAndViscosity } from './calculation';
-import { WaterInputParams } from '../../../../store/expProfile.store';
 import { WeakTitle } from '../../../common/elements/WeakTitle';
 import { Calculation } from '../../../../../mods/calculation/basic';
+import { WaterInputParams } from '../../../../../utils/storage/types';
 
 export const ViewWaterProps: React.FunctionComponent<WaterInputParams> = data => {
     const { pressure, temperature, useDensity, useViscosity } = data;
