@@ -48,7 +48,6 @@ export interface BedInputParams {
     diameter: QuantityValue; // cm
     mass: QuantityValue; // g
     flowrate: QuantityValue; // mL/min
-    ebct: QuantityValue; // min
 }
 
 export interface CorrelationOrInput extends QuantityValue {

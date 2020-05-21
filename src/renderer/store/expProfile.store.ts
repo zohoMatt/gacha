@@ -1,4 +1,4 @@
-import { autorun } from 'mobx';
+import { autorun, observable } from 'mobx';
 import { ExpProfilesStorage } from '../app';
 import { BasicTableWithEditStore, BriefRecordType } from './base';
 import { Store } from './init';
@@ -31,8 +31,7 @@ export class ExpProfileStore extends BasicTableWithEditStore<ExpProfileParams> {
             length: { value: 100, unit: 'cm' },
             diameter: { value: 20, unit: 'cm' },
             mass: { value: 800, unit: 'g' },
-            flowrate: { value: 10, unit: 'mL/mins' },
-            ebct: { value: 15, unit: 'mins' }
+            flowrate: { value: 10, unit: 'mL/mins' }
         },
         adsorption: {
             contaminant: null,
@@ -63,17 +62,17 @@ export class ExpProfileStore extends BasicTableWithEditStore<ExpProfileParams> {
         }
     };
 
-    public calculation: ProfileMaths | null = null;
+    @observable public calculation: ProfileMaths | null = null;
 
     constructor(rootStore: Store) {
         super(rootStore, ExpProfilesStorage);
         // Update calculations when active record is changing
-        autorun(() => {
-            this.updateCalculation();
+        autorun(async () => {
+            await this.onEdit();
         });
     }
 
-    async updateCalculation() {
+    public async onEdit() {
         if (!this.activeRecord) {
             this.calculation = null;
             return;

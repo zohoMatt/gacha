@@ -4,8 +4,9 @@ import { Divider, Descriptions } from 'antd';
 import { BriefRecordType } from '../../store/base';
 import { ViewWaterProps } from './profile/water/ViewWaterProps';
 import { ViewBedProps } from './profile/bed/ViewBedProps';
-import { ViewAdsorptionData } from './profile/adsorption/ViewAdsorptionData';
 import { ViewPsdmParams } from './profile/simParams/ViewPsdmParams';
+import { CalculationResults } from './profile/CalculationResults';
+import { ViewAdsorptionData } from './profile/adsorption/ViewAdsorptionData';
 import { ExpProfileParams } from '../../../utils/storage/types';
 
 export interface ViewProfileProps {
@@ -39,6 +40,8 @@ export const ViewProfile: React.FunctionComponent<ViewProfileProps> = ({ data })
             <ViewBedProps {...bed} />
             <Divider orientation="center">Simulation: PSDM</Divider>
             <ViewPsdmParams {...psdm} />
+            <Divider orientation="center">Calculation Results</Divider>
+            <CalculationResults />
         </div>
     );
 };

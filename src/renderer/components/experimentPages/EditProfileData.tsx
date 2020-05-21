@@ -8,6 +8,8 @@ import { BasicInfoFormFields } from '../common/BasicInfo';
 import { EditBedTab } from './profile/bed/EditBedTab';
 import { EditPsdmTab } from './profile/simParams/EditPsdmTab';
 import { EditAdsorptionTab } from './profile/adsorption/EditAdsorptionTab';
+import { CalculationResults } from './profile/CalculationResults';
+import { ErrorBoundary } from '../common/ErrorBoundary';
 
 export const EditProfileData: React.FunctionComponent<EditProps> = ({
     form,
@@ -44,6 +46,9 @@ export const EditProfileData: React.FunctionComponent<EditProps> = ({
                     <EditPsdmTab {...initValues.psdm} />
                 </TabPane>
             </Tabs>
+            <ErrorBoundary display="Invalid parameters to calculate.">
+                <CalculationResults />
+            </ErrorBoundary>
         </Form>
     );
 };

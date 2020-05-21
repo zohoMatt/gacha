@@ -73,6 +73,8 @@ export abstract class BasicTableWithEditStore<T> {
         this.activeKey = key;
         const { name, description } = entry;
         this.activeRecord = { name, description, ...entry.params };
+        // Side effect
+        await this.onEdit();
     }
 
     @action
@@ -127,5 +129,9 @@ export abstract class BasicTableWithEditStore<T> {
     @action
     public cancel() {
         this.resetActive();
+    }
+
+    public onEdit() {
+        return Promise.resolve(null);
     }
 }
