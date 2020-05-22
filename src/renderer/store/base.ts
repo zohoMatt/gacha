@@ -1,4 +1,4 @@
-import { action, autorun, computed, observable, toJS } from 'mobx';
+import { action, observable } from 'mobx';
 import { omit } from 'lodash';
 import { generate as id } from 'shortid';
 
@@ -132,6 +132,6 @@ export abstract class BasicTableWithEditStore<T> {
     }
 
     public onEdit() {
-        return Promise.resolve(null);
+        return Promise.resolve();
     }
 }

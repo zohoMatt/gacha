@@ -3,8 +3,8 @@ import 'mobx-react-lite/batchingForReactDom';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-
 import { message } from 'antd';
+
 import Application from './components/Application';
 import { DataStorage } from '../utils/storage/storage';
 import { Store } from './store/init';

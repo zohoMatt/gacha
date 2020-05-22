@@ -1,15 +1,14 @@
 import * as React from 'react';
 import { Form, Tabs } from 'antd';
 
-import { EditProps } from '../common/container/TableWithEditSection';
 import { VALIDATE_MSG_TEMPLATE } from '../../../utils/validator';
+import { EditProps } from '../common/container/TableWithEditSection';
 import { EditWaterTab } from './profile/water/EditWaterTab';
 import { BasicInfoFormFields } from '../common/BasicInfo';
 import { EditBedTab } from './profile/bed/EditBedTab';
 import { EditPsdmTab } from './profile/simParams/EditPsdmTab';
 import { EditAdsorptionTab } from './profile/adsorption/EditAdsorptionTab';
 import { CalculationResults } from './profile/CalculationResults';
-import { ErrorBoundary } from '../common/ErrorBoundary';
 
 export const EditProfileData: React.FunctionComponent<EditProps> = ({
     form,
@@ -46,9 +45,7 @@ export const EditProfileData: React.FunctionComponent<EditProps> = ({
                     <EditPsdmTab {...initValues.psdm} />
                 </TabPane>
             </Tabs>
-            <ErrorBoundary display="Invalid parameters to calculate.">
-                <CalculationResults />
-            </ErrorBoundary>
+            <CalculationResults />
         </Form>
     );
 };
