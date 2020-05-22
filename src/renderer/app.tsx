@@ -8,13 +8,7 @@ import { message } from 'antd';
 import Application from './components/Application';
 import { DataStorage } from '../utils/storage/storage';
 import { Store } from './store/init';
-import {
-    AdsorbentData,
-    AdsorbentParams,
-    ContaminantData,
-    ExpProfileParams,
-    ProfileData
-} from '../utils/storage/types';
+import { AdsorbentData, ContaminantData, ProfileData } from '../utils/storage/types';
 
 // Create main element
 const mainElement = document.createElement('div');

@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { message, Typography } from 'antd';
+import { message, Col, Row, Typography } from 'antd';
 
 import { OperationPanel, OperationPanelButtons } from '../OperationPanel';
 import { RecordList } from '../RecordList';
@@ -148,19 +148,19 @@ export class TableWithEditSection extends React.Component<
         const { activeRecord } = this.store;
         const { Edit, Save, SaveAs, Cancel } = OperationPanelButtons;
         return (
-            <div className={styles.container}>
+            <Row className={styles.container} gutter={24}>
                 <div className={styles.title}>
                     <Typography.Title level={3}>{title}</Typography.Title>
                 </div>
-                <div className={styles.table}>
+                <Col className={styles.table} span={6}>
                     <RecordList
                         database={tableList}
                         disabled={status === 'edit'}
                         toView={this.toView}
                         toDelete={this.toDelete}
                         />
-                </div>
-                <div className={styles.rightColumn}>
+                </Col>
+                <Col className={styles.rightColumn} span={17}>
                     <div className={styles.edit}>
                         {status === 'idle' ? <IdleStatePrompt onCreate={this.createNew} /> : null}
                         {status === 'view' ? this.props.renderView(activeRecord) : null}
@@ -191,8 +191,8 @@ export class TableWithEditSection extends React.Component<
                                 />
                         ) : null}
                     </div>
-                </div>
-            </div>
+                </Col>
+            </Row>
         );
     }
 }
