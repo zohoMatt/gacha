@@ -18,7 +18,9 @@ export const ViewAdsorptionData: React.FunctionComponent<AdsorptionInputParams &
         const [contaminantRecord, setContaminant] = React.useState({} as ContaminantData);
         React.useEffect(() => {
             if (contaminant)
-                store!.contaminant.queryWithKeyInList(contaminant).then(v => v && setContaminant);
+                store!.contaminant
+                    .queryWithKeyInList(contaminant)
+                    .then(v => v && setContaminant(v));
         });
 
         const { filmDiffusion, poreDiffusion, surfaceDiffusion, spdfr, tortuosity } = kinetics;
