@@ -15,6 +15,9 @@ export interface EssentialProfileInput {
     frendlichNth: string;
     initConcent: string;
     contaminantMolarVolume: string;
+    surfaceDiffusion: string | null;
+    poreDiffusion: string | null;
+    filmDiffusion: string | null;
 }
 
 export class ProfileMaths {
@@ -138,6 +141,10 @@ export class ProfileMaths {
     }
 
     public get filmMassTransferCoeffi(): Unit {
+        // User Input
+        const { filmDiffusion } = this.input;
+        if (filmDiffusion) return unit(filmDiffusion);
+
         const { adsorbentParticleRadius } = this.input;
         const nSc = this.nSchmidt.toNumber('');
         const nRe = this.nReynolds.toNumber('');
@@ -191,11 +198,19 @@ export class ProfileMaths {
     }
 
     public get poreDiffusion(): Unit {
+        // User Input
+        const { poreDiffusion } = this.input;
+        if (poreDiffusion) return unit(poreDiffusion);
+
         const { tortuosity } = this.input;
         return divide(this.diffusivityInWater, unit(tortuosity));
     }
 
     public get surfaceDiffusion(): Unit {
+        // User Input
+        const { surfaceDiffusion } = this.input;
+        if (surfaceDiffusion) return unit(surfaceDiffusion);
+
         const { spdfr } = this.input;
         const dw = this.diffusivityInWater.toString();
         const {

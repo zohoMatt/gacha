@@ -5,6 +5,7 @@ import { Divider, Form, Input, Select } from 'antd';
 import { CorrelationOrUserInput } from '../../../common/elements/CorrelationOrUserInput';
 import { StoreInjectedProp } from '../../../../store/init';
 import { AdsorptionInputParams, ContaminantData } from '../../../../../utils/storage/types';
+import { Calculation } from '../../../../../mods/calculation/basic';
 
 export const EditAdsorptionTab: React.FunctionComponent<AdsorptionInputParams &
     StoreInjectedProp> = inject('store')(
@@ -21,6 +22,25 @@ export const EditAdsorptionTab: React.FunctionComponent<AdsorptionInputParams &
                 {c.name}
             </Option>
         ));
+
+        const EMPTY_PROMPT = '(Calculation error)';
+        let filmDiffusion: any = EMPTY_PROMPT;
+        let poreDiffusion: any = EMPTY_PROMPT;
+        let surfaceDiffusion: any = EMPTY_PROMPT;
+        try {
+            const {
+                filmMassTransferCoeffi: f,
+                poreDiffusion: p,
+                surfaceDiffusion: s
+            } = store!.exp.calculation!;
+            filmDiffusion = f;
+            poreDiffusion = p;
+            surfaceDiffusion = s;
+        } catch (e) {
+            console.warn(e);
+        }
+
+        const { display: d, format: f } = Calculation;
 
         return (
             <>
@@ -49,7 +69,8 @@ export const EditAdsorptionTab: React.FunctionComponent<AdsorptionInputParams &
                     <CorrelationOrUserInput
                         decorationText="Correlation"
                         tooltip="Gnielinski Correlation"
-                        unit="cm/s"
+                        unit="cm/min"
+                        checkedText={d(f(filmDiffusion))}
                         />
                 </Form.Item>
                 <Form.Item
@@ -59,7 +80,8 @@ export const EditAdsorptionTab: React.FunctionComponent<AdsorptionInputParams &
                     <CorrelationOrUserInput
                         decorationText="Correlation"
                         tooltip="Sontheimer Correlation"
-                        unit="cm²/s"
+                        unit="cm²/min"
+                        checkedText={d(f(surfaceDiffusion))}
                         />
                 </Form.Item>
                 <Form.Item
@@ -69,7 +91,8 @@ export const EditAdsorptionTab: React.FunctionComponent<AdsorptionInputParams &
                     <CorrelationOrUserInput
                         decorationText="Correlation"
                         tooltip="Hayduk and Laudie"
-                        unit="cm²/s"
+                        unit="cm²/min"
+                        checkedText={d(f(poreDiffusion))}
                         />
                 </Form.Item>
                 <Form.Item

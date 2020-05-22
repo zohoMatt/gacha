@@ -44,17 +44,17 @@ export class ExpProfileStore extends BasicTableWithEditStore<ExpProfileParams> {
                 filmDiffusion: {
                     correlation: true,
                     value: 0.1,
-                    unit: 'cm/s'
+                    unit: 'cm/min'
                 },
                 surfaceDiffusion: {
                     correlation: true,
                     value: 0.1,
-                    unit: 'cm^2/s'
+                    unit: 'cm^2/min'
                 },
                 poreDiffusion: {
                     correlation: true,
                     value: 0.1,
-                    unit: 'cm^2/s'
+                    unit: 'cm^2/min'
                 },
                 spdfr: { value: 4, unit: '' },
                 tortuosity: { value: 1, unit: '' }
@@ -82,7 +82,7 @@ export class ExpProfileStore extends BasicTableWithEditStore<ExpProfileParams> {
         const { temperature } = water;
         const { diameter, length, flowrate, mass, adsorbent: adsorbentKey } = bed;
         const { initConcent, kinetics, freundlich, contaminant: contaminantKey } = adsorption;
-        const { tortuosity, spdfr } = kinetics;
+        const { tortuosity, spdfr, surfaceDiffusion, filmDiffusion, poreDiffusion } = kinetics;
         const { k, nth } = freundlich;
 
         // Validate first
@@ -118,7 +118,10 @@ export class ExpProfileStore extends BasicTableWithEditStore<ExpProfileParams> {
             frendlichK: c(k),
             frendlichNth: c(nth),
             initConcent: c(initConcent),
-            contaminantMolarVolume: c(molarVolume)
+            contaminantMolarVolume: c(molarVolume),
+            surfaceDiffusion: surfaceDiffusion.correlation ? null : c(surfaceDiffusion),
+            filmDiffusion: filmDiffusion.correlation ? null : c(filmDiffusion),
+            poreDiffusion: poreDiffusion.correlation ? null : c(poreDiffusion)
         });
     }
 }

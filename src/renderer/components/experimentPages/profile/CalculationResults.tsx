@@ -10,6 +10,8 @@ export interface CalculationResultsProps {
 
 export const CalculationResults: React.FC<CalculationResultsProps> = inject('store')(
     observer(({ store }) => {
+        const divider = <Divider orientation="center">Calculation Results</Divider>;
+
         const { calculation } = store!.exp;
 
         try {
@@ -30,9 +32,12 @@ export const CalculationResults: React.FC<CalculationResultsProps> = inject('sto
         } catch (e) {
             console.warn(e);
             return (
-                <Typography.Text type="danger" strong>
-                    Invalid Parameters
-                </Typography.Text>
+                <>
+                    {divider}
+                    <Typography.Text type="danger" strong>
+                        Invalid Parameters
+                    </Typography.Text>
+                </>
             );
         }
         const {
@@ -53,7 +58,7 @@ export const CalculationResults: React.FC<CalculationResultsProps> = inject('sto
 
         return (
             <>
-                <Divider orientation="center">Calculation Results</Divider>
+                {divider}
                 <Descriptions>
                     <Descriptions.Item label="Bed Density">{d(f(bedDensity))}</Descriptions.Item>
                     <Descriptions.Item label="Bed Porosity">{d(f(bedPorosity))}</Descriptions.Item>
