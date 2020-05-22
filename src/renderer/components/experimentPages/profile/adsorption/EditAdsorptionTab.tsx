@@ -24,9 +24,9 @@ export const EditAdsorptionTab: React.FunctionComponent<AdsorptionInputParams &
         ));
 
         const EMPTY_PROMPT = '(Calculation error)';
-        let filmDiffusion: any = EMPTY_PROMPT;
-        let poreDiffusion: any = EMPTY_PROMPT;
-        let surfaceDiffusion: any = EMPTY_PROMPT;
+        let filmDiffusion: any = null;
+        let poreDiffusion: any = null;
+        let surfaceDiffusion: any = null;
         try {
             const {
                 filmMassTransferCoeffi: f,
@@ -70,7 +70,7 @@ export const EditAdsorptionTab: React.FunctionComponent<AdsorptionInputParams &
                         decorationText="Correlation"
                         tooltip="Gnielinski Correlation"
                         unit="cm/min"
-                        checkedText={d(f(filmDiffusion))}
+                        checkedText={filmDiffusion ? d(f(filmDiffusion)) : EMPTY_PROMPT}
                         />
                 </Form.Item>
                 <Form.Item
@@ -81,7 +81,7 @@ export const EditAdsorptionTab: React.FunctionComponent<AdsorptionInputParams &
                         decorationText="Correlation"
                         tooltip="Sontheimer Correlation"
                         unit="cm²/min"
-                        checkedText={d(f(surfaceDiffusion))}
+                        checkedText={surfaceDiffusion ? d(f(surfaceDiffusion)) : EMPTY_PROMPT}
                         />
                 </Form.Item>
                 <Form.Item
@@ -92,7 +92,7 @@ export const EditAdsorptionTab: React.FunctionComponent<AdsorptionInputParams &
                         decorationText="Correlation"
                         tooltip="Hayduk and Laudie"
                         unit="cm²/min"
-                        checkedText={d(f(poreDiffusion))}
+                        checkedText={poreDiffusion ? d(f(poreDiffusion)) : EMPTY_PROMPT}
                         />
                 </Form.Item>
                 <Form.Item

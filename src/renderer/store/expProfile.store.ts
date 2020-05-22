@@ -44,17 +44,17 @@ export class ExpProfileStore extends BasicTableWithEditStore<ExpProfileParams> {
                 filmDiffusion: {
                     correlation: true,
                     value: 0.1,
-                    unit: 'cm/min'
+                    unit: 'cm/mins'
                 },
                 surfaceDiffusion: {
                     correlation: true,
                     value: 0.1,
-                    unit: 'cm^2/min'
+                    unit: 'cm^2/mins'
                 },
                 poreDiffusion: {
                     correlation: true,
                     value: 0.1,
-                    unit: 'cm^2/min'
+                    unit: 'cm^2/mins'
                 },
                 spdfr: { value: 4, unit: '' },
                 tortuosity: { value: 1, unit: '' }

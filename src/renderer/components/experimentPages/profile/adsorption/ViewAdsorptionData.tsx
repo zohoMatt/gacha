@@ -8,6 +8,7 @@ import { StoreInjectedProp } from '../../../../store/init';
 import { ITEM_KEYS, NAV_KEYS } from '../../../nav/NavBar';
 import { Calculation } from '../../../../../mods/calculation/basic';
 import { AdsorptionInputParams, ContaminantData } from '../../../../../utils/storage/types';
+import { ErrorBoundary } from '../../../common/ErrorBoundary';
 
 export const ViewAdsorptionData: React.FunctionComponent<AdsorptionInputParams &
     StoreInjectedProp> = inject('store')(
@@ -23,10 +24,29 @@ export const ViewAdsorptionData: React.FunctionComponent<AdsorptionInputParams &
                     .then(v => v && setContaminant(v));
         });
 
-        const { filmDiffusion, poreDiffusion, surfaceDiffusion, spdfr, tortuosity } = kinetics;
+        const { filmDiffusion, surfaceDiffusion, poreDiffusion, spdfr, tortuosity } = kinetics;
         const { k, nth } = freundlich;
 
-        const d = Calculation.display;
+        // Correlation
+        let corFD: any = null;
+        let corPD: any = null;
+        let corSD: any = null;
+        try {
+            const {
+                filmMassTransferCoeffi: f,
+                poreDiffusion: p,
+                surfaceDiffusion: s
+            } = store!.exp.calculation!;
+            corFD = f;
+            corPD = p;
+            corSD = s;
+        } catch (e) {
+            console.warn(e);
+        }
+
+        const { display: d, format: f } = Calculation;
+        const EMPTY_PROMPT = '(Calculation error)';
+        const corVal = (cor: any) => (cor ? d(f(cor)) : EMPTY_PROMPT);
 
         return (
             <>
@@ -47,25 +67,19 @@ export const ViewAdsorptionData: React.FunctionComponent<AdsorptionInputParams &
                 </Descriptions>
                 <Descriptions title={<WeakTitle title="Kinetics" />}>
                     <Descriptions.Item label="Film Diffusion">
-                        {`${
-                            filmDiffusion.correlation
-                                ? `cm/s (Gnielinski)`
-                                : `${d(filmDiffusion)} (User Input)`
-                        }`}
+                        {filmDiffusion.correlation
+                            ? `${corVal(corFD)} (Gnielinski)`
+                            : `${d(filmDiffusion)} (User Input)`}
                     </Descriptions.Item>
                     <Descriptions.Item label="Surface Diffusion">
-                        {`${
-                            surfaceDiffusion.correlation
-                                ? `cm²/s (Sontheimer)`
-                                : `${d(surfaceDiffusion)} (User Input)`
-                        }`}
+                        {surfaceDiffusion.correlation
+                            ? `${corVal(corSD)} (Sontheimer)`
+                            : `${d(surfaceDiffusion)} (User Input)`}
                     </Descriptions.Item>
                     <Descriptions.Item label="Pore Diffusion">
-                        {`${
-                            poreDiffusion.correlation
-                                ? `cm²/s (Hayduk & Laudie)`
-                                : `${d(poreDiffusion)} (User Input)`
-                        }`}
+                        {poreDiffusion.correlation
+                            ? `${corVal(corPD)} (Hayduk & Laudie)`
+                            : `${d(poreDiffusion)} (User Input)`}
                     </Descriptions.Item>
                     <Descriptions.Item label="SPDFR">{d(spdfr)}</Descriptions.Item>
                     <Descriptions.Item label="Tortuosity">{d(tortuosity)}</Descriptions.Item>
