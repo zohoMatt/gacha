@@ -1,29 +1,57 @@
 import * as React from 'react';
-import { Typography } from 'antd';
+import { Button, Result, Typography } from 'antd';
+import { CloseCircleOutlined } from '@ant-design/icons/lib';
 
 export interface ErrorBoundaryState {
     error: boolean;
+    errorContent: string;
+    errorStackInfo: string;
 }
 
-export interface ErrorBoundaryProps {
-    display: string;
-}
-
-export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export class ErrorBoundary extends React.Component<{}, ErrorBoundaryState> {
     public state: ErrorBoundaryState = {
-        error: false
+        error: false,
+        errorContent: '',
+        errorStackInfo: ''
     };
 
     public static getDerivedStateFromError() {
         return { error: true };
     }
 
+    public componentDidCatch(error: Error, info: React.ErrorInfo) {
+        this.setState({
+            errorContent: error.toString(),
+            errorStackInfo: info.componentStack
+        });
+    }
+
+    public refresh = () => {
+        window.location.reload();
+    };
+
     public render() {
-        if (this.state.error) {
+        const { Paragraph } = Typography;
+        const { error, errorContent, errorStackInfo } = this.state;
+
+        if (error) {
             return (
-                <Typography.Text type="danger" strong>
-                    {this.props.display}
-                </Typography.Text>
+                <Result
+                    status="500"
+                    title="ERROR"
+                    subTitle="Sorry, something went wrong."
+                    extra={
+                        <Button type="primary" onClick={this.refresh}>
+                            Refresh
+                        </Button>
+                    }>
+                    <Paragraph>
+                        <CloseCircleOutlined /> {errorContent}
+                    </Paragraph>
+                    <Paragraph>
+                        <CloseCircleOutlined /> {errorStackInfo}
+                    </Paragraph>
+                </Result>
             );
         }
 

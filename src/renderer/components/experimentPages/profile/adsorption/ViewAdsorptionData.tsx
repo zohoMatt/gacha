@@ -8,7 +8,6 @@ import { StoreInjectedProp } from '../../../../store/init';
 import { ITEM_KEYS, NAV_KEYS } from '../../../nav/NavBar';
 import { Calculation } from '../../../../../mods/calculation/basic';
 import { AdsorptionInputParams, ContaminantData } from '../../../../../utils/storage/types';
-import { ErrorBoundary } from '../../../common/ErrorBoundary';
 
 export const ViewAdsorptionData: React.FunctionComponent<AdsorptionInputParams &
     StoreInjectedProp> = inject('store')(

@@ -7,6 +7,7 @@ import { RecordList } from '../RecordList';
 import { IdleStatePrompt } from '../elements/IdleStatePrompt';
 
 import { BriefRecordType, BasicTableWithEditStore } from '../../../store/base';
+import { ErrorBoundary } from '../ErrorBoundary';
 
 const styles = require('./TableWithEditSection.module.less');
 
