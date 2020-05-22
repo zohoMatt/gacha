@@ -2,6 +2,7 @@ import { action, computed, observable } from 'mobx';
 import { Store } from './init';
 
 export enum GraphProcessingStatus {
+    Idle,
     Processing,
     Error,
     Success

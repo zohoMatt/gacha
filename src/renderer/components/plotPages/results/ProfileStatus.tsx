@@ -20,9 +20,10 @@ export const ProfileStatus: React.FC = () => {
             render(val: string) {
                 return (
                     <>
-                        {val === 'running' ? <Badge status="processing" text="Running" /> : null}
-                        {val === 'success' ? <Badge status="success" text="Done" /> : null}
-                        {val === 'error' ? <Badge status="error" text="Error" /> : null}
+                        {val === 'Idle' ? <Badge status="default" text="In queue" /> : null}
+                        {val === 'Processing' ? <Badge status="processing" text="Running" /> : null}
+                        {val === 'Success' ? <Badge status="success" text="Done" /> : null}
+                        {val === 'Error' ? <Badge status="error" text="Error" /> : null}
                     </>
                 );
             }
