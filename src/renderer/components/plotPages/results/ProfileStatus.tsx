@@ -5,6 +5,7 @@ import { QuestionCircleOutlined } from '@ant-design/icons/lib';
 
 import { TableData } from './mock';
 import { ITEM_KEYS, NAV_KEYS } from '../../nav/NavBar';
+import { Workspace } from '../../common/container/Workspace';
 
 const styles = require('./ProfileStatus.module.less');
 
@@ -96,10 +97,7 @@ export const ProfileStatus: React.FC = () => {
     const TIPS = 'You can search and select multiple fields for the table to display.';
 
     return (
-        <div className={styles.container}>
-            <Typography.Title className={styles.title} level={3}>
-                Profile Status
-            </Typography.Title>
+        <Workspace title="Profile Status">
             <div className={styles.selector}>
                 <Select
                     showSearch
@@ -124,6 +122,6 @@ export const ProfileStatus: React.FC = () => {
                 scroll={{ x: 1300 }}
                 columns={columns as any}
                 />
-        </div>
+        </Workspace>
     );
 };
