@@ -102,7 +102,7 @@ export const ProfileStatus: React.FC = () => {
                 <Select
                     showSearch
                     mode="multiple"
-                    placeholder="Select an adsorbent"
+                    placeholder="Select fields to display below"
                     optionFilterProp="children"
                     style={{ width: '70%' }}
                     onChange={onSelect}
