@@ -14,7 +14,6 @@ export interface ProfileStatusUIStates {
 
 export interface GraphData {
     key: string;
-    profile: string;
     status: GraphProcessingStatus;
     data: any[];
 }
@@ -39,17 +38,22 @@ export class GraphStore {
     }
 
     @action
-    resetUI() {
+    public getProfileViaKey(key: string) {
+        return null;
+    }
+
+    @action
+    public resetUI() {
         this.profiles.profilesToCompare = [];
     }
 
     @action
-    updateStatus(key: string, status: GraphProcessingStatus) {
+    public updateStatus(key: string, status: GraphProcessingStatus) {
         // todo
     }
 
     @action
-    compareThem(keys: string[]) {
+    public compareThem(keys: string[]) {
         this.profiles.profilesToCompare = keys;
     }
 }

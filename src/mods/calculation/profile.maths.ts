@@ -20,6 +20,26 @@ export interface EssentialProfileInput {
     filmDiffusion: string | null;
 }
 
+export const PROFILE_DESCRIPTION_DICT: { [key in keyof EssentialProfileInput]: string } = {
+    waterTemperature: 'Water Temperature',
+    adsorbentDensity: 'Adsorbent Density',
+    adsorbentParticlePorosity: 'Adsorbent Particle Porosity',
+    adsorbentParticleRadius: 'Adsorbent Particle Radius',
+    bedDiameter: 'Bed Diameter',
+    bedLength: 'Bed Length',
+    bedFlowrate: 'Bed Flowrate',
+    bedMass: 'Bed Mass',
+    tortuosity: 'Tortuosity',
+    spdfr: 'SPDFR',
+    frendlichK: 'Frendlich K',
+    frendlichNth: 'Frendlich 1/n',
+    initConcent: 'Initial Concentration',
+    contaminantMolarVolume: 'Contaminant Molar Volume',
+    surfaceDiffusion: 'Surface Diffusion',
+    poreDiffusion: 'Pore Diffusion',
+    filmDiffusion: 'Film Diffusion'
+};
+
 export class ProfileMaths {
     private readonly input: EssentialProfileInput;
 

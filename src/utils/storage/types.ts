@@ -1,4 +1,4 @@
-import { DataStorage, FullRecordType, QuantityValue, StorageInitOptions } from './storage';
+import { FullRecordType, QuantityValue } from './storage';
 
 /** ******** Contaminants ********* */
 export interface ContaminantParams {

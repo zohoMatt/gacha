@@ -20,7 +20,7 @@ export enum ITEM_KEYS {
     Contaminant = 'contaminant',
     Adsorbent = 'adsorbent',
     Profile = 'profile',
-    Result = 'result',
+    Status = 'status',
     Comparison = 'comparison',
     History = 'history',
     Prefer = 'prefer'
@@ -91,10 +91,8 @@ export const NavBar: React.FunctionComponent = () => {
                             <span>Plot</span>
                         </span>
                     }>
-                    <Item key={ITEM_KEYS.Result}>
-                        <Link to={`${match.url}/${NAV_KEYS.Plot}/${ITEM_KEYS.Result}`}>
-                            Results
-                        </Link>
+                    <Item key={ITEM_KEYS.Status}>
+                        <Link to={`${match.url}/${NAV_KEYS.Plot}/${ITEM_KEYS.Status}`}>Status</Link>
                     </Item>
                     <Item key={ITEM_KEYS.Comparison}>
                         <Link to={`${match.url}/${NAV_KEYS.Plot}/${ITEM_KEYS.Comparison}`}>

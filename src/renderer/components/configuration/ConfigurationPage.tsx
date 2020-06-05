@@ -28,7 +28,7 @@ const ConfigurationPage: React.FunctionComponent = () => {
                         <Route path={`${match.path}/${NAV_KEYS.Experiment}/${ITEM_KEYS.Profile}`}>
                             <ProfileSettings />
                         </Route>
-                        <Route path={`${match.path}/${NAV_KEYS.Plot}/${ITEM_KEYS.Result}`}>
+                        <Route path={`${match.path}/${NAV_KEYS.Plot}/${ITEM_KEYS.Status}`}>
                             <ProfileStatus />
                         </Route>
                         <Route path={`${match.path}/${NAV_KEYS.Plot}/${ITEM_KEYS.Comparison}`}>

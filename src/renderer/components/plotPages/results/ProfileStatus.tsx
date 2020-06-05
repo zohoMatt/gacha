@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { Badge, Popover, Select, Table, Typography } from 'antd';
+import { Badge, Popover, Select, Table } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons/lib';
 
 import { TableData } from './mock';
 import { ITEM_KEYS, NAV_KEYS } from '../../nav/NavBar';
 import { Workspace } from '../../common/container/Workspace';
+import { PROFILE_DESCRIPTION_DICT } from '../../../../mods/calculation/profile.maths';
 
 const styles = require('./ProfileStatus.module.less');
 
@@ -73,22 +74,7 @@ export const ProfileStatus: React.FC = () => {
         setCols(LEFT_FIXED_COLS.concat(selectedCols).concat(RIGHT_FIXED_COLS as any));
     };
 
-    const options = [
-        { key: 'pressure', label: 'pressure' },
-        { key: 'temperature', label: 'temperature' },
-        { key: 'spdfr', label: 'SPDFR' },
-        { key: 'kv', label: 'KV' },
-        { key: 'p1', label: 'Parameter 1' },
-        { key: 'p2', label: 'Parameter 2' },
-        { key: 'p3', label: 'Parameter 3' },
-        { key: 'p4', label: 'Parameter 4' },
-        { key: 'p5', label: 'Parameter 5' },
-        { key: 'p6', label: 'Parameter 6' },
-        { key: 'p7', label: 'Parameter 7' },
-        { key: 'p8', label: 'Parameter 8' },
-        { key: 'p9', label: 'Parameter 9' },
-        { key: 'p10', label: 'Parameter 10' }
-    ].map(({ key, label }) => (
+    const options = Object.entries(PROFILE_DESCRIPTION_DICT).map(([key, label]) => (
         <Option key={key} value={key}>
             {label}
         </Option>
