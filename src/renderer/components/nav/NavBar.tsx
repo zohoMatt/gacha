@@ -108,11 +108,11 @@ export const NavBar: React.FunctionComponent = () => {
                             <span>System</span>
                         </span>
                     }>
-                    <Item key="history">
-                        <Link to={`${match.url}/${NAV_KEYS.System}/${ITEM_KEYS.History}`}>
-                            History
-                        </Link>
-                    </Item>
+                    {/* <Item key="history"> */}
+                    {/* <Link to={`${match.url}/${NAV_KEYS.System}/${ITEM_KEYS.History}`}> */}
+                    {/* History */}
+                    {/* </Link> */}
+                    {/* </Item> */}
                     <Item key={ITEM_KEYS.Prefer}>
                         <Link to={`${match.url}/${NAV_KEYS.System}/${ITEM_KEYS.Prefer}`}>
                             Preference
