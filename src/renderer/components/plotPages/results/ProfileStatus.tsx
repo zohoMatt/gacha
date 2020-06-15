@@ -6,7 +6,11 @@ import { QuestionCircleOutlined } from '@ant-design/icons/lib';
 import { TableData } from './mock';
 import { ITEM_KEYS, NAV_KEYS } from '../../nav/NavBar';
 import { Workspace } from '../../common/container/Workspace';
-import { PROFILE_DESCRIPTION_DICT } from '../../../../mods/calculation/profile.maths';
+import {
+    EssentialProfileInput,
+    PROFILE_DESCRIPTION_DICT
+} from '../../../../mods/calculation/profile.maths';
+import { Calculation } from '../../../../mods/calculation/basic';
 
 const styles = require('./ProfileStatus.module.less');
 
@@ -65,7 +69,9 @@ export const ProfileStatus: React.FC = () => {
             children: [
                 {
                     key: opt.key,
-                    title: '(cm)',
+                    title: Calculation.display(
+                        PROFILE_DESCRIPTION_DICT[opt.key as keyof EssentialProfileInput].unit
+                    ),
                     dataIndex: opt.key
                 }
             ],
@@ -74,9 +80,9 @@ export const ProfileStatus: React.FC = () => {
         setCols(LEFT_FIXED_COLS.concat(selectedCols).concat(RIGHT_FIXED_COLS as any));
     };
 
-    const options = Object.entries(PROFILE_DESCRIPTION_DICT).map(([key, label]) => (
+    const options = Object.entries(PROFILE_DESCRIPTION_DICT).map(([key, { name }]) => (
         <Option key={key} value={key}>
-            {label}
+            {name}
         </Option>
     ));
 

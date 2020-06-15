@@ -53,24 +53,31 @@ export interface ProfileCalculationResults {
     mSurfaceBiot: Unit | string;
 }
 
-export const PROFILE_DESCRIPTION_DICT: { [key in keyof EssentialProfileInput]: string } = {
-    waterTemperature: 'Water Temperature',
-    adsorbentDensity: 'Adsorbent Density',
-    adsorbentParticlePorosity: 'Adsorbent Particle Porosity',
-    adsorbentParticleRadius: 'Adsorbent Particle Radius',
-    bedDiameter: 'Bed Diameter',
-    bedLength: 'Bed Length',
-    bedFlowrate: 'Bed Flowrate',
-    bedMass: 'Bed Mass',
-    tortuosity: 'Tortuosity',
-    spdfr: 'SPDFR',
-    frendlichK: 'Frendlich K',
-    frendlichNth: 'Frendlich 1/n',
-    initConcent: 'Initial Concentration',
-    contaminantMolarVolume: 'Contaminant Molar Volume',
-    surfaceDiffusion: 'Surface Diffusion',
-    poreDiffusion: 'Pore Diffusion',
-    filmDiffusion: 'Film Diffusion'
+export interface ColumnTitleProps {
+    name: string;
+    unit: string;
+}
+
+export const PROFILE_DESCRIPTION_DICT: {
+    [key in keyof EssentialProfileInput]: ColumnTitleProps;
+} = {
+    waterTemperature: { name: 'Water Temperature', unit: 'degC' },
+    adsorbentDensity: { name: 'Adsorbent Density', unit: 'g/cm^3' },
+    adsorbentParticlePorosity: { name: 'Adsorbent Particle Porosity', unit: '' },
+    adsorbentParticleRadius: { name: 'Adsorbent Particle Radius', unit: 'cm' },
+    bedDiameter: { name: 'Bed Diameter', unit: 'cm' },
+    bedLength: { name: 'Bed Length', unit: 'cm' },
+    bedFlowrate: { name: 'Bed Flowrate', unit: 'mL/mins' },
+    bedMass: { name: 'Bed Mass', unit: 'g' },
+    tortuosity: { name: 'Tortuosity', unit: '' },
+    spdfr: { name: 'SPDFR', unit: '' },
+    frendlichK: { name: 'Frendlich K', unit: '' },
+    frendlichNth: { name: 'Frendlich 1/n', unit: '' },
+    initConcent: { name: 'Initial Concentration', unit: 'ug/L' },
+    contaminantMolarVolume: { name: 'Contaminant Molar Volume', unit: 'mL/mol' },
+    surfaceDiffusion: { name: 'Surface Diffusion', unit: 'cm^2/mins' },
+    poreDiffusion: { name: 'Pore Diffusion', unit: 'cm^2/mins' },
+    filmDiffusion: { name: 'Film Diffusion', unit: 'cm/mins' }
 };
 
 export class ProfileMaths implements ProfileCalculationResults {
