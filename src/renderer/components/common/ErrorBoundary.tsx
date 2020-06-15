@@ -2,6 +2,8 @@ import * as React from 'react';
 import { Button, Result, Typography } from 'antd';
 import { CloseCircleOutlined } from '@ant-design/icons/lib';
 
+const styles = require('./ErrorBoundary.module.less');
+
 export interface ErrorBoundaryState {
     error: boolean;
     errorContent: string;
@@ -45,12 +47,14 @@ export class ErrorBoundary extends React.Component<{}, ErrorBoundaryState> {
                             Refresh
                         </Button>
                     }>
-                    <Paragraph>
-                        <CloseCircleOutlined /> {errorContent}
-                    </Paragraph>
-                    <Paragraph>
-                        <CloseCircleOutlined /> {errorStackInfo}
-                    </Paragraph>
+                    <div className={styles.errorDetails}>
+                        <Paragraph>
+                            <CloseCircleOutlined /> {errorContent}
+                        </Paragraph>
+                        <Paragraph>
+                            <CloseCircleOutlined /> {errorStackInfo}
+                        </Paragraph>
+                    </div>
                 </Result>
             );
         }
