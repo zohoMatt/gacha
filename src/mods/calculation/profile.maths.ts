@@ -20,6 +20,39 @@ export interface EssentialProfileInput {
     filmDiffusion: string | null;
 }
 
+export interface ProfileCalculationResults {
+    bedCrossSectionalArea: Unit | string;
+    bedVolume: Unit | string;
+    bedDensity: Unit | string;
+    bedPorosity: Unit | string;
+    ebct: Unit | string;
+    hlr: Unit | string;
+    interstitialVelocity: Unit | string;
+    waterDensity: Unit | string;
+    waterKineticViscosity: Unit | string;
+    waterDynamicViscosity: Unit | string;
+    diffusivityInWater: Unit | string;
+    nReynolds: Unit | string;
+    nSchmidt: Unit | string;
+    multipliedScRe: Unit | string;
+    dispersionCoeffi: Unit | string;
+    nPeclet: Unit | string;
+    filmMassTransferCoeffi: Unit | string;
+    nStanton: Unit | string;
+    mStanton: Unit | string;
+    adsorptionCap: Unit | string;
+    surfaceSoluteDistParam: Unit | string;
+    poreSoluteDistParam: Unit | string;
+    poreDiffusion: Unit | string;
+    surfaceDiffusion: Unit | string;
+    surfaceDiffusionMod: Unit | string;
+    poreDiffusionMod: Unit | string;
+    nPoreBiot: Unit | string;
+    mPoreBiot: Unit | string;
+    nSurfaceBiot: Unit | string;
+    mSurfaceBiot: Unit | string;
+}
+
 export const PROFILE_DESCRIPTION_DICT: { [key in keyof EssentialProfileInput]: string } = {
     waterTemperature: 'Water Temperature',
     adsorbentDensity: 'Adsorbent Density',
@@ -40,7 +73,7 @@ export const PROFILE_DESCRIPTION_DICT: { [key in keyof EssentialProfileInput]: s
     filmDiffusion: 'Film Diffusion'
 };
 
-export class ProfileMaths {
+export class ProfileMaths implements ProfileCalculationResults {
     private readonly input: EssentialProfileInput;
 
     constructor(inputParams: EssentialProfileInput) {

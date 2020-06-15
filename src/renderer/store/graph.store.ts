@@ -1,5 +1,6 @@
 import { action, computed, observable } from 'mobx';
 import { Store } from './init';
+import { EssentialProfileInput } from '../../mods/calculation/profile.maths';
 
 export enum GraphProcessingStatus {
     Idle,
@@ -38,8 +39,8 @@ export class GraphStore {
     }
 
     @action
-    public getProfileViaKey(key: string) {
-        return null;
+    public getProfileViaKey(key: string): EssentialProfileInput {
+        return {} as any;
     }
 
     @action
