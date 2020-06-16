@@ -5,7 +5,7 @@ import { TableWithEditSection } from '../common/container/TableWithEditSection';
 import { EditProfileData } from './EditProfileData';
 import { BriefRecordType } from '../../store/base';
 import { ViewProfile } from './ViewProfile';
-import { StoreInjectedProp } from '../../store/init';
+import { StoreInjectedProp } from '../../store';
 import { ExpProfileParams } from '../../../utils/storage/types';
 
 export const ProfileSettings: React.FunctionComponent<StoreInjectedProp> = inject('store')(

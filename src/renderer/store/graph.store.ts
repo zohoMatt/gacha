@@ -1,28 +1,19 @@
-import { action, computed, observable } from 'mobx';
-import { Store } from './init';
+import { action, observable } from 'mobx';
+import { Store } from './index';
 import { EssentialProfileInput } from '../../mods/calculation/profile.maths';
-
-export enum GraphProcessingStatus {
-    Idle,
-    Processing,
-    Error,
-    Success
-}
+import { DataStorage, FullRecordType, GraphProcessingStatus } from '../../utils/storage/storage';
+import { ExpProfilesStorage } from '../app';
+import { ExpProfileParams } from '../../utils/storage/types';
+import { fullRecordToBrief, profileToInput } from './helpers';
 
 export interface ProfileStatusUIStates {
     profilesToCompare: string[];
 }
 
-export interface GraphData {
-    key: string;
-    status: GraphProcessingStatus;
-    data: any[];
-}
-
 export class GraphStore {
     protected root: Store;
 
-    @observable public data: GraphData[] = [];
+    @observable public database: DataStorage<FullRecordType<ExpProfileParams>> = ExpProfilesStorage;
 
     @observable public profiles: ProfileStatusUIStates = {
         profilesToCompare: []
@@ -32,10 +23,27 @@ export class GraphStore {
         this.root = root;
     }
 
-    @computed
-    get profileStatusTableData() {
-        // todo
-        return [];
+    public async profileStatusTableData() {
+        const list = await this.database.list();
+        return Promise.all(
+            list.map(async profile => {
+                const briefRecord = fullRecordToBrief(profile);
+                const { adsorbent: adsKey } = briefRecord.bed;
+                const { contaminant: contmKey } = briefRecord.adsorption;
+                const adsorbent = adsKey
+                    ? await this.root.adsorbent.queryWithKeyInList(adsKey)
+                    : undefined;
+                const contaminant = contmKey
+                    ? await this.root.contaminant.queryWithKeyInList(contmKey)
+                    : undefined;
+                return {
+                    key: profile.key,
+                    name: profile.name,
+                    status: profile.processed || GraphProcessingStatus.Processing,
+                    ...profileToInput(briefRecord, adsorbent, contaminant)
+                };
+            })
+        );
     }
 
     @action

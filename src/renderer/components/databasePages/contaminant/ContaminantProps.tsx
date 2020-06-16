@@ -5,7 +5,7 @@ import { TableWithEditSection } from '../../common/container/TableWithEditSectio
 import { ViewContaminantData } from './ViewContaminantData';
 import { EditContaminantProps } from './EditContaminantProps';
 import { BriefRecordType } from '../../../store/base';
-import { StoreInjectedProp } from '../../../store/init';
+import { StoreInjectedProp } from '../../../store';
 import { ContaminantParams } from '../../../../utils/storage/types';
 
 export const ContaminantProps: React.FunctionComponent<StoreInjectedProp> = inject('store')(

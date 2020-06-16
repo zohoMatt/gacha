@@ -5,7 +5,7 @@ import { EditAdsorbentData } from './EditAdsorbentData';
 import { ViewAdsorbentData } from './ViewAdsorbentData';
 import { TableWithEditSection } from '../../common/container/TableWithEditSection';
 import { BriefRecordType } from '../../../store/base';
-import { StoreInjectedProp } from '../../../store/init';
+import { StoreInjectedProp } from '../../../store';
 import { AdsorbentParams } from '../../../../utils/storage/types';
 
 export const AdsorbentDatabase: React.FunctionComponent<StoreInjectedProp> = inject('store')(

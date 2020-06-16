@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { Divider, Form, Input, Select } from 'antd';
 
 import { CorrelationOrUserInput } from '../../../common/elements/CorrelationOrUserInput';
-import { StoreInjectedProp } from '../../../../store/init';
+import { StoreInjectedProp } from '../../../../store';
 import { AdsorptionInputParams, ContaminantData } from '../../../../../utils/storage/types';
 import { Calculation } from '../../../../../mods/calculation/basic';
 

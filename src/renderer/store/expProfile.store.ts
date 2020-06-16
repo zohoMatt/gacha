@@ -1,7 +1,7 @@
 import { autorun, observable } from 'mobx';
 import { ExpProfilesStorage } from '../app';
 import { BasicTableWithEditStore, BriefRecordType } from './base';
-import { Store } from './init';
+import { Store } from './index';
 import { ExpProfileParams } from '../../utils/storage/types';
 import { ProfileMaths } from '../../mods/calculation/profile.maths';
 import { profileToInput } from './helpers';

@@ -1,5 +1,5 @@
 import { BasicTableWithEditStore, BriefRecordType } from './base';
-import { Store } from './init';
+import { Store } from './index';
 import { AdsorbentParams } from '../../utils/storage/types';
 import { AdsorbentDatabase } from '../app';
 

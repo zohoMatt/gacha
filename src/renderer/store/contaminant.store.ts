@@ -1,6 +1,6 @@
 import { ContaminantDatabase } from '../app';
 import { BasicTableWithEditStore, BriefRecordType } from './base';
-import { Store } from './init';
+import { Store } from './index';
 import { ContaminantParams } from '../../utils/storage/types';
 
 export class ContaminantStore extends BasicTableWithEditStore<ContaminantParams> {

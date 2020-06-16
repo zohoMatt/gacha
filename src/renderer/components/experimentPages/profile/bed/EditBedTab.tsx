@@ -2,7 +2,7 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Divider, Form, Input, Select } from 'antd';
 
-import { StoreInjectedProp } from '../../../../store/init';
+import { StoreInjectedProp } from '../../../../store';
 import { AdsorbentData } from '../../../../../utils/storage/types';
 
 export const EditBedTab: React.FunctionComponent<StoreInjectedProp> = inject('store')(

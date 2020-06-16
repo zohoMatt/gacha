@@ -22,9 +22,18 @@ export interface BasicInfo {
     manufacturer?: string;
 }
 
+export enum GraphProcessingStatus {
+    Idle,
+    Processing,
+    Error,
+    Success
+}
+
 export interface RecordStatus {
     draft?: boolean;
     cited?: string[];
+    valid?: boolean;
+    processed?: GraphProcessingStatus;
 }
 
 // Used to store into local files

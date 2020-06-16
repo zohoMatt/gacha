@@ -2,7 +2,7 @@ import { action, observable } from 'mobx';
 import { omit } from 'lodash';
 import { generate as id } from 'shortid';
 
-import { Store } from './init';
+import { Store } from './index';
 import { BasicInfo, DataStorage, FullRecordType } from '../../utils/storage/storage';
 
 // Used to display and modification
@@ -89,7 +89,7 @@ export abstract class BasicTableWithEditStore<T> {
 
         // New record
         if (!origin) {
-            this.saveAs(name);
+            await this.saveAs(name);
         } else {
             origin.name = name;
             origin.description = description;
@@ -115,7 +115,7 @@ export abstract class BasicTableWithEditStore<T> {
         };
         await this.database.create(toAdd);
         // Active new key
-        this.edit(key);
+        return this.edit(key);
     }
 
     @action

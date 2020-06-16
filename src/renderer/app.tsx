@@ -7,7 +7,7 @@ import { message } from 'antd';
 
 import Application from './components/Application';
 import { DataStorage } from '../utils/storage/storage';
-import { Store } from './store/init';
+import { Store } from './store';
 import { AdsorbentData, ContaminantData, ProfileData } from '../utils/storage/types';
 
 // Create main element
@@ -24,11 +24,14 @@ const render = (Component: () => JSX.Element) => {
     );
 };
 
+/** ****************** Initialization ****************** */
+
 // Config message
 message.config({
     maxCount: 5,
     top: 240
 });
+
 // Init storage and import data
 export const ContaminantDatabase = new DataStorage<ContaminantData>({
     filename: 'contaminants.pfast'

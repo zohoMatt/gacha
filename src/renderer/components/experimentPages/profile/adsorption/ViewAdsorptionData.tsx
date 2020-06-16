@@ -4,7 +4,7 @@ import { Descriptions } from 'antd';
 import { observer, inject } from 'mobx-react';
 
 import { WeakTitle } from '../../../common/elements/WeakTitle';
-import { StoreInjectedProp } from '../../../../store/init';
+import { StoreInjectedProp } from '../../../../store';
 import { ITEM_KEYS, NAV_KEYS } from '../../../nav/NavBar';
 import { Calculation } from '../../../../../mods/calculation/basic';
 import { AdsorptionInputParams, ContaminantData } from '../../../../../utils/storage/types';

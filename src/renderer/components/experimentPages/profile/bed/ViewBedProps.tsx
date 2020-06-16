@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react';
 import { Descriptions } from 'antd';
 
 import { Calculation } from '../../../../../mods/calculation/basic';
-import { StoreInjectedProp } from '../../../../store/init';
+import { StoreInjectedProp } from '../../../../store';
 import { NAV_KEYS, ITEM_KEYS } from '../../../nav/NavBar';
 import { AdsorbentData, BedInputParams } from '../../../../../utils/storage/types';
 

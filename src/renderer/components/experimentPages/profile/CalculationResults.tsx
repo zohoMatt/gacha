@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Descriptions, Divider, Typography } from 'antd';
-import { Store } from '../../../store/init';
+import { Store } from '../../../store';
 import { Calculation } from '../../../../mods/calculation/basic';
 
 export interface CalculationResultsProps {
