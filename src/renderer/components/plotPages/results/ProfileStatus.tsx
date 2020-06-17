@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Badge, Popover, Select, Table } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons/lib';
 import { inject, observer } from 'mobx-react';
+import { unit } from 'mathjs';
 
 import { StoreInjectedProp } from '../../../store';
 import { ITEM_KEYS, NAV_KEYS } from '../../nav/NavBar';
@@ -23,10 +24,7 @@ export const ProfileStatus: React.FC<StoreInjectedProp> = inject('store')(
         // Hooks
         const [tableData, setTableData] = React.useState([]);
         React.useEffect(() => {
-            store!.graph.profileStatusTableData().then(data => {
-                setTableData(data as any);
-                console.log(data);
-            });
+            store!.graph.profileStatusTableData().then(setTableData as any);
         }, [0]);
 
         const LEFT_FIXED_COLS = [
@@ -87,19 +85,24 @@ export const ProfileStatus: React.FC<StoreInjectedProp> = inject('store')(
         );
 
         const onSelect = (values: string, options: any) => {
-            const selectedCols = options.map((opt: any, i: number) => ({
-                title: opt.children.toString(),
-                children: [
-                    {
-                        key: opt.key,
-                        title: Calculation.display(
-                            PROFILE_DESCRIPTION_DICT[opt.key as keyof EssentialProfileInput].unit
-                        ),
-                        dataIndex: opt.key
-                    }
-                ],
-                width: i === 0 ? 150 : undefined
-            }));
+            const selectedCols = options.map((opt: any, i: number) => {
+                const { unit: columnUnit } = PROFILE_DESCRIPTION_DICT[
+                    opt.key as keyof EssentialProfileInput
+                ];
+                return {
+                    title: opt.children.toString(),
+                    children: [
+                        {
+                            key: opt.key,
+                            title: Calculation.display(columnUnit),
+                            dataIndex: opt.key,
+                            render: (text: string) =>
+                                Calculation.format(unit(text).toNumber(columnUnit))
+                        }
+                    ],
+                    width: i === 0 ? 150 : undefined
+                };
+            });
             setCols(LEFT_FIXED_COLS.concat(selectedCols).concat(RIGHT_FIXED_COLS as any));
         };
 
