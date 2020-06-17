@@ -29,7 +29,7 @@ export const EditAdsorptionTab: React.FunctionComponent<AdsorptionInputParams &
         let surfaceDiffusion: any = null;
         try {
             const {
-                filmMassTransferCoeffi: f,
+                filmDiffusion: f,
                 poreDiffusion: p,
                 surfaceDiffusion: s
             } = store!.exp.calculation!;

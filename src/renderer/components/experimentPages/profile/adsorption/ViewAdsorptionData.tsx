@@ -32,7 +32,7 @@ export const ViewAdsorptionData: React.FunctionComponent<AdsorptionInputParams &
         let corSD: any = null;
         try {
             const {
-                filmMassTransferCoeffi: f,
+                filmDiffusion: f,
                 poreDiffusion: p,
                 surfaceDiffusion: s
             } = store!.exp.calculation!;

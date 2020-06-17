@@ -1,5 +1,5 @@
 /** ****************** Common ****************** */
-import { EssentialProfileInput } from '../../mods/calculation/profile.maths';
+import { EssentialProfileInput } from '../../mods/calculation/types';
 
 export interface QuantityValue {
     value: number;

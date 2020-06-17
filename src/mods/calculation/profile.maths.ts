@@ -1,84 +1,5 @@
-import { unit, divide, evaluate, multiply, Unit } from 'mathjs';
-
-export interface EssentialProfileInput {
-    waterTemperature: string;
-    adsorbentDensity: string;
-    adsorbentParticlePorosity: string;
-    adsorbentParticleRadius: string;
-    bedDiameter: string;
-    bedLength: string;
-    bedFlowrate: string;
-    bedMass: string;
-    tortuosity: string;
-    spdfr: string;
-    frendlichK: string;
-    frendlichNth: string;
-    initConcent: string;
-    contaminantMolarVolume: string;
-    surfaceDiffusion: string | null;
-    poreDiffusion: string | null;
-    filmDiffusion: string | null;
-}
-
-export interface ProfileCalculationResults {
-    bedCrossSectionalArea: Unit | string;
-    bedVolume: Unit | string;
-    bedDensity: Unit | string;
-    bedPorosity: Unit | string;
-    ebct: Unit | string;
-    hlr: Unit | string;
-    interstitialVelocity: Unit | string;
-    waterDensity: Unit | string;
-    waterKineticViscosity: Unit | string;
-    waterDynamicViscosity: Unit | string;
-    diffusivityInWater: Unit | string;
-    nReynolds: Unit | string;
-    nSchmidt: Unit | string;
-    multipliedScRe: Unit | string;
-    dispersionCoeffi: Unit | string;
-    nPeclet: Unit | string;
-    filmMassTransferCoeffi: Unit | string;
-    nStanton: Unit | string;
-    mStanton: Unit | string;
-    adsorptionCap: Unit | string;
-    surfaceSoluteDistParam: Unit | string;
-    poreSoluteDistParam: Unit | string;
-    poreDiffusion: Unit | string;
-    surfaceDiffusion: Unit | string;
-    surfaceDiffusionMod: Unit | string;
-    poreDiffusionMod: Unit | string;
-    nPoreBiot: Unit | string;
-    mPoreBiot: Unit | string;
-    nSurfaceBiot: Unit | string;
-    mSurfaceBiot: Unit | string;
-}
-
-export interface ColumnTitleProps {
-    name: string;
-    unit: string;
-}
-
-export const PROFILE_DESCRIPTION_DICT: {
-    [key in keyof EssentialProfileInput]: ColumnTitleProps;
-} = {
-    waterTemperature: { name: 'Water Temperature', unit: 'degC' },
-    adsorbentDensity: { name: 'Adsorbent Density', unit: 'g/cm^3' },
-    adsorbentParticlePorosity: { name: 'Adsorbent Particle Porosity', unit: '' },
-    adsorbentParticleRadius: { name: 'Adsorbent Particle Radius', unit: 'cm' },
-    bedDiameter: { name: 'Bed Diameter', unit: 'cm' },
-    bedLength: { name: 'Bed Length', unit: 'cm' },
-    bedFlowrate: { name: 'Bed Flowrate', unit: 'mL/mins' },
-    bedMass: { name: 'Bed Mass', unit: 'g' },
-    tortuosity: { name: 'Tortuosity', unit: '' },
-    spdfr: { name: 'SPDFR', unit: '' },
-    frendlichK: { name: 'Frendlich K', unit: '' },
-    frendlichNth: { name: 'Frendlich 1/n', unit: '' },
-    initConcent: { name: 'Initial Concentration', unit: 'ug/L' },
-    contaminantMolarVolume: { name: 'Contaminant Molar Volume', unit: 'mL/mol' },
-    surfaceDiffusion: { name: 'Surface Diffusion', unit: 'cm^2/mins' },
-    poreDiffusion: { name: 'Pore Diffusion', unit: 'cm^2/mins' },
-    filmDiffusion: { name: 'Film Diffusion', unit: 'cm/mins' }
-};
+import { divide, evaluate, multiply, unit, Unit } from 'mathjs';
+import { EssentialProfileInput, ProfileCalculationResults } from './types';
 
 export class ProfileMaths implements ProfileCalculationResults {
     private readonly input: EssentialProfileInput;
@@ -200,7 +121,7 @@ export class ProfileMaths implements ProfileCalculationResults {
         );
     }
 
-    public get filmMassTransferCoeffi(): Unit {
+    public get filmDiffusion(): Unit {
         // User Input
         const { filmDiffusion } = this.input;
         if (filmDiffusion) return unit(filmDiffusion);
@@ -222,7 +143,7 @@ export class ProfileMaths implements ProfileCalculationResults {
     public get nStanton(): Unit {
         const { adsorbentParticleRadius: rp } = this.input;
         const { bedLength } = this.input;
-        const kf = this.filmMassTransferCoeffi.toString();
+        const kf = this.filmDiffusion.toString();
         const p = this.bedPorosity.toString();
         const hlr = this.hlr.toString();
         return unit(evaluate(`(2*(${kf})*(${bedLength.toString()})*(1-${p}))/((${rp})*(${hlr}))`));

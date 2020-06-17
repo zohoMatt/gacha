@@ -8,12 +8,10 @@ import { unit } from 'mathjs';
 import { StoreInjectedProp } from '../../../store';
 import { ITEM_KEYS, NAV_KEYS } from '../../nav/NavBar';
 import { Workspace } from '../../common/container/Workspace';
-import {
-    EssentialProfileInput,
-    PROFILE_DESCRIPTION_DICT
-} from '../../../../mods/calculation/profile.maths';
 import { Calculation } from '../../../../mods/calculation/basic';
 import { GraphProcessingStatus } from '../../../../utils/storage/types';
+import { EssentialProfileInput } from '../../../../mods/calculation/types';
+import { PROFILE_DESCRIPTION_DICT } from '../../../../mods/calculation/configs';
 
 const styles = require('./ProfileStatus.module.less');
 

@@ -1,6 +1,5 @@
 import { action, observable } from 'mobx';
 import { Store } from './index';
-import { EssentialProfileInput } from '../../mods/calculation/profile.maths';
 import { DataStorage } from '../../utils/storage/storage';
 import { ExpProfilesStorage } from '../app';
 import {
@@ -10,6 +9,7 @@ import {
     ProfileStatusTableData
 } from '../../utils/storage/types';
 import { fullRecordToBrief, profileToInput } from './helpers';
+import { EssentialProfileInput } from '../../mods/calculation/types';
 
 export interface ProfileStatusUIStates {
     profilesToCompare: string[];
