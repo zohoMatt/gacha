@@ -3,7 +3,12 @@ import { Store } from './index';
 import { EssentialProfileInput } from '../../mods/calculation/profile.maths';
 import { DataStorage } from '../../utils/storage/storage';
 import { ExpProfilesStorage } from '../app';
-import { ExpProfileParams, FullRecordType, GraphProcessingStatus } from '../../utils/storage/types';
+import {
+    ExpProfileParams,
+    FullRecordType,
+    GraphProcessingStatus,
+    ProfileStatusTableData
+} from '../../utils/storage/types';
 import { fullRecordToBrief, profileToInput } from './helpers';
 
 export interface ProfileStatusUIStates {
@@ -23,7 +28,7 @@ export class GraphStore {
         this.root = root;
     }
 
-    public async profileStatusTableData() {
+    public async profileStatusTableData(): Promise<ProfileStatusTableData[]> {
         const list = await this.database.list();
         return Promise.all(
             list.map(async profile => {
@@ -36,11 +41,12 @@ export class GraphStore {
                 const contaminant = contmKey
                     ? await this.root.contaminant.queryWithKeyInList(contmKey)
                     : undefined;
+                const essentialInput = profileToInput(briefRecord, adsorbent, contaminant);
                 return {
                     key: profile.key,
                     name: profile.name,
                     status: profile.processed || GraphProcessingStatus.Processing,
-                    ...profileToInput(briefRecord, adsorbent, contaminant)
+                    ...(essentialInput || {})
                 };
             })
         );

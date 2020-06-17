@@ -1,4 +1,5 @@
 /** ****************** Common ****************** */
+import { EssentialProfileInput } from '../../mods/calculation/profile.maths';
 
 export interface QuantityValue {
     value: number;
@@ -17,13 +18,6 @@ export interface BasicInfo {
     name: string;
     description: string;
     manufacturer?: string;
-}
-
-export enum GraphProcessingStatus {
-    Idle,
-    Processing,
-    Error,
-    Success
 }
 
 export interface RecordStatus {
@@ -128,3 +122,18 @@ export interface ExpProfileParams {
 }
 
 export type ProfileData = FullRecordType<ExpProfileParams>;
+
+/** ****************** Graph Data ****************** */
+
+export enum GraphProcessingStatus {
+    Idle,
+    Processing,
+    Error,
+    Success
+}
+
+export type ProfileStatusTableData = {
+    key: string;
+    name: string;
+    status: GraphProcessingStatus;
+} & EssentialProfileInput;
