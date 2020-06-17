@@ -2,52 +2,7 @@ import { app, remote } from 'electron';
 import * as path from 'path';
 import * as low from 'lowdb';
 import * as FileAsync from 'lowdb/adapters/FileAsync';
-
-export interface QuantityValue {
-    value: number;
-    unit: string;
-}
-
-export interface Params<T> {
-    params: T;
-}
-
-export interface KeyID {
-    key: string;
-}
-
-export interface BasicInfo {
-    name: string;
-    description: string;
-    manufacturer?: string;
-}
-
-export enum GraphProcessingStatus {
-    Idle,
-    Processing,
-    Error,
-    Success
-}
-
-export interface RecordStatus {
-    draft?: boolean;
-    cited?: string[];
-    valid?: boolean;
-    processed?: GraphProcessingStatus;
-}
-
-// Used to store into local files
-export type FullRecordType<T> = KeyID & BasicInfo & Params<T> & RecordStatus;
-
-export interface StorageDataStructure<T> {
-    version: string;
-    data: T[];
-}
-
-export interface StorageInitOptions<T> {
-    filename: string;
-    defaultStore?: StorageDataStructure<T>;
-}
+import { StorageDataStructure, StorageInitOptions } from './types';
 
 export class DataStorage<T> {
     public static VERSION = '0.1.0';

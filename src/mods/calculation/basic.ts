@@ -1,5 +1,5 @@
 import { format, unit as mathUnit, Unit } from 'mathjs';
-import { QuantityValue } from '../../utils/storage/storage';
+import { QuantityValue } from '../../utils/storage/types';
 
 export class Calculation {
     public static readonly FIXED = 4;

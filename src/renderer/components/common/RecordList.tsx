@@ -2,7 +2,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import { Input, message, Popconfirm, Table } from 'antd';
 
-import { FullRecordType } from '../../../utils/storage/storage';
+import { FullRecordType } from '../../../utils/storage/types';
 
 const styles = require('./RecordList.module.less');
 

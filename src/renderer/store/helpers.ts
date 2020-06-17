@@ -1,7 +1,11 @@
 import { EssentialProfileInput } from '../../mods/calculation/profile.maths';
 import { BriefRecordType } from './base';
-import { AdsorbentParams, ContaminantParams, ExpProfileParams } from '../../utils/storage/types';
-import { FullRecordType } from '../../utils/storage/storage';
+import {
+    AdsorbentParams,
+    ContaminantParams,
+    ExpProfileParams,
+    FullRecordType
+} from '../../utils/storage/types';
 import { Calculation } from '../../mods/calculation/basic';
 
 export function profileToInput(

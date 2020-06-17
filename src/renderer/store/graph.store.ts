@@ -1,9 +1,9 @@
 import { action, observable } from 'mobx';
 import { Store } from './index';
 import { EssentialProfileInput } from '../../mods/calculation/profile.maths';
-import { DataStorage, FullRecordType, GraphProcessingStatus } from '../../utils/storage/storage';
+import { DataStorage } from '../../utils/storage/storage';
 import { ExpProfilesStorage } from '../app';
-import { ExpProfileParams } from '../../utils/storage/types';
+import { ExpProfileParams, FullRecordType, GraphProcessingStatus } from '../../utils/storage/types';
 import { fullRecordToBrief, profileToInput } from './helpers';
 
 export interface ProfileStatusUIStates {

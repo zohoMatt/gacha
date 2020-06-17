@@ -12,7 +12,7 @@ import {
     PROFILE_DESCRIPTION_DICT
 } from '../../../../mods/calculation/profile.maths';
 import { Calculation } from '../../../../mods/calculation/basic';
-import { GraphProcessingStatus } from '../../../../utils/storage/storage';
+import { GraphProcessingStatus } from '../../../../utils/storage/types';
 
 const styles = require('./ProfileStatus.module.less');
 

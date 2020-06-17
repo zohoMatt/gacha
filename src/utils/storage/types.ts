@@ -1,6 +1,53 @@
-import { FullRecordType, QuantityValue } from './storage';
+/** ****************** Common ****************** */
+
+export interface QuantityValue {
+    value: number;
+    unit: string;
+}
+
+export interface Params<T> {
+    params: T;
+}
+
+export interface KeyID {
+    key: string;
+}
+
+export interface BasicInfo {
+    name: string;
+    description: string;
+    manufacturer?: string;
+}
+
+export enum GraphProcessingStatus {
+    Idle,
+    Processing,
+    Error,
+    Success
+}
+
+export interface RecordStatus {
+    draft?: boolean;
+    cited?: string[];
+    valid?: boolean;
+    processed?: GraphProcessingStatus;
+}
+
+// Used to store into local files
+export type FullRecordType<T> = KeyID & BasicInfo & Params<T> & RecordStatus;
+
+export interface StorageDataStructure<T> {
+    version: string;
+    data: T[];
+}
+
+export interface StorageInitOptions<T> {
+    filename: string;
+    defaultStore?: StorageDataStructure<T>;
+}
 
 /** ******** Contaminants ********* */
+
 export interface ContaminantParams {
     fullName: string;
     molecularWeight: QuantityValue; // mg/mmol
@@ -16,6 +63,7 @@ export interface ContaminantParams {
 export type ContaminantData = FullRecordType<ContaminantParams>;
 
 /** ******** Adsorbents ********* */
+
 export interface AdsorbentParams {
     density: QuantityValue; // g/cm^3
     particleRadius: QuantityValue; // cm
@@ -26,6 +74,7 @@ export interface AdsorbentParams {
 export type AdsorbentData = FullRecordType<AdsorbentParams>;
 
 /** ******** Experimental Profiles ********* */
+
 export interface WaterInputParams {
     pressure: QuantityValue; // atm
     temperature: QuantityValue; // ℃

@@ -3,7 +3,8 @@ import { omit } from 'lodash';
 import { generate as id } from 'shortid';
 
 import { Store } from './index';
-import { BasicInfo, DataStorage, FullRecordType } from '../../utils/storage/storage';
+import { DataStorage } from '../../utils/storage/storage';
+import { BasicInfo, FullRecordType } from '../../utils/storage/types';
 
 // Used to display and modification
 export type BriefRecordType<T> = BasicInfo & T;
