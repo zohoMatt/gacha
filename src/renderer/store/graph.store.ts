@@ -24,6 +24,8 @@ export class GraphStore {
         profilesToCompare: []
     };
 
+    @observable public optionalHeaders: string[] = [];
+
     constructor(root: Store) {
         this.root = root;
     }
@@ -50,6 +52,11 @@ export class GraphStore {
                 };
             })
         );
+    }
+
+    @action
+    public changeColumnsSelection(keys: string[]) {
+        this.optionalHeaders = keys;
     }
 
     @action

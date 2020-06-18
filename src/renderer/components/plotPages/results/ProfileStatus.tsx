@@ -71,37 +71,41 @@ const RIGHT_FIXED_COLS = [
     }
 ];
 
+const keyToCol = (key: string) => {
+    const { unit: columnUnit } = PROFILE_DESCRIPTION_DICT[key as keyof FullProfile];
+    return {
+        title: PROFILE_DESCRIPTION_DICT[key as keyof FullProfile].name,
+        children: [
+            {
+                key,
+                title: Calculation.display(columnUnit),
+                dataIndex: key,
+                width: 150,
+                render: (text: string) => Calculation.format(unit(text).toNumber(columnUnit))
+            }
+        ]
+    };
+};
+
 export const ProfileStatus: React.FC<StoreInjectedProp> = inject('store')(
     observer(({ store }) => {
+        const graphStore = store!.graph;
+
         // Hooks
         const [tableData, setTableData] = React.useState([]);
         const [columns, setCols] = React.useState(
-            LEFT_FIXED_COLS.concat(RIGHT_FIXED_COLS as any[])
+            LEFT_FIXED_COLS.concat(graphStore.optionalHeaders.map(keyToCol) as any[]).concat(
+                RIGHT_FIXED_COLS as any[]
+            )
         );
         React.useEffect(() => {
-            store!.graph.profileStatusTableData().then(setTableData as any);
+            graphStore.profileStatusTableData().then(setTableData as any);
         }, [0]);
 
         const onSelect = (values: string, options: any) => {
-            const selectedCols = options.map((opt: any, i: number) => {
-                const { unit: columnUnit } = PROFILE_DESCRIPTION_DICT[
-                    opt.key as keyof EssentialProfileInput
-                ];
-                return {
-                    title: opt.children.toString(),
-                    children: [
-                        {
-                            key: opt.key,
-                            title: Calculation.display(columnUnit),
-                            dataIndex: opt.key,
-                            width: 150,
-                            render: (text: string) =>
-                                Calculation.format(unit(text).toNumber(columnUnit))
-                        }
-                    ]
-                };
-            });
+            const selectedCols = options.map((opt: any) => keyToCol(opt.key));
             setCols(LEFT_FIXED_COLS.concat(selectedCols).concat(RIGHT_FIXED_COLS as any));
+            graphStore.changeColumnsSelection(options.map((opt: any) => opt.key));
         };
 
         const options = TABLE_COLUMNS.map((key: string) => (
@@ -121,6 +125,7 @@ export const ProfileStatus: React.FC<StoreInjectedProp> = inject('store')(
                         placeholder="Select fields to display below"
                         optionFilterProp="children"
                         style={{ width: '70%' }}
+                        defaultValue={graphStore.optionalHeaders as any} // Here is an declaration error from antd
                         onChange={onSelect}
                         filterOption={(input: string, option: any) =>
                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
