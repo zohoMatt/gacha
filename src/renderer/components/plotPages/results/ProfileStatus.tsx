@@ -135,7 +135,7 @@ export const ProfileStatus: React.FC<StoreInjectedProp> = inject('store')(
                     size="small"
                     style={{ height: '100%' }}
                     dataSource={tableData}
-                    scroll={{ x: 1300 }}
+                    scroll={{ x: 600 }}
                     columns={columns as any}
                     />
             </Workspace>
