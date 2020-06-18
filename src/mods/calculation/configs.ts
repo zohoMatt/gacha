@@ -49,3 +49,20 @@ export const PROFILE_DESCRIPTION_DICT: {
     nSurfaceBiot: { name: 'Surface Biot Number', unit: '' },
     mSurfaceBiot: { name: 'Surface Biot Number', unit: '' }
 };
+
+export const TABLE_COLUMNS: Array<keyof FullProfile> = [
+    'waterTemperature',
+    'adsorbentDensity',
+    'adsorbentParticlePorosity',
+    'adsorbentParticleRadius',
+    'bedDiameter',
+    'bedLength',
+    'bedFlowrate',
+    'bedMass',
+    'tortuosity',
+    'spdfr',
+    'frendlichK',
+    'frendlichNth',
+    'initConcent',
+    'contaminantMolarVolume'
+];
