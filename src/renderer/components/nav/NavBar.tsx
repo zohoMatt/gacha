@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link, useRouteMatch, useHistory } from 'react-router-dom';
 import { Menu } from 'antd';
-import { createHashHistory } from 'history';
 import { ExperimentOutlined, SettingOutlined } from '@ant-design/icons/lib';
 import { AreaChartOutlined, DatabaseOutlined, InsertRowBelowOutlined } from '@ant-design/icons';
 
@@ -33,12 +32,10 @@ export const NavBar: React.FunctionComponent = () => {
     );
 
     // Auto-select specified menu item
-    const history = createHashHistory({
-        basename: match.path
-    });
+    const history = useHistory();
     React.useEffect(() => {
         history.listen((location: any) => {
-            const item = location.pathname.split('/')[2];
+            const item = location.pathname.split('/')[3];
             if (item) setMenu(item);
         });
     }, [0]);

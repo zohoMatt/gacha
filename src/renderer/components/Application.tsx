@@ -1,9 +1,7 @@
 import { hot } from 'react-hot-loader/root';
 import * as React from 'react';
 import { Provider } from 'mobx-react';
-
-// We must use HashRouter otherwise it would cause the problem like https://github.com/gaearon/react-hot-loader/issues/620
-import { HashRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import WelcomePage from './welcome/WelcomePage';
 import ConfigurationPage from './configuration/ConfigurationPage';

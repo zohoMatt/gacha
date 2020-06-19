@@ -1,13 +1,13 @@
-import { observer } from 'mobx-react';
 import * as React from 'react';
-import { message, Col, Row, Typography } from 'antd';
+import { observer } from 'mobx-react';
+import { message, Modal, Col, Row, Typography } from 'antd';
 
 import { OperationPanel, OperationPanelButtons } from '../OperationPanel';
 import { RecordList } from '../RecordList';
 import { IdleStatePrompt } from '../elements/IdleStatePrompt';
+import { RouterPrompt } from '../RouterPrompt';
 
 import { BriefRecordType, BasicTableWithEditStore } from '../../../store/base';
-import { ErrorBoundary } from '../ErrorBoundary';
 
 const styles = require('./TableWithEditSection.module.less');
 
@@ -37,6 +37,7 @@ export interface TableWithEditSectionState {
     tableList: any[];
 }
 
+// Block switching routes if in editing mode
 @observer
 export class TableWithEditSection extends React.Component<
     TableWithEditSectionProps,
@@ -150,6 +151,7 @@ export class TableWithEditSection extends React.Component<
         const { Edit, Save, SaveAs, Cancel } = OperationPanelButtons;
         return (
             <Row className={styles.container} gutter={24}>
+                <RouterPrompt shouldPrompt={status === 'edit'} />
                 <div className={styles.title}>
                     <Typography.Title level={3}>{title}</Typography.Title>
                 </div>
