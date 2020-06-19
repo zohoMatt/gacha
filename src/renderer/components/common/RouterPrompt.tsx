@@ -7,12 +7,16 @@ export interface RouterPromptProps {
 
 // todo Use customized Modal component
 export const RouterPrompt: React.FC<RouterPromptProps> = ({ shouldPrompt }) => {
+    const checkDuplicate = (location: any) => {
+        if (location.pathname === window.location.pathname) {
+            return false;
+        }
+        return 'All unsaved changes will be lost. Sure to proceed?';
+    };
+
     return (
         <>
-            <Prompt
-                message="All unsaved changes will be lost. Sure to proceed?"
-                when={shouldPrompt || false}
-                />
+            <Prompt message={checkDuplicate} when={shouldPrompt || false} />
         </>
     );
 };
