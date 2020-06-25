@@ -17,7 +17,9 @@
     "pretest:e2e": "npm run build",
     "test:e2e": "jest '(\\/test\\/e2e/).*'",
     "pack": "npm run build && electron-builder --dir",
-    "dist": "npm run build && electron-builder",
+    "dist": "rm -rf release dist && npm run build && electron-builder",
+    "prod": "cross-env DEBUG=off && npm run dist",
+    "preview": "cross-env DEBUG=on && npm run dist",
     "postinstall": "electron-builder install-app-deps"
   },
   "husky": {
@@ -35,10 +37,10 @@
     ]
   },
   "build": {
-    "productName": "ProductName",
-    "appId": "org.your.productname",
+    "productName": "GACha",
+    "appId": "org.ppzoho.gacha",
     "mac": {
-      "category": "your.app.category.type"
+      "category": "gacha.app.science.calculation"
     },
     "directories": {
       "output": "release"
@@ -60,10 +62,10 @@
     "url": "git+ssh://git@github.com:Robinfr/electron-react-typescript.git"
   },
   "author": {
-    "name": "Your name",
-    "email": "Your email"
+    "name": "MattZuo",
+    "email": "mattzuo12@gmail.com"
   },
-  "license": "SEE LICENSE",
+  "license": "GNU V3",
   "bugs": {
     "url": "https://github.com/Robinfr/electron-react-typescript/issues"
   },
@@ -100,7 +102,6 @@
     "babel-loader": "^8.0.6",
     "cross-env": "^5.1.3",
     "css-loader": "^3.5.2",
-    "devtron": "^1.4.0",
     "electron": "^3.1.9",
     "electron-builder": "^22.3.2",
     "electron-debug": "^3.0.1",

@@ -21,7 +21,7 @@ const createWindow = async () => {
         width: 1920,
         height: 1080,
         frame: true,
-        title: 'MasterPFAS'
+        title: 'PFAST'
     });
 
     if (process.env.NODE_ENV !== 'production') {
@@ -37,7 +37,7 @@ const createWindow = async () => {
         );
     }
 
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.DEBUG !== 'off') {
         // Open DevTools, see https://github.com/electron/electron/issues/12438 for why we wait for dom-ready
         win.webContents.once('dom-ready', () => {
             win!.webContents.openDevTools();
@@ -51,12 +51,11 @@ const createWindow = async () => {
 
 app.on('ready', () => {
     // 1. Init logger
-    Logger.init();
+    // Logger.init();
     // 2. init IPC listeners
     initIPCService();
     // 3. others
     createWindow();
-    require('devtron').install();
 });
 
 app.on('window-all-closed', () => {

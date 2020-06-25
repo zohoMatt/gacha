@@ -44,6 +44,6 @@ module.exports = merge.smart(baseConfig, {
         })
     ],
     externals: {
-        'devtron': 'commonjs devtron'
+        // 'devtron': 'commonjs devtron'
     }
 });
