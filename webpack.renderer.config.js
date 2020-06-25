@@ -107,7 +107,7 @@ module.exports = merge.smart(baseConfig, {
         }),
         new webpack.NamedModulesPlugin(),
         new HtmlWebpackPlugin({
-            title: 'PFAST'
+            title: 'GACha'
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')

@@ -21,7 +21,7 @@ const createWindow = async () => {
         width: 1920,
         height: 1080,
         frame: true,
-        title: 'PFAST'
+        title: 'GACha'
     });
 
     if (process.env.NODE_ENV !== 'production') {
