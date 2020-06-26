@@ -4,6 +4,7 @@ import * as url from 'url';
 import installExt, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 import { initIPCService } from './ipc';
 import { Logger } from '../utils/logger';
+import { AppEnv } from '../mods/env';
 
 let win: BrowserWindow | null;
 
@@ -13,7 +14,7 @@ const installExtensions = async () => {
 };
 
 const createWindow = async () => {
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.APP_ENV !== AppEnv.Production) {
         await installExtensions();
     }
 
@@ -29,7 +30,7 @@ const createWindow = async () => {
         }
     });
 
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.APP_ENV !== AppEnv.Production) {
         process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = '1'; // eslint-disable-line require-atomic-updates
         win.loadURL(`http://localhost:2003`);
     } else {
@@ -42,7 +43,7 @@ const createWindow = async () => {
         );
     }
 
-    if (process.env.DEBUG !== 'off') {
+    if (process.env.APP_ENV !== AppEnv.Production) {
         // Open DevTools, see https://github.com/electron/electron/issues/12438 for why we wait for dom-ready
         win.webContents.once('dom-ready', () => {
             win!.webContents.openDevTools();

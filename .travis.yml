@@ -4,25 +4,16 @@ node_js: "12.10.0"
 cache:
   npm: false
 
-env:
-  global:
-    - DEBUG=off
-    - NODE_ENV=production
-
 os:
-  - osx
+  - linux
 
-before_install:
-  - pwd
-  - cd gacha
+dist:
+  - xenial
 
 install:
-  - pwd
   - npm install
 
 script:
-  - pwd
-  - npm test
   - npm run dist -- -mwl
 
 deploy:

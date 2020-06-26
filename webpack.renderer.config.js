@@ -1,3 +1,5 @@
+import { AppEnv } from './src/mods/env';
+
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -5,7 +7,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const baseConfig = require('./webpack.base.config');
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isDev = process.env.APP_ENV === AppEnv.Dev;
 
 module.exports = merge.smart(baseConfig, {
     target: 'electron-renderer',
@@ -42,7 +44,7 @@ module.exports = merge.smart(baseConfig, {
                     {
                         loader: 'style-loader',
                         options: {
-                            sourceMap: !isProduction,
+                            sourceMap: isDev,
                         },
                     },
                     {
@@ -54,7 +56,7 @@ module.exports = merge.smart(baseConfig, {
                             modules: {
                                 auto: true
                             },
-                            sourceMap: !isProduction
+                            sourceMap: isDev
                         }
                     },
                     {
@@ -108,9 +110,6 @@ module.exports = merge.smart(baseConfig, {
         new webpack.NamedModulesPlugin(),
         new HtmlWebpackPlugin({
             title: 'GACha'
-        }),
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
         })
     ]
 });
