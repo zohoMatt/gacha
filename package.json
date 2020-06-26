@@ -4,8 +4,8 @@
   "description": "",
   "main": "./dist/main.js",
   "scripts": {
-    "build-main": "npx cross-env NODE_ENV=production webpack --config webpack.main.prod.config.js",
-    "build-renderer": "npx cross-env NODE_ENV=production webpack --config webpack.renderer.prod.config.js",
+    "build-main": "npx cross-env NODE_ENV=production npx webpack --config webpack.main.prod.config.js",
+    "build-renderer": "npx cross-env NODE_ENV=production npx webpack --config webpack.renderer.prod.config.js",
     "build": "npm run build-main && npm run build-renderer",
     "dev-renderer": "npx webpack-dev-server --config webpack.renderer.dev.config.js",
     "dev-main": "npx webpack --config webpack.main.config.js && electron ./dist/main.js",
