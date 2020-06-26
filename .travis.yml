@@ -13,6 +13,7 @@ os:
   - osx
 
 before_install:
+  - pwd
   - cd gacha
 
 install:
