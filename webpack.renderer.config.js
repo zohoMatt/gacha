@@ -1,5 +1,3 @@
-import { AppEnv } from './src/mods/env';
-
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -7,7 +5,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const baseConfig = require('./webpack.base.config');
 
-const isDev = process.env.APP_ENV === AppEnv.Dev;
+const isDev = process.env.APP_ENV === 'dev';
 
 module.exports = merge.smart(baseConfig, {
     target: 'electron-renderer',
