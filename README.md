@@ -1,4 +1,4 @@
-# PFAST
+# GACha
 
 ![](https://img.shields.io/badge/Electron-3.1.9-yellowgreen)
 ![](https://img.shields.io/badge/React-16.8.6-green)
@@ -13,15 +13,15 @@
 ![](https://img.shields.io/badge/lowdb-1.0.0-cc8844)
 ![](https://img.shields.io/badge/license-GPL%203.0-blue)
 
-> More efficient plotting tool for PFAS adsorption.
+> Yet another more efficient plotting tool for PFAS adsorption processing Pore-Surface Diffusion Model.
 
 ## Instructions
 
 ## Development
 
-### Get started
+### Getting started
 
-**Run separately in 2 sessions (Recommended)**
+**Run in 2 separate shell sessions (Recommended)**
 ```
 npm run dev-renderer
 npm run dev-main
@@ -31,10 +31,20 @@ npm run dev-main
 npm run start-dev
 ```
 
-### Testing
+### Unit Testing (currently absent)
 
 ```
 npm test
 ```
 
 ### Packaging
+
+Build for current platform:
+```
+npm run dist
+```
+Use [electron-bulder CLI options](https://www.electron.build/cli) like:
+```
+# build for all platforms (Windows, Linux, Mac)
+npm run build -- -mwl
+```
