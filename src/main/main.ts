@@ -21,7 +21,12 @@ const createWindow = async () => {
         width: 1920,
         height: 1080,
         frame: true,
-        title: 'GACha'
+        title: 'GACha',
+        // fixme https://www.electronjs.org/docs/tutorial/security#2-do-not-enable-nodejs-integration-for-remote-content
+        webPreferences: {
+            nodeIntegration: true,
+            nodeIntegrationInWorker: true
+        }
     });
 
     if (process.env.NODE_ENV !== 'production') {

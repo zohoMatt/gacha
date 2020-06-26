@@ -21,7 +21,7 @@ export class DataStorage<T> {
         this.userDataPath = path.join(
             (app || remote.app).getPath('userData'),
             this.storageFolder,
-            `${filename}.json`
+            `./${filename}.json`
         );
         console.info(`Current user data path: ${this.userDataPath}`);
 
