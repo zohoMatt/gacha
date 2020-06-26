@@ -8,6 +8,9 @@ env:
     - DEBUG=off
     - NODE_ENV=production
 
+os:
+  - linux
+
 install:
   - npm install
 
@@ -17,12 +20,12 @@ script:
 
 deploy:
   provider: releases
-  api_key: GITHUB_PERSONAL_TOKEN
+  token: $GITHUB_PERSONAL_TOKEN
   file:
     - release/*.exe
     - release/*.dmg
     - release/*.deb
-  skip_cleanup: true
+  cleanup: false
   on:
     tags: true
 
