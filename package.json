@@ -4,8 +4,8 @@
   "description": "",
   "main": "./dist/main.js",
   "scripts": {
-    "build-main": "cross-env NODE_ENV=production DEBUG=on webpack --config webpack.main.prod.config.js",
-    "build-renderer": "cross-env NODE_ENV=production DEBUG=on webpack --config webpack.renderer.prod.config.js",
+    "build-main": "npx cross-env NODE_ENV=production webpack --config webpack.main.prod.config.js",
+    "build-renderer": "npx cross-env NODE_ENV=production webpack --config webpack.renderer.prod.config.js",
     "build": "npm run build-main && npm run build-renderer",
     "dev-renderer": "webpack-dev-server --config webpack.renderer.dev.config.js",
     "dev-main": "webpack --config webpack.main.config.js && electron ./dist/main.js",
@@ -16,7 +16,7 @@
     "pretest:e2e": "npm run build",
     "test:e2e": "jest '(\\/test\\/e2e/).*'",
     "pack": "npm run build && electron-builder --dir",
-    "dist": "rm -rf release dist && npm run build && electron-builder",
+    "dist": "rm -rf release dist && npm run build && npx electron-builder",
     "prod": "cross-env DEBUG=off && npm run dist",
     "preview": "cross-env DEBUG=on && npm run dist",
     "postinstall": "electron-builder install-app-deps"
