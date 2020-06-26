@@ -14,6 +14,7 @@ os:
 before_install:
   - npm i -g electron-builder@22.3.2
   - npm i -g cross-env
+  - npm i -g webpack
 
 install:
   - npm install
