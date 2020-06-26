@@ -5,10 +5,7 @@ cache:
   npm: false
 
 os:
-  - linux
-
-dist:
-  - xenial
+  - osx
 
 install:
   - npm install
