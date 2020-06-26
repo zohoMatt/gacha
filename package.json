@@ -19,7 +19,7 @@
     "dist": "rm -rf release dist && npm run build && npx electron-builder",
     "prod": "cross-env DEBUG=off && npm run dist",
     "preview": "cross-env DEBUG=on && npm run dist",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "npx electron-builder install-app-deps"
   },
   "husky": {
     "hooks": {
