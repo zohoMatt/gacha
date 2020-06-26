@@ -12,13 +12,11 @@ env:
 os:
   - osx
 
-before_install:
-  - npm i -g npx
-
 install:
   - npm install
 
 script:
+  - pwd
   - npm test
   - npm run dist -- -mwl
 
