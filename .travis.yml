@@ -9,11 +9,10 @@ env:
     - NODE_ENV=production
 
 os:
-  - linux
+  - osx
 
 before_install:
   - npm i -g electron-builder@22.3.2
-  - npm i -g electron@3.1.9
 
 install:
   - npm install
