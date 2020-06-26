@@ -14,7 +14,7 @@ export interface CheckWithInputProps {
     value?: ValueFormat;
     checkedKey?: string;
     initValue?: ValueFormat;
-    unit?: string;
+    unit: string;
     onChange?: (payload: ValueFormat) => any;
     checkedText?: string;
     decorationText?: string;
