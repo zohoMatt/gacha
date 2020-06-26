@@ -7,6 +7,8 @@ import { StorageDataStructure, StorageInitOptions } from './types';
 export class DataStorage<T> {
     public static VERSION = '0.1.0';
 
+    public storageFolder = 'database';
+
     public userDataPath: string;
 
     public database: any;
@@ -16,7 +18,11 @@ export class DataStorage<T> {
     public constructor(opt: StorageInitOptions<T>) {
         const { filename, defaultStore } = opt;
 
-        this.userDataPath = path.join((app || remote.app).getPath('appData'), `${filename}.json`);
+        this.userDataPath = path.join(
+            (app || remote.app).getPath('userData'),
+            this.storageFolder,
+            `${filename}.json`
+        );
         console.info(`Current user data path: ${this.userDataPath}`);
 
         if (defaultStore) this.defaultStore = defaultStore;
