@@ -1,0 +1,28 @@
+language: node_js
+node_js: "12.10.0"
+
+#cache:
+
+env:
+  global:
+    - DEBUG=off
+    - NODE_ENV=production
+
+install:
+  - npm install
+
+script:
+  - npm test
+  - npm run dist -- -mwl
+
+deploy:
+  provider: releases
+  api_key: GITHUB_PERSONAL_TOKEN
+  file:
+    - release/*.exe
+    - release/*.dmg
+    - release/*.deb
+  skip_cleanup: true
+  on:
+    tags: true
+
