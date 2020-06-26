@@ -14,7 +14,6 @@ os:
 
 before_install:
   - npm i -g npx
-  - npm i -g webpack-cli
 
 install:
   - npm install
