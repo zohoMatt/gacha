@@ -11,6 +11,9 @@ env:
 os:
   - linux
 
+before_install:
+  - npm i -g electron-builder
+
 install:
   - npm install
 
