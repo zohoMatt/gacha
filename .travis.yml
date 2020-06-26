@@ -12,7 +12,11 @@ env:
 os:
   - osx
 
+before_install:
+  - cd gacha
+
 install:
+  - pwd
   - npm install
 
 script:
