@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { Checkbox, Input, Tooltip, Typography } from 'antd';
+import { Calculation } from '../../../../mods/calculation/basic';
 
 const styles = require('./CorrelationOrUserInput.module.less');
 
 export interface ValueFormat {
     correlation: boolean;
     value: number;
+    unit: string;
 }
 
 export interface CheckWithInputProps {
@@ -33,13 +35,13 @@ export const CorrelationOrUserInput: React.FunctionComponent<CheckWithInputProps
 
     const onCheckboxChanged = (status: boolean) => {
         setChecked(status);
-        if (onChange) onChange({ correlation: status, value: value ? value.value : input });
+        if (onChange) onChange({ correlation: status, value: value ? value.value : input, unit });
     };
 
     const onInputChanged = (inputNum: number) => {
         setInput(inputNum);
         if (onChange)
-            onChange({ correlation: value ? value.correlation : checked, value: inputNum });
+            onChange({ correlation: value ? value.correlation : checked, value: inputNum, unit });
     };
 
     const isChecked = value ? value.correlation : checked;
@@ -68,7 +70,7 @@ export const CorrelationOrUserInput: React.FunctionComponent<CheckWithInputProps
             ) : (
                 <Input
                     type="number"
-                    addonAfter={unit || ''}
+                    addonAfter={unit ? Calculation.displayUnit(unit) : ''}
                     value={value ? value.value : input}
                     onChange={e => onInputChanged(+e.target.value)}
                     />

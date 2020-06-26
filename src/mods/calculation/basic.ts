@@ -12,7 +12,7 @@ export class Calculation {
     };
 
     // todo More functional
-    protected static displayUnit(unit: string | Unit) {
+    public static displayUnit(unit: string | Unit) {
         return unit
             .toString()
             .replace(/\^3/g, '³')

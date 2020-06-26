@@ -1,7 +1,7 @@
 import { hot } from 'react-hot-loader/root';
 import * as React from 'react';
 import { Provider } from 'mobx-react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 
 import WelcomePage from './welcome/WelcomePage';
 import ConfigurationPage from './configuration/ConfigurationPage';
