@@ -59,7 +59,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:Robinfr/electron-react-typescript.git"
+    "url": "https://github.com/zohoMatt/gacha.git"
   },
   "author": {
     "name": "MattZuo",
@@ -67,9 +67,9 @@
   },
   "license": "GNU V3",
   "bugs": {
-    "url": "https://github.com/Robinfr/electron-react-typescript/issues"
+    "url": "https://github.com/zohoMatt/gacha/issues"
   },
-  "homepage": "https://github.com/Robinfr/electron-react-typescript",
+  "homepage": "https://github.com/zohoMatt/gacha",
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
