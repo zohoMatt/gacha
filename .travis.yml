@@ -15,12 +15,12 @@ script:
 
 deploy:
   provider: releases
-  token: $GITHUB_PERSONAL_TOKEN
+  token: $GH_TOKEN
   file:
     - release/*.exe
     - release/*.dmg
     - release/*.deb
-  cleanup: false
+  skip_cleanup: true
   on:
     tags: true
 
