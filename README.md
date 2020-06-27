@@ -15,7 +15,7 @@
 
 > Yet another more efficient plotting tool for PFAS adsorption processing Pore-Surface Diffusion Model.
 
-* master: [![Build Status](https://travis-ci.com/zohoMatt/gacha.svg?branch=master)](https://travis-ci.com/zohoMatt/gacha)
+[master] [![Build Status](https://travis-ci.com/zohoMatt/gacha.svg?branch=master)](https://travis-ci.com/zohoMatt/gacha)
 
 ## Instructions
 
@@ -48,5 +48,5 @@ npm run dist
 Use [electron-bulder CLI options](https://www.electron.build/cli) like:
 ```
 # build for all platforms (Windows, Linux, Mac)
-npm run build -- -mwl
+npm run dist -- -mwl
 ```
