@@ -16,7 +16,6 @@
 > Yet another more efficient plotting tool for PFAS adsorption processing Pore-Surface Diffusion Model.
 
 * master: [![Build Status](https://travis-ci.com/zohoMatt/gacha.svg?branch=master)](https://travis-ci.com/zohoMatt/gacha)
-* dist: [![Build Status](https://travis-ci.com/zohoMatt/gacha.svg?branch=dist)](https://travis-ci.com/zohoMatt/gacha)
 
 ## Instructions
 
