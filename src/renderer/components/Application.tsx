@@ -8,7 +8,7 @@ import ConfigurationPage from './configuration/ConfigurationPage';
 import { store } from '../app';
 
 const styles = require('./Application.less');
-const headPic = require('../assets/images/pfas.png');
+const coverPic = require('../assets/images/cover-page.jpg');
 
 const Application = () => (
     <Provider store={store}>
@@ -19,7 +19,12 @@ const Application = () => (
                         <ConfigurationPage />
                     </Route>
                     <Route path="/">
-                        <WelcomePage src={headPic} goto="/workspace" />
+                        <WelcomePage
+                            img={coverPic}
+                            goto="/workspace"
+                            repo="https://github.com/zohoMatt/gacha"
+                            mail="mattzuo12@gmail.com"
+                            />
                     </Route>
                 </Switch>
             </div>

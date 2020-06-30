@@ -1,5 +1,14 @@
 import * as React from 'react';
+import { Button, Col, Row } from 'antd';
 import { Link } from 'react-router-dom';
+import { shell } from 'electron';
+import {
+    ArrowRightOutlined,
+    ExportOutlined,
+    ImportOutlined,
+    GithubOutlined,
+    MailOutlined
+} from '@ant-design/icons';
 
 const styles = require('./WelcomePage.module.less');
 
@@ -7,30 +16,93 @@ export interface WelcomeProps {
     title?: string;
     intro?: string;
     copyright?: string;
-    src: string;
+    img: string;
     goto: string;
+    repo?: string;
+    mail?: string;
 }
 
 const WelcomePage: React.FunctionComponent<WelcomeProps> = ({
     title,
     intro,
     copyright,
-    src,
-    goto
-}) => (
-    <div className={styles.bg}>
-        <div className={styles.title}>{title || 'MasterPFAS'}</div>
-        <img className={styles.image} src={src} alt="Header" />
-        <div className={styles.intro}>
-            {intro || 'A swift way to plot and compare PFAS adsorption curve.'}
+    img,
+    goto,
+    repo,
+    mail
+}) => {
+    const repoClicked = () => (repo ? shell.openExternal(repo) : null);
+
+    return (
+        <div className={styles.bg}>
+            <img className={styles.img} src={img} alt="Header" />
+            <div className={styles.buttonGroup}>
+                <Row gutter={24}>
+                    <Col span={12} offset={6}>
+                        <Link to={goto} style={{ width: '100%' }}>
+                            <Button block type="primary" size="large" icon={<ArrowRightOutlined />}>
+                                START
+                            </Button>
+                        </Link>
+                    </Col>
+                </Row>
+                <Row gutter={24}>
+                    <Col offset={3} span={8}>
+                        <Button
+                            ghost
+                            block
+                            type="primary"
+                            size="middle"
+                            shape="round"
+                            icon={<ImportOutlined />}>
+                            Import Data
+                        </Button>
+                    </Col>
+                    <Col offset={2} span={8}>
+                        <Button
+                            ghost
+                            block
+                            type="primary"
+                            size="middle"
+                            shape="round"
+                            icon={<ExportOutlined />}>
+                            Export Data
+                        </Button>
+                    </Col>
+                </Row>
+                <Row gutter={24}>
+                    <Col offset={3} span={8}>
+                        {repo ? (
+                            <Button
+                                ghost
+                                block
+                                type="dashed"
+                                size="middle"
+                                shape="round"
+                                onClick={repoClicked}
+                                icon={<GithubOutlined />}>
+                                GitHub Repo
+                            </Button>
+                        ) : null}
+                    </Col>
+                    <Col offset={2} span={8}>
+                        {mail ? (
+                            <Button
+                                ghost
+                                block
+                                type="dashed"
+                                size="middle"
+                                shape="round"
+                                href={`mailto:${mail}`}
+                                icon={<MailOutlined />}>
+                                Contact Me
+                            </Button>
+                        ) : null}
+                    </Col>
+                </Row>
+            </div>
         </div>
-        <div className={styles.copyright}>{copyright || 'Copyright: MIT License by PP & Zoho'}</div>
-        <div className={styles.btnRow}>
-            <Link to={goto}>
-                <div className={styles.startBtn}>START</div>
-            </Link>
-        </div>
-    </div>
-);
+    );
+};
 
 export default WelcomePage;

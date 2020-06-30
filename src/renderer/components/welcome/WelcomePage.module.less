@@ -2,72 +2,24 @@
 @import '../../assets/styles/mixins.less';
 
 .bg {
-    position: relative;
-    box-sizing: border-box;
+}
+
+.img {
+    position: fixed;
     width: 100%;
     height: 100%;
-    background: @BG;
+}
+
+.buttonGroup {
+    position: fixed;
+    right: 8vw;
+    top: 50%;
+    z-index: 10;
+
+    width: 40vw;
+    height: 20vh;
 
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.title {
-    margin: 3vh 0;
-
-    color: @BASIC_COLOR_A5;
-    font-family: @FONT_TAHOMA;
-    font-size: 8vh;
-}
-
-.intro {
-    margin: 4vh 0;
-
-    color: @BASIC_COLOR_A3;
-    font-family: @FONT_PALATINO;
-    font-size: 3vh;
-}
-
-.copyright {
-    color: @BASIC_COLOR_A2;
-    font-family: @FONT_TNR;
-    font-size: 2vh;
-}
-
-.image {
-    margin: 5vh 0;
-    width: 30vw;
-    height: auto;
-}
-
-.btnRow {
-    .center-aligned-2d();
-    height: 20vh;
-}
-
-.startBtn {
-    .center-aligned-2d();
-
-    width: 20vw;
-    height: 10vh;
-
-    background: @BASIC_COLOR_A2;
-    border-radius: 2vh;
-
-    color: @BASIC_COLOR_A3;
-    font-size: 4vh;
-    cursor: pointer;
-    user-select: none;
-
-    &:hover {
-        background: @BASIC_COLOR_A1;
-    }
-
-    &:active {
-        width: 18vw;
-        height: 9vh;
-        font-size: 3vh;
-    }
+    justify-content: space-around;
 }

@@ -32,9 +32,9 @@ const createWindow = async () => {
 
     if (process.env.APP_ENV === AppEnv.Dev) {
         process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = '1'; // eslint-disable-line require-atomic-updates
-        win.loadURL(`http://localhost:2003`);
+        await win.loadURL(`http://localhost:2003`);
     } else {
-        win.loadURL(
+        await win.loadURL(
             url.format({
                 pathname: path.join(__dirname, 'index.html'),
                 protocol: 'file:',
