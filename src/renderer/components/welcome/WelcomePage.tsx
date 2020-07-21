@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Col, Row } from 'antd';
+import { Button, Col, Modal, Row } from 'antd';
 import { Link } from 'react-router-dom';
 import { shell } from 'electron';
 import {
@@ -9,6 +9,8 @@ import {
     GithubOutlined,
     MailOutlined
 } from '@ant-design/icons';
+
+import { showLicense } from './LicenseModal';
 
 const styles = require('./WelcomePage.module.less');
 
@@ -100,6 +102,11 @@ const WelcomePage: React.FunctionComponent<WelcomeProps> = ({
                         ) : null}
                     </Col>
                 </Row>
+            </div>
+            <div className={styles.license}>
+                <Button type="link" onClick={showLicense}>
+                    GACha Copyright © 2020, Hao Zuo
+                </Button>
             </div>
         </div>
     );
