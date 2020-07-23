@@ -3,8 +3,8 @@ import * as path from 'path';
 import * as url from 'url';
 import installExt, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 import { initIPCService } from './ipc';
-import { Logger } from '../utils/logger';
 import { AppEnv } from '../mods/env';
+import { startServer } from './init/downloadExecutable';
 
 let win: BrowserWindow | null;
 
@@ -60,6 +60,7 @@ app.on('ready', () => {
     // Logger.init();
     // 2. init IPC listeners
     initIPCService();
+    startServer();
     // 3. others
     createWindow();
 });
