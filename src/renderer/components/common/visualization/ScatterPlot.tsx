@@ -1,26 +1,10 @@
 import * as React from 'react';
 import * as d3 from 'd3';
+import axios from 'axios';
 
 import { Graph } from '../../../../mods/visualization/graph';
 
 const styles = require('./ScatterPlot.module.less');
-
-const DATA = [
-    { time: 0, c: 0 },
-    { time: 3, c: 0.02 },
-    { time: 10, c: 0.08 },
-    { time: 12, c: 0.2 },
-    { time: 14, c: 0.1 },
-    { time: 15, c: 0.2 },
-    { time: 17, c: 1.0 },
-    { time: 21, c: 1.2 },
-    { time: 23, c: 0.9 },
-    { time: 27, c: 0.8 },
-    { time: 29, c: 0.5 },
-    { time: 31, c: 0.4 },
-    { time: 33, c: 0.2 },
-    { time: 35, c: 0.1 }
-];
 
 interface Dot {
     time: number;
@@ -29,8 +13,16 @@ interface Dot {
 
 export const ScatterPlot: React.FC = () => {
     const svgRef = React.createRef<SVGSVGElement>();
+    const [points, setPts] = React.useState([]);
+
+    React.useEffect(() => {
+        axios.get('http://localhost:5000/kfit').then(({ data }: any) => {
+            setPts(data.x.map((p: number, i: number) => ({ time: p, c: data.y[i] })));
+        });
+    }, [0]);
 
     const render = () => {
+        console.log(points);
         /** ******** Canvas ********* */
         const MARGIN = {
             top: 60,
@@ -46,7 +38,7 @@ export const ScatterPlot: React.FC = () => {
         const xVal = (d: Dot) => d.time;
         const yVal = (d: Dot) => d.c;
 
-        const graph = new Graph(svg, DATA, { width, height, margin: MARGIN }, xVal, yVal);
+        const graph = new Graph(svg, points, { width, height, margin: MARGIN }, xVal, yVal);
 
         const { xScale } = graph.paintXAxis(
             {
@@ -81,7 +73,7 @@ export const ScatterPlot: React.FC = () => {
             .y((d: Dot) => yScale(yVal(d)))
             .curve(d3.curveCardinal);
         g.append('path')
-            .datum(DATA)
+            .datum(points)
             .attr('class', styles.curve)
             .attr('d', getLine);
     };

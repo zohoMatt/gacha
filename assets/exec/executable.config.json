@@ -1,10 +1,10 @@
 {
   "latest": {
-    "version": "1.0.0",
-    "url": "https://github.com/zohoMatt/psdm-local-server/releases/download/v1.0.0/psdm-server"
+    "version": "1.1.0",
+    "url": "https://github.com/zohoMatt/psdm-local-server/releases/download/v1.1.0/psdm-server-v1.1.0"
   },
   "stable": {
-    "version": "1.0.0",
-    "url": "https://github.com/zohoMatt/psdm-local-server/releases/download/v1.0.0/psdm-server"
+    "version": "1.1.0",
+    "url": "https://github.com/zohoMatt/psdm-local-server/releases/download/v1.1.0/psdm-server-v1.1.0"
   }
 }

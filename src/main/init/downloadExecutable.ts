@@ -29,14 +29,13 @@ const execute = async (binPath: string) => {
 };
 
 export async function startServer(type: VersionType = VersionType.Stable) {
-    const filePath = path.join(app.getPath('userData'), 'bin/psdm-server');
+    const binConfig = type === VersionType.Latest ? config.latest : config.stable;
+    const dirPath = path.join(app.getPath('userData'), 'bin');
+    const filePath = path.join(dirPath, `psdm-server-v${binConfig.version}`);
     if (!fs.existsSync(filePath)) {
+        fs.emptyDirSync(dirPath);
         fs.ensureFileSync(filePath);
-        if (type === VersionType.Latest) {
-            await downloadFile(config.latest.url, filePath);
-        } else {
-            await downloadFile(config.stable.url, filePath);
-        }
+        await downloadFile(binConfig.url, filePath);
     }
     return execute(filePath);
 }
